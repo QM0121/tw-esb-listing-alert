@@ -1,9 +1,9 @@
 {
-  "last_checked_at": null,
-  "esb_company_count": 0,
-  "rows_scanned": 0,
+  "last_checked_at": "2026-05-14T00:03:56+08:00",
+  "esb_company_count": 170,
+  "rows_scanned": 1,
   "matched_count": 0,
   "new_alert_count": 0,
-  "last_run_ok": null,
-  "message": "尚未執行監測"
+  "last_run_ok": true,
+  "message": "完成。掃描 1 筆即時重大訊息，興櫃轉板關鍵公告命中 0 筆，新增通知 0 筆。"
 }
