@@ -6,7 +6,7 @@ import os
 import re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 import requests
 from bs4 import BeautifulSoup
@@ -21,7 +21,7 @@ TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "").strip()
 
 HEADERS = {
     "User-Agent": (
-        "Mozilla/5.0 (compatible; TW-ESB-Listing-Alert/2.0; "
+        "Mozilla/5.0 (compatible; TW-ESB-Listing-Alert/3.0; "
         "+https://github.com/)"
     ),
     "Accept-Language": "zh-TW,zh;q=0.9,en;q=0.8",
@@ -34,8 +34,9 @@ TWSE_APPLY_LISTING_URL = "https://www.twse.com.tw/rwd/zh/company/applylisting?re
 TPEX_APPLY_OTC_URL = "https://www.tpex.org.tw/zh-tw/mainboard/applying/status/company.html"
 TIB_NEWS_URL = "https://www.twse.com.tw/TIB/zh/news.html"
 
-MAX_EVENTS_TO_KEEP = 1200
-MAX_SEEN_TO_KEEP = 12000
+SCHEMA_VERSION = 3
+MAX_EVENTS_TO_KEEP = 5000
+MAX_SEEN_TO_KEEP = 30000
 
 SOURCE_LABELS = {
     "mops": "MOPS 即時重大訊息",
@@ -44,7 +45,6 @@ SOURCE_LABELS = {
     "tib_news": "TWSE 臺灣創新板新聞稿",
 }
 
-# 重大訊息關鍵字：董事會決議、撤回、申請案件
 MOPS_RULES: list[tuple[str, str, re.Pattern[str]]] = [
     ("申請上市", "董事會決議申請", re.compile(r"董事會.*決議.*申請.*上市|決議.*申請.*股票.*上市")),
     ("申請上櫃", "董事會決議申請", re.compile(r"董事會.*決議.*申請.*上櫃|決議.*申請.*股票.*上櫃")),
@@ -89,17 +89,17 @@ def write_json(path: Path, payload: Any) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
 def get_text(url: str) -> str:
-    response = requests.get(url, headers=HEADERS, timeout=35)
+    response = requests.get(url, headers=HEADERS, timeout=40)
     response.raise_for_status()
     response.encoding = response.apparent_encoding or "utf-8"
     return response.text
 
 def get_json(url: str) -> Any:
-    response = requests.get(url, headers=HEADERS, timeout=35)
+    response = requests.get(url, headers=HEADERS, timeout=40)
     response.raise_for_status()
     return response.json()
 
-def find_value(row: dict[str, Any], keywords: Iterable[str]) -> str:
+def find_value(row: dict[str, Any], keywords: list[str]) -> str:
     for keyword in keywords:
         for key, value in row.items():
             if keyword in str(key):
@@ -169,7 +169,10 @@ def parse_mops_realtime(html: str, esb_companies: dict[str, str]) -> list[dict[s
     events: list[dict[str, str]] = []
 
     for tr in soup.find_all("tr"):
-        cells = [normalize_text(td.get_text(" ", strip=True)) for td in tr.find_all("td")]
+        cells = [normalize_text(td.get_text(" ", strip=True)) for td in tr.find_all("td", recursive=False)]
+        if len(cells) < 5:
+            # 部分 MOPS 列結構不是 direct child，保留 fallback
+            cells = [normalize_text(td.get_text(" ", strip=True)) for td in tr.find_all("td")]
         if len(cells) < 5:
             continue
 
@@ -198,81 +201,116 @@ def parse_mops_realtime(html: str, esb_companies: dict[str, str]) -> list[dict[s
                 ))
                 break
 
-    return events
+    return dedupe_events(events)
 
 # ----------------------------------------
-# 2) TWSE 申請上市公司表格
+# 通用：找出指定官方表格
 # ----------------------------------------
-def parse_html_table_with_headers(html: str, required_any: tuple[str, ...]) -> list[dict[str, str]]:
-    soup = BeautifulSoup(html, "html.parser")
+def find_table_by_headers(soup: BeautifulSoup, required_headers: list[str]) -> Any:
     for table in soup.find_all("table"):
-        headers = [normalize_text(th.get_text(" ", strip=True)) for th in table.find_all("th")]
-        if not headers or not any(key in " ".join(headers) for key in required_any):
+        header_text = " ".join(
+            normalize_text(th.get_text(" ", strip=True))
+            for th in table.find_all("th")
+        )
+        if all(header in header_text for header in required_headers):
+            return table
+    return None
+
+def direct_row_cells(tr: Any) -> list[str]:
+    cells = [normalize_text(td.get_text(" ", strip=True)) for td in tr.find_all("td", recursive=False)]
+    if cells:
+        return cells
+    return [normalize_text(td.get_text(" ", strip=True)) for td in tr.find_all("td")]
+
+def table_rows(table: Any) -> list[list[str]]:
+    if table is None:
+        return []
+    body_rows = table.select("tbody > tr")
+    if not body_rows:
+        body_rows = table.find_all("tr")
+    rows: list[list[str]] = []
+    for tr in body_rows:
+        cells = direct_row_cells(tr)
+        if cells:
+            rows.append(cells)
+    return rows
+
+def ensure_reasonable_row_count(source: str, rows: list[list[str]], max_rows: int = 500) -> None:
+    # 官方申請上市 / 上櫃公司表格目前遠低於此數；
+    # 若超過，通常代表 HTML 結構誤抓，寧可失敗也不要寫入大量錯誤資料。
+    if len(rows) > max_rows:
+        raise RuntimeError(f"{source} 解析列數異常：{len(rows)}，停止寫入避免污染資料。")
+
+# ----------------------------------------
+# 2) TWSE 申請上市公司
+# 欄位順序：
+# 0索引 1公司代號 2公司簡稱 3申請日期 4董事長 5股本
+# 6上市審議日期 7董事會通過 8契約備查/核准 9上市買賣日期 10承銷商 11承銷價 12備註
+# ----------------------------------------
+def parse_twse_apply(html: str) -> list[dict[str, str]]:
+    soup = BeautifulSoup(html, "html.parser")
+    table = find_table_by_headers(soup, ["公司代號", "公司簡稱", "申請日期"])
+    rows = table_rows(table)
+    ensure_reasonable_row_count("TWSE 申請上市公司", rows)
+
+    events: list[dict[str, str]] = []
+    for cells in rows:
+        if len(cells) < 10:
             continue
 
-        rows: list[dict[str, str]] = []
-        for tr in table.find_all("tr"):
-            tds = [normalize_text(td.get_text(" ", strip=True)) for td in tr.find_all("td")]
-            if not tds:
-                continue
-            # 若 td 欄數多於/少於 header，盡量以可配對部分為主
-            row = {headers[i]: tds[i] for i in range(min(len(headers), len(tds)))}
-            if row:
-                rows.append(row)
-        if rows:
-            return rows
-    return []
-
-def field(row: dict[str, str], *contains: str) -> str:
-    for part in contains:
-        for key, value in row.items():
-            if part in key:
-                return normalize_text(value)
-    return ""
-
-def parse_twse_apply(html: str) -> list[dict[str, str]]:
-    rows = parse_html_table_with_headers(html, ("公司代號", "申請日期"))
-    events: list[dict[str, str]] = []
-
-    for row in rows:
-        code = clean_stock_code(field(row, "公司代號", "證券代號"))
-        name = field(row, "公司簡稱", "公司名稱")
-        app_date = field(row, "申請日期")
-        review_date = field(row, "上市審議委員會審議日期", "審議日期")
-        board_date = field(row, "交易所董事會通過上市日期", "董事會通過")
-        contract_date = field(row, "上市契約報請主管機關備查", "主管機關核准")
-        listing_date = field(row, "股票上市買賣日期", "上市買賣日期")
-        row_text = " ".join(row.values())
-        is_tib = "創新板" in row_text
+        code = clean_stock_code(cells[1] if len(cells) > 1 else "")
+        name = cells[2] if len(cells) > 2 else ""
+        app_date = cells[3] if len(cells) > 3 else ""
+        review_date = cells[6] if len(cells) > 6 else ""
+        board_date = cells[7] if len(cells) > 7 else ""
+        contract_date = cells[8] if len(cells) > 8 else ""
+        listing_date = cells[9] if len(cells) > 9 else ""
+        remarks = cells[12] if len(cells) > 12 else ""
+        row_text = " ".join(cells)
+        is_tib = "創新板" in row_text or "創" in name
         event_type = "申請創新板上市" if is_tib else "申請上市"
         url = TWSE_APPLY_LISTING_URL
 
-        if app_date:
+        if not code or not name or not app_date:
+            continue
+
+        events.append(make_event(
+            source="twse_apply",
+            event_type=event_type,
+            stage="送件",
+            event_date=app_date,
+            company_code=code,
+            company_name=name,
+            title=f"{name}（{code}）列入證交所申請上市公司名單",
+            url=url,
+            detail="官方申請上市公司表格顯示申請日期",
+        ))
+        events.append(make_event(
+            source="twse_apply",
+            event_type=event_type,
+            stage="受理",
+            event_date=app_date,
+            company_code=code,
+            company_name=name,
+            title=f"{name}（{code}）出現在證交所申請上市公司名單",
+            url=url,
+            detail="以新列入官方申請公司清單作為受理追蹤訊號",
+        ))
+
+        if review_date:
             events.append(make_event(
                 source="twse_apply",
-                event_type=event_type,
-                stage="送件",
-                event_date=app_date,
+                event_type="轉板進度重大更新",
+                stage="審議通過",
+                event_date=review_date,
                 company_code=code,
                 company_name=name,
-                title=f"{name or code} 列入證交所申請上市公司名單",
+                title=f"{name}（{code}）上市審議委員會審議日期已更新",
                 url=url,
-                detail="官方申請名單顯示申請日期",
-            ))
-            events.append(make_event(
-                source="twse_apply",
-                event_type=event_type,
-                stage="受理",
-                event_date=app_date,
-                company_code=code,
-                company_name=name,
-                title=f"{name or code} 出現在證交所申請上市公司名單",
-                url=url,
-                detail="以新列入官方申請公司清單作為受理追蹤訊號",
+                detail="官方申請上市公司表格已出現上市審議委員會審議日期",
             ))
 
         updates = [
-            (review_date, "上市審議委員會審議日期已更新"),
             (board_date, "交易所董事會通過上市日期已更新"),
             (contract_date, "上市契約備查／主管機關核准日期已更新"),
             (listing_date, "股票上市買賣日期已更新"),
@@ -286,56 +324,93 @@ def parse_twse_apply(html: str) -> list[dict[str, str]]:
                     event_date=date_value,
                     company_code=code,
                     company_name=name,
-                    title=f"{name or code}：{detail}",
+                    title=f"{name}（{code}）：{detail}",
                     url=url,
                     detail=detail,
                 ))
 
-    return events
+        if "撤件" in remarks or "撤回" in remarks or "撤銷" in remarks:
+            events.append(make_event(
+                source="twse_apply",
+                event_type=event_type,
+                stage="撤回申請",
+                event_date=app_date,
+                company_code=code,
+                company_name=name,
+                title=f"{name}（{code}）申請案備註顯示撤件／撤回",
+                url=url,
+                detail=remarks,
+            ))
+
+    return dedupe_events(events)
 
 # ----------------------------------------
-# 3) TPEx 申請上櫃公司表格
+# 3) TPEx 申請上櫃公司
+# 欄位順序：
+# 0索引 1股票代號 2公司名稱 3申請日期 4董事長 5股本
+# 6上櫃審議日期 7董事會通過 8同意/核准契約 9上櫃買賣日期 10承銷商 11承銷價 12備註
 # ----------------------------------------
 def parse_tpex_apply(html: str) -> list[dict[str, str]]:
-    rows = parse_html_table_with_headers(html, ("股票代號", "申請日期", "上櫃審議"))
-    events: list[dict[str, str]] = []
+    soup = BeautifulSoup(html, "html.parser")
+    table = find_table_by_headers(soup, ["股票代號", "公司名稱", "申請日期"])
+    rows = table_rows(table)
+    ensure_reasonable_row_count("TPEx 申請上櫃公司", rows)
 
-    for row in rows:
-        code = clean_stock_code(field(row, "股票代號", "公司代號"))
-        name = field(row, "公司名稱", "公司簡稱")
-        app_date = field(row, "申請日期")
-        review_date = field(row, "上櫃審議委員會審議日期", "審議日期")
-        board_date = field(row, "櫃買董事會通過上櫃日期", "董事會通過")
-        contract_date = field(row, "同意上櫃契約日期", "核准上櫃契約日期", "契約日期")
-        trading_date = field(row, "股票上櫃買賣日期", "上櫃買賣日期")
+    events: list[dict[str, str]] = []
+    for cells in rows:
+        if len(cells) < 10:
+            continue
+
+        code = clean_stock_code(cells[1] if len(cells) > 1 else "")
+        name = cells[2] if len(cells) > 2 else ""
+        app_date = cells[3] if len(cells) > 3 else ""
+        review_date = cells[6] if len(cells) > 6 else ""
+        board_date = cells[7] if len(cells) > 7 else ""
+        contract_date = cells[8] if len(cells) > 8 else ""
+        trading_date = cells[9] if len(cells) > 9 else ""
+        remarks = cells[12] if len(cells) > 12 else ""
         url = TPEX_APPLY_OTC_URL
 
-        if app_date:
+        if not code or not name or not app_date:
+            continue
+
+        events.append(make_event(
+            source="tpex_apply",
+            event_type="申請上櫃",
+            stage="送件",
+            event_date=app_date,
+            company_code=code,
+            company_name=name,
+            title=f"{name}（{code}）列入櫃買中心申請上櫃公司名單",
+            url=url,
+            detail="官方申請上櫃公司表格顯示申請日期",
+        ))
+        events.append(make_event(
+            source="tpex_apply",
+            event_type="申請上櫃",
+            stage="受理",
+            event_date=app_date,
+            company_code=code,
+            company_name=name,
+            title=f"{name}（{code}）出現在櫃買中心申請上櫃公司名單",
+            url=url,
+            detail="以新列入官方申請公司清單作為受理追蹤訊號",
+        ))
+
+        if review_date:
             events.append(make_event(
                 source="tpex_apply",
-                event_type="申請上櫃",
-                stage="送件",
-                event_date=app_date,
+                event_type="轉板進度重大更新",
+                stage="審議通過",
+                event_date=review_date,
                 company_code=code,
                 company_name=name,
-                title=f"{name or code} 列入櫃買中心申請上櫃公司名單",
+                title=f"{name}（{code}）上櫃審議委員會審議日期已更新",
                 url=url,
-                detail="官方申請名單顯示申請日期",
-            ))
-            events.append(make_event(
-                source="tpex_apply",
-                event_type="申請上櫃",
-                stage="受理",
-                event_date=app_date,
-                company_code=code,
-                company_name=name,
-                title=f"{name or code} 出現在櫃買中心申請上櫃公司名單",
-                url=url,
-                detail="以新列入官方申請公司清單作為受理追蹤訊號",
+                detail="官方申請上櫃公司表格已出現上櫃審議委員會審議日期",
             ))
 
         updates = [
-            (review_date, "上櫃審議委員會審議日期已更新"),
             (board_date, "櫃買董事會通過上櫃日期已更新"),
             (contract_date, "上櫃契約同意／核准日期已更新"),
             (trading_date, "股票上櫃買賣日期已更新"),
@@ -349,12 +424,25 @@ def parse_tpex_apply(html: str) -> list[dict[str, str]]:
                     event_date=date_value,
                     company_code=code,
                     company_name=name,
-                    title=f"{name or code}：{detail}",
+                    title=f"{name}（{code}）：{detail}",
                     url=url,
                     detail=detail,
                 ))
 
-    return events
+        if "撤件" in remarks or "撤回" in remarks or "撤銷" in remarks:
+            events.append(make_event(
+                source="tpex_apply",
+                event_type="申請上櫃",
+                stage="撤回申請",
+                event_date=app_date,
+                company_code=code,
+                company_name=name,
+                title=f"{name}（{code}）申請案備註顯示撤件／撤回",
+                url=url,
+                detail=remarks,
+            ))
+
+    return dedupe_events(events)
 
 # ----------------------------------------
 # 4) 臺灣創新板新聞稿
@@ -368,7 +456,6 @@ def extract_company_code(text: str) -> str:
     return match.group(1) if match else ""
 
 def extract_company_name_from_news(text: str) -> str:
-    # 新聞標題形式不一，保留一個盡量可讀的簡化版
     cleaned = re.sub(r"^\d{3}年\d{1,2}月\d{1,2}日\s*", "", text)
     for marker in ("於", "送件", "股票", "接獲", "訂於", "審議", "撤回"):
         if marker in cleaned:
@@ -414,11 +501,45 @@ def parse_tib_news(html: str) -> list[dict[str, str]]:
                 ))
                 break
 
-    return events
+    return dedupe_events(events)
 
-def event_sort_key(event: dict[str, str]) -> tuple[str, str]:
-    # 文字日期格式不完全一致，先以首次偵測時間與事件日期字串排序即可。
-    return (event.get("first_seen_at", ""), event.get("event_date", ""))
+def dedupe_events(events: list[dict[str, str]]) -> list[dict[str, str]]:
+    seen: set[str] = set()
+    out: list[dict[str, str]] = []
+    for event in events:
+        event_id = event.get("id", "")
+        if event_id and event_id not in seen:
+            seen.add(event_id)
+            out.append(event)
+    return out
+
+def parse_roc_or_iso_date(value: str) -> datetime:
+    text = normalize_text(value)
+    # 115/04/29
+    m = re.search(r"(\d{2,3})[/-](\d{1,2})[/-](\d{1,2})", text)
+    if m:
+        year = int(m.group(1)) + 1911
+        month = int(m.group(2))
+        day = int(m.group(3))
+        try:
+            return datetime(year, month, day, tzinfo=timezone(timedelta(hours=8)))
+        except ValueError:
+            pass
+    # 2026-05-14
+    m = re.search(r"(\d{4})-(\d{1,2})-(\d{1,2})", text)
+    if m:
+        try:
+            return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)), tzinfo=timezone(timedelta(hours=8)))
+        except ValueError:
+            pass
+    return datetime(1970, 1, 1, tzinfo=timezone(timedelta(hours=8)))
+
+def event_sort_key(event: dict[str, str]) -> tuple[datetime, str, str]:
+    return (
+        parse_roc_or_iso_date(event.get("event_date", "")),
+        event.get("company_code", ""),
+        event.get("stage", ""),
+    )
 
 def format_telegram(event: dict[str, str]) -> str:
     company = event.get("company_name") or "未解析公司名稱"
@@ -441,7 +562,7 @@ def send_telegram(text: str) -> None:
     response = requests.post(
         endpoint,
         json={"chat_id": TELEGRAM_CHAT_ID, "text": text, "disable_web_page_preview": False},
-        timeout=35,
+        timeout=40,
     )
     response.raise_for_status()
     payload = response.json()
@@ -470,6 +591,7 @@ def main() -> None:
     status: dict[str, Any] = {
         "last_checked_at": checked_at,
         "last_run_ok": False,
+        "schema_version": SCHEMA_VERSION,
         "message": "",
         "sources": {},
         "new_event_count": 0,
@@ -479,59 +601,70 @@ def main() -> None:
 
     try:
         seen_payload = read_json(SEEN_PATH, {"seen": []})
-        seen_list = seen_payload.get("seen", []) if isinstance(seen_payload, dict) else []
-        seen_ids = set(str(item) for item in seen_list)
+        if not isinstance(seen_payload, dict):
+            seen_payload = {"seen": []}
 
-        # 舊版 seen.json 沒有 initialized_sources；
-        # 代表 MOPS 已經跑過，新增官方來源先靜默建基線，避免一次狂發歷史通知。
-        if isinstance(seen_payload, dict) and "initialized_sources" in seen_payload:
-            initialized_sources = set(seen_payload.get("initialized_sources", []))
-        else:
-            initialized_sources = {"mops"}
+        seen_ids = set(str(item) for item in seen_payload.get("seen", []))
+        initialized_sources = set(seen_payload.get("initialized_sources", []))
+        prior_schema_version = int(seen_payload.get("schema_version", 0) or 0)
+        is_v3_migration = prior_schema_version < SCHEMA_VERSION
 
         existing_events = read_json(ALERTS_PATH, [])
         if not isinstance(existing_events, list):
             existing_events = []
 
+        # MOPS 是即時重大訊息，保留歷史累積；
+        # TWSE / TPEx / TIB 官方頁面每次重建，避免舊版錯誤資料殘留。
+        preserved_mops_events = [
+            event for event in existing_events
+            if isinstance(event, dict) and event.get("source") == "mops"
+        ]
+
         esb_companies = fetch_esb_companies()
 
-        fetched_by_source: dict[str, list[dict[str, str]]] = {}
-        fetched_by_source["mops"] = parse_mops_realtime(get_text(MOPS_REALTIME_URL), esb_companies)
-        fetched_by_source["twse_apply"] = parse_twse_apply(get_text(TWSE_APPLY_LISTING_URL))
-        fetched_by_source["tpex_apply"] = parse_tpex_apply(get_text(TPEX_APPLY_OTC_URL))
-        fetched_by_source["tib_news"] = parse_tib_news(get_text(TIB_NEWS_URL))
+        source_events: dict[str, list[dict[str, str]]] = {
+            "mops": parse_mops_realtime(get_text(MOPS_REALTIME_URL), esb_companies),
+            "twse_apply": parse_twse_apply(get_text(TWSE_APPLY_LISTING_URL)),
+            "tpex_apply": parse_tpex_apply(get_text(TPEX_APPLY_OTC_URL)),
+            "tib_news": parse_tib_news(get_text(TIB_NEWS_URL)),
+        }
 
-        new_events: list[dict[str, str]] = []
-        sendable_events: list[dict[str, str]] = []
-
-        for source, events in fetched_by_source.items():
+        for source, events in source_events.items():
             status["sources"][source] = {
                 "label": SOURCE_LABELS.get(source, source),
                 "fetched": len(events),
             }
 
+        # 網站資料：官方清單類來源每次重建，MOPS 保留累積紀錄
+        website_events = (
+            source_events["twse_apply"]
+            + source_events["tpex_apply"]
+            + source_events["tib_news"]
+            + preserved_mops_events
+            + source_events["mops"]
+        )
+        website_events = dedupe_events(website_events)
+        website_events.sort(key=event_sort_key, reverse=True)
+        website_events = website_events[:MAX_EVENTS_TO_KEEP]
+
+        new_events: list[dict[str, str]] = []
+        sendable_events: list[dict[str, str]] = []
+
+        for source, events in source_events.items():
             source_new = [event for event in events if event["id"] not in seen_ids]
             new_events.extend(source_new)
             seen_ids.update(event["id"] for event in source_new)
+
+            # v3 首次修復執行時，官方清單來源先做靜默基線，
+            # 避免舊資料重新整理後一次洗 Telegram。
+            if is_v3_migration and source in {"twse_apply", "tpex_apply", "tib_news"}:
+                initialized_sources.add(source)
+                continue
 
             if source in initialized_sources:
                 sendable_events.extend(source_new)
             else:
                 initialized_sources.add(source)
-
-        # 保持網站可看到新資料；第一次建基線也會寫入網站
-        if new_events:
-            merged = new_events + existing_events
-        else:
-            merged = existing_events
-
-        # 去重
-        dedup: dict[str, dict[str, str]] = {}
-        for event in merged:
-            event_id = event.get("id")
-            if event_id and event_id not in dedup:
-                dedup[event_id] = event
-        all_events = list(dedup.values())[:MAX_EVENTS_TO_KEEP]
 
         telegram_sent_count = 0
         for event in sendable_events:
@@ -540,19 +673,20 @@ def main() -> None:
 
         status["new_event_count"] = len(new_events)
         status["telegram_sent_count"] = telegram_sent_count
-        status["total_event_count"] = len(all_events)
-        status["summary"] = summarize(all_events)
+        status["total_event_count"] = len(website_events)
+        status["summary"] = summarize(website_events)
         status["last_run_ok"] = True
         status["message"] = (
-            f"完成：新增網站事件 {len(new_events)} 筆，"
-            f"Telegram 推播 {telegram_sent_count} 筆。"
+            f"完成：網站重建 {len(website_events)} 筆事件，"
+            f"本輪新增事件 {len(new_events)} 筆，Telegram 推播 {telegram_sent_count} 筆。"
         )
 
         write_json(SEEN_PATH, {
             "seen": list(seen_ids)[-MAX_SEEN_TO_KEEP:],
             "initialized_sources": sorted(initialized_sources),
+            "schema_version": SCHEMA_VERSION,
         })
-        write_json(ALERTS_PATH, all_events)
+        write_json(ALERTS_PATH, website_events)
         write_json(STATUS_PATH, status)
         print(status["message"])
 
