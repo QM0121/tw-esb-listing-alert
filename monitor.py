@@ -235,7 +235,7 @@ def table_rows(table: Any) -> list[list[str]]:
             rows.append(cells)
     return rows
 
-def ensure_reasonable_row_count(source: str, rows: list[list[str]], max_rows: int = 500) -> None:
+def ensure_reasonable_row_count(source: str, rows: list[list[str]], max_rows: int = 5000) -> None:
     # 官方申請上市 / 上櫃公司表格目前遠低於此數；
     # 若超過，通常代表 HTML 結構誤抓，寧可失敗也不要寫入大量錯誤資料。
     if len(rows) > max_rows:
