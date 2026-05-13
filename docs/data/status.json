@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-05-14T00:45:01+08:00",
+  "last_checked_at": "2026-05-14T04:07:50+08:00",
   "last_run_ok": true,
   "schema_version": 3,
-  "message": "完成：網站重建 4705 筆事件，本輪新增事件 4635 筆，Telegram 推播 0 筆。",
+  "message": "完成：網站重建 4705 筆事件，本輪新增事件 0 筆，Telegram 推播 0 筆。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -21,7 +21,7 @@
       "fetched": 70
     }
   },
-  "new_event_count": 4635,
+  "new_event_count": 0,
   "telegram_sent_count": 0,
   "total_event_count": 4705,
   "summary": {
