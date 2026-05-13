@@ -1,0 +1,9 @@
+{
+  "last_checked_at": null,
+  "esb_company_count": 0,
+  "rows_scanned": 0,
+  "matched_count": 0,
+  "new_alert_count": 0,
+  "last_run_ok": null,
+  "message": "尚未執行監測"
+}

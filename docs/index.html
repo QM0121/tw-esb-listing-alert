@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>台灣興櫃股轉板監測</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --accent: #111827;
+      --pill: #eef2ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+    .hero {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 14px 40px rgba(15, 23, 42, .06);
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.15;
+    }
+    .sub {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+      margin: 0;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .stat {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fafafa;
+    }
+    .stat .k {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    .stat .v {
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 22px 0;
+    }
+    input, select {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: white;
+      padding: 12px 14px;
+      font-size: 15px;
+    }
+    input {
+      flex: 1;
+      min-width: 240px;
+    }
+    select {
+      min-width: 150px;
+    }
+    .list {
+      display: grid;
+      gap: 14px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, .045);
+    }
+    .top {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .company {
+      font-size: 20px;
+      font-weight: 800;
+      margin: 0 0 8px;
+    }
+    .chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--pill);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .time {
+      color: var(--muted);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+    .title {
+      margin: 14px 0 12px;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    .link {
+      display: inline-block;
+      text-decoration: none;
+      color: white;
+      background: var(--accent);
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .empty {
+      color: var(--muted);
+      background: white;
+      border: 1px dashed var(--line);
+      border-radius: 18px;
+      padding: 24px;
+    }
+    .footer {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    @media (max-width: 860px) {
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px) {
+      .stats { grid-template-columns: 1fr; }
+      .wrap { padding: 20px 14px 40px; }
+      .hero { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <h1>台灣興櫃股轉上市櫃／創新板監測</h1>
+      <p class="sub">
+        自動掃描公開資訊觀測站即時重大訊息，篩選櫃買中心興櫃公司名單，
+        專注追蹤上市、上櫃、創新板相關公告。命中時同步由 Telegram 推播。
+      </p>
+
+      <div class="stats">
+        <div class="stat">
+          <span class="k">最近檢查</span>
+          <span class="v" id="lastChecked">—</span>
+        </div>
+        <div class="stat">
+          <span class="k">興櫃公司數</span>
+          <span class="v" id="companyCount">—</span>
+        </div>
+        <div class="stat">
+          <span class="k">本輪掃描公告</span>
+          <span class="v" id="rowsScanned">—</span>
+        </div>
+        <div class="stat">
+          <span class="k">本輪新增通知</span>
+          <span class="v" id="newAlerts">—</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <input id="search" type="search" placeholder="搜尋公司代號、公司名稱或公告主旨" />
+      <select id="eventType">
+        <option value="">全部類型</option>
+        <option value="上市">上市</option>
+        <option value="上櫃">上櫃</option>
+        <option value="創新板">創新板</option>
+      </select>
+    </section>
+
+    <section id="alertList" class="list"></section>
+
+    <p class="footer">
+      本頁面僅供資訊追蹤，不構成投資建議。公告內容請以公開資訊觀測站原始揭露為準。
+    </p>
+  </main>
+
+  <script>
+    const alertList = document.getElementById("alertList");
+    const searchInput = document.getElementById("search");
+    const eventTypeSelect = document.getElementById("eventType");
+    let alerts = [];
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function renderStatus(status) {
+      document.getElementById("lastChecked").textContent =
+        status.last_checked_at || "尚未執行";
+      document.getElementById("companyCount").textContent =
+        status.esb_company_count ?? "—";
+      document.getElementById("rowsScanned").textContent =
+        status.rows_scanned ?? "—";
+      document.getElementById("newAlerts").textContent =
+        status.new_alert_count ?? "—";
+    }
+
+    function renderAlerts() {
+      const keyword = searchInput.value.trim().toLowerCase();
+      const eventType = eventTypeSelect.value;
+
+      const filtered = alerts.filter((item) => {
+        const haystack = [
+          item.code, item.name, item.title, item.event_type, item.stage
+        ].join(" ").toLowerCase();
+
+        const keywordOk = !keyword || haystack.includes(keyword);
+        const typeOk = !eventType || item.event_type === eventType;
+        return keywordOk && typeOk;
+      });
+
+      if (!filtered.length) {
+        alertList.innerHTML = '<div class="empty">目前尚無符合條件的通知紀錄。</div>';
+        return;
+      }
+
+      alertList.innerHTML = filtered.map((item) => `
+        <article class="card">
+          <div class="top">
+            <div>
+              <h2 class="company">${escapeHtml(item.name)}（${escapeHtml(item.code)}）</h2>
+              <div class="chips">
+                <span class="chip">${escapeHtml(item.event_type)}</span>
+                <span class="chip">${escapeHtml(item.stage)}</span>
+              </div>
+            </div>
+            <div class="time">
+              發言：${escapeHtml(item.date)} ${escapeHtml(item.time)}<br />
+              偵測：${escapeHtml(item.detected_at)}
+            </div>
+          </div>
+          <p class="title">${escapeHtml(item.title)}</p>
+          <a class="link" href="${escapeHtml(item.source_url)}" target="_blank" rel="noopener noreferrer">
+            查看 MOPS 即時重大訊息
+          </a>
+        </article>
+      `).join("");
+    }
+
+    async function init() {
+      try {
+        const [alertsRes, statusRes] = await Promise.all([
+          fetch("./data/alerts.json", { cache: "no-store" }),
+          fetch("./data/status.json", { cache: "no-store" }),
+        ]);
+
+        alerts = alertsRes.ok ? await alertsRes.json() : [];
+        const status = statusRes.ok ? await statusRes.json() : {};
+        renderStatus(status);
+        renderAlerts();
+      } catch (error) {
+        alertList.innerHTML = '<div class="empty">讀取資料失敗，請稍後重新整理。</div>';
+      }
+    }
+
+    searchInput.addEventListener("input", renderAlerts);
+    eventTypeSelect.addEventListener("change", renderAlerts);
+    init();
+  </script>
+</body>
+</html>
