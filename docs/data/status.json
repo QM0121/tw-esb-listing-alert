@@ -1,14 +1,41 @@
 {
-  "last_checked_at": null,
-  "last_run_ok": null,
-  "message": "尚未執行 v2 監測",
-  "sources": {},
-  "new_event_count": 0,
+  "last_checked_at": "2026-05-14T00:22:01+08:00",
+  "last_run_ok": true,
+  "message": "完成：新增網站事件 4935 筆，Telegram 推播 0 筆。",
+  "sources": {
+    "mops": {
+      "label": "MOPS 即時重大訊息",
+      "fetched": 0
+    },
+    "twse_apply": {
+      "label": "TWSE 申請上市公司",
+      "fetched": 4865
+    },
+    "tpex_apply": {
+      "label": "TPEx 申請上櫃公司",
+      "fetched": 0
+    },
+    "tib_news": {
+      "label": "TWSE 臺灣創新板新聞稿",
+      "fetched": 70
+    }
+  },
+  "new_event_count": 4935,
   "telegram_sent_count": 0,
-  "total_event_count": 0,
+  "total_event_count": 1200,
   "summary": {
-    "stage_counts": {},
-    "type_counts": {},
-    "source_counts": {}
+    "stage_counts": {
+      "送件": 224,
+      "受理": 224,
+      "轉板進度重大更新": 752
+    },
+    "type_counts": {
+      "申請上市": 356,
+      "轉板進度重大更新": 752,
+      "申請創新板上市": 92
+    },
+    "source_counts": {
+      "TWSE 申請上市公司": 1200
+    }
   }
 }
