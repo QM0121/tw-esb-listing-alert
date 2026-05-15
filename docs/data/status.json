@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-05-15T15:15:43+08:00",
+  "last_checked_at": "2026-05-15T15:23:33+08:00",
   "last_run_ok": true,
-  "schema_version": 7,
-  "message": "完成：網站重建 745 筆事件，本輪新增事件 0 筆，Telegram 推播 0 筆；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "schema_version": 8,
+  "message": "完成但有部分來源暫時抓取失敗：tpex_apply。網站資料共 745 筆事件，本輪新增 0 筆，Telegram 推播 0 筆；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -17,7 +17,8 @@
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
       "fetched": 0,
-      "ok": true
+      "ok": false,
+      "error": "TPEx 申請上櫃來源解析後為 0 筆，暫不覆寫既有資料。"
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
