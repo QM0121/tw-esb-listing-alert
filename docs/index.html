@@ -464,7 +464,7 @@
       font-size: 22px;
       line-height: 1.45;
       font-weight: 900;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
 
 
@@ -483,7 +483,8 @@
       font-size: 20px;
       line-height: 1.65;
       font-weight: 900;
-      margin-top: 8px;
+      margin-top: 2px;
+      margin-bottom: 10px;
     }
 
     .inline-badges {
@@ -862,7 +863,7 @@
     }
 
     .event-company-line {
-      margin: 12px 0 0;
+      margin: 4px 0 0;
       color: var(--navy);
       font-size: 24px;
       line-height: 1.45;
@@ -870,7 +871,7 @@
     }
 
     .event-title {
-      margin: 8px 0 0;
+      margin: 4px 0 0;
       color: var(--text);
       font-size: 22px;
       line-height: 1.7;
@@ -1114,7 +1115,7 @@
       font-size: 22px;
       line-height: 1.45;
       font-weight: 900;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
 
 
@@ -1133,7 +1134,8 @@
       font-size: 20px;
       line-height: 1.65;
       font-weight: 900;
-      margin-top: 8px;
+      margin-top: 2px;
+      margin-bottom: 10px;
     }
 
     .inline-badges {
@@ -1706,6 +1708,8 @@
         result = result.replace(pattern, "").trim();
       }
 
+      result = result.replace(/^[：:、，,。\-–—\s]+/, "").trim();
+
       return result || String(title ?? "").trim();
     }
 
@@ -2027,13 +2031,13 @@
             </div>
 
             <div class="event-main">
+              <div class="event-company-line">${esc(company)}</div>
+              <p class="event-title">${esc(eventLine)}</p>
               <div class="badges">
                 <span class="badge type">${esc(event.event_type)}</span>
                 <span class="badge stage">${esc(event.stage)}</span>
                 <span class="badge source">${esc(event.source_label)}</span>
               </div>
-              <div class="event-company-line">${esc(company)}</div>
-              <p class="event-title">${esc(eventLine)}</p>
               <p class="event-detail">${esc(event.detail || "重點以官方事件日期為主；系統收錄時間僅供追蹤資料更新。")}</p>
             </div>
 
@@ -2065,12 +2069,12 @@
             <div class="mini-date-value">${esc(formatROCDate(event.event_date || "—"))}</div>
           </div>
           <div class="mini-content">
+            <div class="mini-company-line">${esc(companyLine)}</div>
+            <div class="latest-title">${esc(eventLine)}</div>
             <div class="inline-badges">
               <span class="small-badge type">${esc(event.event_type || "未分類")}</span>
               <span class="small-badge stage">${esc(event.stage || "未分類")}</span>
             </div>
-            <div class="mini-company-line">${esc(companyLine)}</div>
-            <div class="latest-title">${esc(eventLine)}</div>
           </div>
         </article>
       `;
@@ -2115,12 +2119,12 @@
               <div class="mini-date-value">${esc(formatROCDate(item.latest.event_date || "—"))}</div>
             </div>
             <div class="mini-content">
+              <div class="mini-company-line">${esc(company)}</div>
+              <div class="active-stage">${esc(eventLine)}</div>
               <div class="inline-badges">
                 <span class="small-badge type">${esc(item.track)}</span>
                 <span class="small-badge stage">${esc(item.latest.stage || "最新進度")}</span>
               </div>
-              <div class="mini-company-line">${esc(company)}</div>
-              <div class="active-stage">${esc(eventLine)}</div>
             </div>
           </article>
         `;

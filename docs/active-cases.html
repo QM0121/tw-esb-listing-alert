@@ -287,7 +287,7 @@
     .badge.source { background: var(--amber-soft); color: var(--amber); }
 
     .case-company-line {
-      margin: 12px 0 0;
+      margin: 4px 0 0;
       color: var(--navy);
       font-size: 24px;
       line-height: 1.45;
@@ -295,7 +295,7 @@
     }
 
     .case-title {
-      margin: 8px 0 0;
+      margin: 4px 0 0;
       color: var(--text);
       font-size: 22px;
       line-height: 1.7;
@@ -470,6 +470,8 @@
         result = result.replace(pattern, "").trim();
       }
 
+      result = result.replace(/^[：:、，,。\-–—\s]+/, "").trim();
+
       return result || String(title ?? "").trim();
     }
 
@@ -572,13 +574,13 @@
               <div class="date-value">${esc(formatROCDate(item.latest.event_date || "—"))}</div>
             </div>
             <div class="case-main">
+              <div class="case-company-line">${esc(company)}</div>
+              <p class="case-title">${esc(eventLine)}</p>
               <div class="badges">
                 <span class="badge type">${esc(item.track)}</span>
                 <span class="badge stage">${esc(item.latest.stage || "最新進度")}</span>
                 <span class="badge source">${esc(item.latest.source_label || "")}</span>
               </div>
-              <div class="case-company-line">${esc(company)}</div>
-              <p class="case-title">${esc(eventLine)}</p>
             </div>
           </article>
         `;
