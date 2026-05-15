@@ -36,7 +36,7 @@ TPEX_APPLY_OTC_URL = "https://www.tpex.org.tw/zh-tw/mainboard/applying/status/co
 TPEX_APPLY_OTC_CSV_URL = "https://www.tpex.org.tw/web/regular_emerging/apply_schedule/applicant/applicant_companies_download_UTF-8.php?l=zh-tw&y=ALL"
 TIB_NEWS_URL = "https://www.twse.com.tw/TIB/zh/news.html"
 
-SCHEMA_VERSION = 6
+SCHEMA_VERSION = 7
 MAX_EVENTS_TO_KEEP = 5000
 MAX_SEEN_TO_KEEP = 30000
 
@@ -201,7 +201,7 @@ def parse_mops_realtime(html: str, esb_companies: dict[str, str]) -> list[dict[s
         if len(cells) < 5:
             continue
 
-        code = clean_stock_code(cells[0], retention_start)
+        code = clean_stock_code(cells[0])
         if not code or code not in esb_companies:
             continue
 
@@ -274,7 +274,7 @@ def ensure_reasonable_row_count(source: str, rows: list[list[str]], max_rows: in
 # ----------------------------------------
 def parse_twse_apply(html: str) -> list[dict[str, str]]:
     soup = BeautifulSoup(html, "html.parser")
-    table = find_table_by_headers(soup, ["公司代號", "公司簡稱", "申請日期"], retention_start)
+    table = find_table_by_headers(soup, ["公司代號", "公司簡稱", "申請日期"])
     rows = table_rows(table)
     ensure_reasonable_row_count("TWSE 申請上市公司", rows)
 
@@ -545,34 +545,57 @@ def dedupe_events(events: list[dict[str, str]]) -> list[dict[str, str]]:
 
 def parse_roc_or_iso_date(value: str) -> datetime:
     text = normalize_text(value)
-    # 115/04/29
-    m = re.search(r"(\d{2,3})[/-](\d{1,2})[/-](\d{1,2})", text)
+    tz = timezone(timedelta(hours=8))
+
+    # 民國年：115/05/12、115-05-12、115.05.12
+    m = re.search(r"(?<!\d)(\d{2,3})[./-](\d{1,2})[./-](\d{1,2})(?!\d)", text)
     if m:
-        year = int(m.group(1)) + 1911
-        month = int(m.group(2))
-        day = int(m.group(3))
+        roc_year = int(m.group(1))
+        # 2~3 碼視為民國年
+        if 1 <= roc_year <= 999:
+            try:
+                return datetime(roc_year + 1911, int(m.group(2)), int(m.group(3)), tzinfo=tz)
+            except ValueError:
+                pass
+
+    # 西元年：2026/05/12、2026-05-12、2026.05.12
+    m = re.search(r"(?<!\d)(\d{4})[./-](\d{1,2})[./-](\d{1,2})(?!\d)", text)
+    if m:
         try:
-            return datetime(year, month, day, tzinfo=timezone(timedelta(hours=8)))
+            return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)), tzinfo=tz)
         except ValueError:
             pass
-    # 2026-05-14
-    m = re.search(r"(\d{4})-(\d{1,2})-(\d{1,2})", text)
+
+    # 民國中文日期：115年05月12日
+    m = re.search(r"(?<!\d)(\d{2,3})年(\d{1,2})月(\d{1,2})日?(?!\d)", text)
     if m:
         try:
-            return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)), tzinfo=timezone(timedelta(hours=8)))
+            return datetime(int(m.group(1)) + 1911, int(m.group(2)), int(m.group(3)), tzinfo=tz)
         except ValueError:
             pass
-    return datetime(1970, 1, 1, tzinfo=timezone(timedelta(hours=8)))
+
+    # 西元中文日期：2026年05月12日
+    m = re.search(r"(?<!\d)(\d{4})年(\d{1,2})月(\d{1,2})日?(?!\d)", text)
+    if m:
+        try:
+            return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)), tzinfo=tz)
+        except ValueError:
+            pass
+
+    return datetime(1970, 1, 1, tzinfo=tz)
 
 
 def is_event_within_retention_window(event: dict[str, str], window_start: datetime) -> bool:
     """
     只保留近三年資料。
-    無法解析日期者保留，避免漏掉格式異常但可能重要的新公告。
+    日期可解析者，依 window_start 判斷。
+    日期無法解析者：
+    - MOPS 即時重大訊息保留，避免漏掉可能的重要新公告
+    - TWSE / TPEx / TIB 官方歷史清單不保留，避免舊資料或異常格式污染網站
     """
     parsed = parse_roc_or_iso_date(event.get("event_date", ""))
     if parsed.year == 1970:
-        return True
+        return event.get("source") == "mops"
     return parsed >= window_start
 
 
