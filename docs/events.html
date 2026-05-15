@@ -308,12 +308,20 @@
     .badge.stage { background: var(--green-soft); color: var(--green); }
     .badge.source { background: var(--amber-soft); color: var(--amber); }
 
-    .event-title {
+    .event-company-line {
       margin: 12px 0 0;
+      color: var(--navy);
+      font-size: 24px;
+      line-height: 1.45;
+      font-weight: 900;
+    }
+
+    .event-title {
+      margin: 8px 0 0;
       color: var(--text);
-      font-size: 16px;
-      line-height: 1.8;
-      font-weight: 800;
+      font-size: 22px;
+      line-height: 1.7;
+      font-weight: 900;
     }
 
     .event-detail {
@@ -467,6 +475,37 @@
       return text.replace("T", " ").replace("+08:00", "");
     }
 
+    function companyDisplay(event) {
+      const name = event.company_name || "公司名稱待解析";
+      const code = event.company_code ? `（${event.company_code}）` : "";
+      return `${name}${code}`;
+    }
+
+    function escapeRegExp(text) {
+      return String(text ?? "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    function stripCompanyPrefix(title, companyName, companyCode) {
+      let result = String(title ?? "").trim();
+      const name = String(companyName ?? "").trim();
+      const code = String(companyCode ?? "").trim();
+
+      if (!name) return result;
+
+      const patterns = [];
+      if (name && code) {
+        patterns.push(new RegExp(`^${escapeRegExp(name)}\s*[（(]${escapeRegExp(code)}[）)]\s*`));
+        patterns.push(new RegExp(`^${escapeRegExp(name)}\s*${escapeRegExp(code)}\s*`));
+      }
+      patterns.push(new RegExp(`^${escapeRegExp(name)}\s*`));
+
+      for (const pattern of patterns) {
+        result = result.replace(pattern, "").trim();
+      }
+
+      return result || String(title ?? "").trim();
+    }
+
     function formatROCDate(value) {
       const raw = String(value ?? "").trim();
       if (!raw) return "—";
@@ -551,8 +590,8 @@
       }
 
       eventsEl.innerHTML = filtered.map(event => {
-        const company = event.company_name || "公司名稱待解析";
-        const code = event.company_code ? `（${event.company_code}）` : "";
+        const company = companyDisplay(event);
+        const eventLine = stripCompanyPrefix(event.title || "", event.company_name, event.company_code);
         return `
           <article class="event-card">
             <div class="date-box">
@@ -566,7 +605,8 @@
                 <span class="badge stage">${esc(event.stage)}</span>
                 <span class="badge source">${esc(event.source_label)}</span>
               </div>
-              <p class="event-title" style="margin-top:10px;">${esc(event.title)}</p>
+              <div class="event-company-line">${esc(company)}</div>
+              <p class="event-title">${esc(eventLine)}</p>
               <p class="event-detail">${esc(event.detail || "重點以官方事件日期為主；系統收錄時間僅供追蹤資料更新。")}</p>
             </div>
             <div class="event-action">

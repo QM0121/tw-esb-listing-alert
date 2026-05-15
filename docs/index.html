@@ -459,6 +459,15 @@
       justify-content: center;
     }
 
+    .mini-company-line {
+      color: var(--navy);
+      font-size: 22px;
+      line-height: 1.45;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+
     .latest-top,
     .active-top {
       display: flex;
@@ -471,10 +480,10 @@
     .latest-title,
     .active-stage {
       color: var(--text);
-      font-size: 15px;
-      line-height: 1.75;
+      font-size: 20px;
+      line-height: 1.65;
       font-weight: 900;
-      margin-top: 7px;
+      margin-top: 8px;
     }
 
     .inline-badges {
@@ -852,12 +861,20 @@
       color: var(--amber);
     }
 
-    .event-title {
+    .event-company-line {
       margin: 12px 0 0;
+      color: var(--navy);
+      font-size: 24px;
+      line-height: 1.45;
+      font-weight: 900;
+    }
+
+    .event-title {
+      margin: 8px 0 0;
       color: var(--text);
-      font-size: 16px;
-      line-height: 1.8;
-      font-weight: 800;
+      font-size: 22px;
+      line-height: 1.7;
+      font-weight: 900;
     }
 
     .event-detail {
@@ -1092,6 +1109,15 @@
       justify-content: center;
     }
 
+    .mini-company-line {
+      color: var(--navy);
+      font-size: 22px;
+      line-height: 1.45;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+
     .latest-top,
     .active-top {
       display: flex;
@@ -1104,10 +1130,10 @@
     .latest-title,
     .active-stage {
       color: var(--text);
-      font-size: 15px;
-      line-height: 1.75;
+      font-size: 20px;
+      line-height: 1.65;
       font-weight: 900;
-      margin-top: 7px;
+      margin-top: 8px;
     }
 
     .inline-badges {
@@ -1658,6 +1684,31 @@
       return `${name}${code}`;
     }
 
+    function escapeRegExp(text) {
+      return String(text ?? "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    function stripCompanyPrefix(title, companyName, companyCode) {
+      let result = String(title ?? "").trim();
+      const name = String(companyName ?? "").trim();
+      const code = String(companyCode ?? "").trim();
+
+      if (!name) return result;
+
+      const patterns = [];
+      if (name && code) {
+        patterns.push(new RegExp(`^${escapeRegExp(name)}\s*[（(]${escapeRegExp(code)}[）)]\s*`));
+        patterns.push(new RegExp(`^${escapeRegExp(name)}\s*${escapeRegExp(code)}\s*`));
+      }
+      patterns.push(new RegExp(`^${escapeRegExp(name)}\s*`));
+
+      for (const pattern of patterns) {
+        result = result.replace(pattern, "").trim();
+      }
+
+      return result || String(title ?? "").trim();
+    }
+
     function selectedCompanyEvents() {
       if (!selectedCompany) return [];
       const code = String(selectedCompany.code || "").trim();
@@ -1965,8 +2016,8 @@
       }
 
       eventsEl.innerHTML = visibleEvents.map(event => {
-        const company = event.company_name || "公司名稱待解析";
-        const code = event.company_code ? `（${event.company_code}）` : "";
+        const company = companyDisplay(event);
+        const eventLine = stripCompanyPrefix(event.title || "", event.company_name, event.company_code);
         return `
           <article class="event-card">
             <div class="date-box">
@@ -1981,7 +2032,8 @@
                 <span class="badge stage">${esc(event.stage)}</span>
                 <span class="badge source">${esc(event.source_label)}</span>
               </div>
-              <p class="event-title" style="margin-top:10px;">${esc(event.title)}</p>
+              <div class="event-company-line">${esc(company)}</div>
+              <p class="event-title">${esc(eventLine)}</p>
               <p class="event-detail">${esc(event.detail || "重點以官方事件日期為主；系統收錄時間僅供追蹤資料更新。")}</p>
             </div>
 
@@ -2003,7 +2055,10 @@
         return;
       }
 
-      container.innerHTML = latest.map(event => `
+      container.innerHTML = latest.map(event => {
+        const companyLine = companyDisplay(event);
+        const eventLine = stripCompanyPrefix(event.title || "", event.company_name, event.company_code);
+        return `
         <article class="latest-item">
           <div class="mini-date-box">
             <div class="mini-date-label">事件日期</div>
@@ -2014,10 +2069,12 @@
               <span class="small-badge type">${esc(event.event_type || "未分類")}</span>
               <span class="small-badge stage">${esc(event.stage || "未分類")}</span>
             </div>
-            <div class="latest-title">${esc(event.title || "")}</div>
+            <div class="mini-company-line">${esc(companyLine)}</div>
+            <div class="latest-title">${esc(eventLine)}</div>
           </div>
         </article>
-      `).join("");
+      `;
+      }).join("");
     }
 
     function renderActiveCases() {
@@ -2050,6 +2107,7 @@
 
       container.innerHTML = visibleCases.map(item => {
         const company = `${item.name || "公司名稱待解析"}${item.code ? `（${item.code}）` : ""}`;
+        const eventLine = stripCompanyPrefix(item.latest.title || "", item.name, item.code);
         return `
           <article class="active-item">
             <div class="mini-date-box">
@@ -2061,7 +2119,8 @@
                 <span class="small-badge type">${esc(item.track)}</span>
                 <span class="small-badge stage">${esc(item.latest.stage || "最新進度")}</span>
               </div>
-              <div class="active-stage">${esc(item.latest.title || "")}</div>
+              <div class="mini-company-line">${esc(company)}</div>
+              <div class="active-stage">${esc(eventLine)}</div>
             </div>
           </article>
         `;
