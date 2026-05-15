@@ -671,7 +671,7 @@ def main() -> None:
         preserved_mops_events = filter_events_within_retention_window([
             event for event in existing_events
             if isinstance(event, dict) and event.get("source") == "mops"
-        ])
+        ], retention_start)
 
         esb_companies = fetch_esb_companies()
 
@@ -710,7 +710,7 @@ def main() -> None:
         preserved_failed_source_events = filter_events_within_retention_window([
             event for event in existing_events
             if isinstance(event, dict) and event.get("source") in source_errors
-        ])
+        ], retention_start)
         website_events = (
             source_events.get("twse_apply", [])
             + source_events.get("tpex_apply", [])
