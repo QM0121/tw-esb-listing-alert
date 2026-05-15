@@ -36,7 +36,7 @@ TPEX_APPLY_OTC_URL = "https://www.tpex.org.tw/zh-tw/mainboard/applying/status/co
 TPEX_APPLY_OTC_CSV_URL_TEMPLATE = "https://www.tpex.org.tw/web/regular_emerging/apply_schedule/applicant/applicant_companies_download_UTF-8.php?l=zh-tw&y={year}"
 TIB_NEWS_URL = "https://www.twse.com.tw/TIB/zh/news.html"
 
-SCHEMA_VERSION = 9
+SCHEMA_VERSION = 10
 MAX_EVENTS_TO_KEEP = 5000
 MAX_SEEN_TO_KEEP = 30000
 
@@ -684,18 +684,34 @@ def parse_roc_or_iso_date(value: str) -> datetime:
     text = normalize_text(value)
     tz = timezone(timedelta(hours=8))
 
-    # 民國年：115/05/12、115-05-12、115.05.12
+    # 1) 西元緊湊格式：20260512
+    #    TPEx 申請上櫃 CSV 實際常見格式即為 YYYYMMDD。
+    m = re.search(r"(?<!\d)(\d{4})(\d{2})(\d{2})(?!\d)", text)
+    if m:
+        try:
+            return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)), tzinfo=tz)
+        except ValueError:
+            pass
+
+    # 2) 民國緊湊格式：1150512
+    m = re.search(r"(?<!\d)(\d{3})(\d{2})(\d{2})(?!\d)", text)
+    if m:
+        try:
+            return datetime(int(m.group(1)) + 1911, int(m.group(2)), int(m.group(3)), tzinfo=tz)
+        except ValueError:
+            pass
+
+    # 3) 民國年：115/05/12、115-05-12、115.05.12
     m = re.search(r"(?<!\d)(\d{2,3})[./-](\d{1,2})[./-](\d{1,2})(?!\d)", text)
     if m:
         roc_year = int(m.group(1))
-        # 2~3 碼視為民國年
         if 1 <= roc_year <= 999:
             try:
                 return datetime(roc_year + 1911, int(m.group(2)), int(m.group(3)), tzinfo=tz)
             except ValueError:
                 pass
 
-    # 西元年：2026/05/12、2026-05-12、2026.05.12
+    # 4) 西元年：2026/05/12、2026-05-12、2026.05.12
     m = re.search(r"(?<!\d)(\d{4})[./-](\d{1,2})[./-](\d{1,2})(?!\d)", text)
     if m:
         try:
@@ -703,7 +719,7 @@ def parse_roc_or_iso_date(value: str) -> datetime:
         except ValueError:
             pass
 
-    # 民國中文日期：115年05月12日
+    # 5) 民國中文日期：115年05月12日
     m = re.search(r"(?<!\d)(\d{2,3})年(\d{1,2})月(\d{1,2})日?(?!\d)", text)
     if m:
         try:
@@ -711,7 +727,7 @@ def parse_roc_or_iso_date(value: str) -> datetime:
         except ValueError:
             pass
 
-    # 西元中文日期：2026年05月12日
+    # 6) 西元中文日期：2026年05月12日
     m = re.search(r"(?<!\d)(\d{4})年(\d{1,2})月(\d{1,2})日?(?!\d)", text)
     if m:
         try:
