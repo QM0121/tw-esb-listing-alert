@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-05-15T22:49:45+08:00",
+  "last_checked_at": "2026-05-16T00:24:51+08:00",
   "last_run_ok": true,
   "schema_version": 10,
   "message": "完成：網站重建 1376 筆事件，本輪新增事件 0 筆，Telegram 推播 0 筆；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -29,8 +29,8 @@
   "telegram_sent_count": 0,
   "total_event_count": 1376,
   "data_retention_years": 3,
-  "data_window_start": "2023-05-15",
-  "data_window_end": "2026-05-15",
+  "data_window_start": "2023-05-16",
+  "data_window_end": "2026-05-16",
   "data_window_label": "近 3 年資料",
   "debug": {
     "tpex_apply_by_year": {
