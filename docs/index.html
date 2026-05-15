@@ -7,681 +7,490 @@
   <meta name="description" content="追蹤台灣興櫃公司申請上市、上櫃、創新板上市與轉板進度重大更新。" />
   <style>
     :root {
-      --navy-950: #071d3d;
-      --navy-900: #0a2a57;
-      --navy-800: #103c7b;
-      --navy-700: #1750a6;
-      --blue-600: #2563eb;
-      --blue-500: #3b82f6;
-      --blue-100: #eaf2ff;
-      --blue-050: #f5f8ff;
-      --sky-100: #e8f7ff;
-      --green-100: #eafaf2;
-      --green-700: #15803d;
-      --amber-100: #fff6e8;
-      --amber-700: #b45309;
-      --red-100: #fff0f0;
-      --red-700: #dc2626;
-      --ink: #142033;
-      --muted: #61708a;
-      --line: #dbe5f4;
+      --bg: #f4f6f8;
       --card: #ffffff;
-      --bg: #f4f7fc;
-      --shadow: 0 18px 42px rgba(11, 31, 65, .08);
-      --shadow-soft: 0 10px 28px rgba(11, 31, 65, .06);
-      --radius-xl: 28px;
-      --radius-lg: 22px;
-      --radius-md: 18px;
-      --radius-sm: 14px;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --line: #d9dee7;
+      --navy: #1f3a5f;
+      --navy-2: #274b7a;
+      --soft-blue: #eef4fb;
+      --soft-green: #edf7f0;
+      --soft-amber: #fff7ea;
+      --soft-red: #fff2f2;
+      --green: #157347;
+      --amber: #a16207;
+      --red: #b42318;
+      --shadow: 0 8px 24px rgba(15, 23, 42, .06);
+      --radius-lg: 20px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
     }
 
     * { box-sizing: border-box; }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
-      background:
-        radial-gradient(circle at top left, rgba(65, 130, 255, .08), transparent 28rem),
-        linear-gradient(180deg, #f7faff 0%, var(--bg) 100%);
+      background: var(--bg);
       color: var(--ink);
       font-family:
-        Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-        "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+        "Noto Sans TC",
+        "PingFang TC",
+        "Microsoft JhengHei",
+        "Heiti TC",
+        Arial,
+        sans-serif;
+      letter-spacing: .01em;
     }
 
     a { color: inherit; }
 
-    .site-header {
+    .topbar {
+      background: var(--card);
+      border-bottom: 1px solid var(--line);
       position: sticky;
       top: 0;
-      z-index: 100;
-      background: linear-gradient(135deg, var(--navy-950), var(--navy-900));
-      color: white;
-      border-bottom: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 10px 30px rgba(3, 15, 39, .22);
-      backdrop-filter: blur(10px);
+      z-index: 50;
     }
 
-    .header-inner {
-      max-width: 1380px;
+    .topbar-inner,
+    .page,
+    .footer-inner {
+      max-width: 1360px;
       margin: 0 auto;
-      padding: 16px 22px;
+      padding-left: 22px;
+      padding-right: 22px;
+    }
+
+    .topbar-inner {
+      min-height: 76px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 22px;
-    }
-
-    .brand {
-      min-width: 0;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .brand-mark {
-      flex: 0 0 auto;
-      width: 58px;
-      height: 58px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.22);
-      background: rgba(255,255,255,.08);
-      display: grid;
-      place-items: center;
-    }
-
-    .brand-mark svg {
-      width: 35px;
-      height: 35px;
+      gap: 20px;
     }
 
     .brand-title {
       margin: 0;
-      font-size: clamp(22px, 2.35vw, 34px);
+      color: var(--navy);
+      font-size: clamp(24px, 2.3vw, 34px);
       font-weight: 900;
-      line-height: 1.1;
-      letter-spacing: .02em;
-      white-space: nowrap;
+      line-height: 1.15;
     }
 
     .brand-subtitle {
-      margin: 5px 0 0;
-      color: rgba(255,255,255,.83);
+      margin: 6px 0 0;
+      color: var(--muted);
       font-size: 14px;
-      line-height: 1.55;
+      line-height: 1.6;
       font-weight: 600;
     }
 
-    .main-nav {
+    .top-nav {
       display: flex;
-      align-items: center;
       gap: 8px;
       flex-wrap: wrap;
-      justify-content: flex-end;
     }
 
-    .nav-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+    .top-nav a {
       text-decoration: none;
-      color: rgba(255,255,255,.92);
-      font-size: 15px;
-      font-weight: 800;
-      padding: 11px 14px;
+      color: var(--navy);
+      border: 1px solid transparent;
       border-radius: 999px;
-      transition: .18s ease;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 800;
     }
 
-    .nav-link:hover,
-    .nav-link.active {
-      background: rgba(255,255,255,.12);
-      color: #fff;
-    }
-
-    .nav-link svg {
-      width: 16px;
-      height: 16px;
-      opacity: .95;
+    .top-nav a:hover {
+      background: var(--soft-blue);
+      border-color: #d8e4f4;
     }
 
     .page {
-      max-width: 1380px;
-      margin: 0 auto;
-      padding: 22px 22px 44px;
+      padding-top: 22px;
+      padding-bottom: 30px;
     }
 
-    .status-hero {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
-      gap: 22px;
-      padding: 22px 26px;
-      border: 1px solid rgba(37, 99, 235, .22);
-      background:
-        radial-gradient(circle at right center, rgba(37, 99, 235, .10), transparent 18rem),
-        linear-gradient(135deg, #f9fbff, #eaf3ff);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .status-hero::after {
-      content: "";
-      position: absolute;
-      right: -30px;
-      top: -30px;
-      width: 190px;
-      height: 190px;
-      border-radius: 50%;
-      background: rgba(59, 130, 246, .08);
-    }
-
-    .status-icon {
-      position: relative;
-      z-index: 1;
-      width: 78px;
-      height: 78px;
+    .hero-status {
+      background: var(--card);
+      border: 1px solid var(--line);
       border-radius: 24px;
+      padding: 22px 24px;
+      box-shadow: var(--shadow);
       display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, #dbeafe, #eff6ff);
-      color: var(--navy-800);
-      border: 1px solid rgba(37, 99, 235, .18);
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 16px;
     }
 
-    .status-icon svg {
-      width: 44px;
-      height: 44px;
-    }
-
-    .status-copy {
-      position: relative;
-      z-index: 1;
-      min-width: 0;
-    }
-
-    .status-title {
-      margin: 0;
-      font-size: clamp(30px, 3.2vw, 46px);
-      color: var(--navy-800);
-      font-weight: 950;
-      line-height: 1.1;
-      letter-spacing: .02em;
-    }
-
-    .status-desc {
-      margin: 10px 0 0;
-      color: var(--navy-900);
-      font-size: 17px;
-      line-height: 1.7;
-      font-weight: 700;
-    }
-
-    .status-pill {
-      position: relative;
-      z-index: 1;
-      min-width: 190px;
-      align-self: center;
-      justify-self: end;
+    .hero-eyebrow {
       display: inline-flex;
-      flex-direction: column;
-      gap: 4px;
-      padding: 15px 18px;
-      border-radius: 20px;
-      background: rgba(255,255,255,.74);
-      border: 1px solid rgba(37, 99, 235, .16);
-      box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(10px);
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      color: var(--navy-2);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .06em;
     }
 
-    .status-pill-label {
+    .hero-title {
+      margin: 0;
+      color: var(--navy);
+      font-size: clamp(28px, 2.7vw, 40px);
+      font-weight: 900;
+      line-height: 1.15;
+    }
+
+    .hero-desc {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+      font-weight: 600;
+    }
+
+    .hero-time {
+      min-width: 230px;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px 18px;
+    }
+
+    .hero-time-label {
+      display: block;
       color: var(--muted);
       font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 7px;
+    }
+
+    .hero-time-value {
+      color: var(--navy);
+      font-size: 18px;
       font-weight: 900;
-      letter-spacing: .08em;
-    }
-
-    .status-pill-value {
-      color: var(--navy-800);
-      font-size: 20px;
-      font-weight: 950;
-      line-height: 1.35;
-    }
-
-    .dashboard-grid {
-      display: grid;
-      gap: 16px;
-      margin-top: 18px;
+      line-height: 1.5;
     }
 
     .stats-grid {
+      display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 16px;
     }
 
     .stat-card {
-      min-height: 132px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      padding: 18px 20px;
       background: var(--card);
       border: 1px solid var(--line);
       border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .stat-icon {
-      flex: 0 0 auto;
-      width: 62px;
-      height: 62px;
-      border-radius: 22px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, #dbeafe, #f1f6ff);
-      color: var(--navy-800);
-      border: 1px solid rgba(37, 99, 235, .14);
-    }
-
-    .stat-icon svg {
-      width: 31px;
-      height: 31px;
-    }
-
-    .stat-content {
-      min-width: 0;
+      padding: 18px;
+      box-shadow: var(--shadow);
     }
 
     .stat-label {
       display: block;
       color: var(--muted);
-      font-size: 14px;
-      font-weight: 900;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 8px;
       line-height: 1.5;
-      margin-bottom: 7px;
     }
 
     .stat-value {
-      color: var(--navy-800);
+      color: var(--navy);
       font-size: clamp(20px, 2vw, 28px);
-      line-height: 1.22;
-      font-weight: 950;
-      letter-spacing: .01em;
-      overflow-wrap: anywhere;
+      font-weight: 900;
+      line-height: 1.3;
+      word-break: break-word;
     }
 
     .stat-note {
       display: block;
-      margin-top: 6px;
+      margin-top: 7px;
       color: var(--muted);
       font-size: 12px;
-      font-weight: 700;
-      line-height: 1.5;
+      line-height: 1.6;
+      font-weight: 600;
     }
 
     .panel {
       background: var(--card);
       border: 1px solid var(--line);
       border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-soft);
+      box-shadow: var(--shadow);
     }
 
     .schedule-panel {
       padding: 18px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      flex-wrap: wrap;
+      margin-bottom: 16px;
     }
 
-    .schedule-title {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      color: var(--navy-900);
-      font-size: 16px;
-      font-weight: 950;
-      line-height: 1.5;
-      white-space: nowrap;
-    }
-
-    .schedule-title svg {
-      width: 21px;
-      height: 21px;
-      color: var(--navy-700);
+    .panel-title {
+      margin: 0 0 12px;
+      color: var(--navy);
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1.4;
     }
 
     .schedule-times {
       display: flex;
-      gap: 9px;
       flex-wrap: wrap;
-      justify-content: flex-end;
+      gap: 8px;
     }
 
     .schedule-time {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 66px;
-      padding: 9px 12px;
+      min-width: 68px;
+      border: 1px solid #dce5f0;
       border-radius: 999px;
-      border: 1px solid rgba(37, 99, 235, .14);
-      color: var(--navy-800);
-      background: var(--blue-050);
+      padding: 8px 12px;
+      background: #fafcff;
+      color: var(--navy);
       font-size: 14px;
-      font-weight: 950;
+      font-weight: 800;
     }
 
     .filter-panel {
-      padding: 18px 20px 20px;
-      display: grid;
-      gap: 14px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
     }
 
-    .filter-top {
+    .filter-grid {
       display: grid;
-      grid-template-columns: minmax(300px, 1fr) 260px auto;
+      grid-template-columns: minmax(320px, 1fr) 240px auto;
       gap: 12px;
       align-items: start;
     }
 
-    .search-wrap {
-      position: relative;
-    }
+    .search-wrap { position: relative; }
 
-    .search-shell {
-      position: relative;
-    }
-
-    .search-shell svg {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 21px;
-      height: 21px;
-      color: #7a8aa7;
-      pointer-events: none;
-    }
-
-    .search-input,
-    .source-select {
-      width: 100%;
-      height: 56px;
-      border: 1px solid #cfdbed;
-      border-radius: 18px;
-      background: #fff;
-      color: var(--ink);
+    .search-box,
+    .source-select,
+    .reset-btn {
+      height: 54px;
+      border-radius: 14px;
       font-size: 15px;
       font-weight: 700;
+    }
+
+    .search-box,
+    .source-select {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--ink);
       outline: none;
-      transition: .18s ease;
     }
 
-    .search-input {
-      padding: 0 18px 0 48px;
-    }
-
-    .search-input:focus,
-    .source-select:focus {
-      border-color: rgba(37, 99, 235, .65);
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, .10);
+    .search-box {
+      padding: 0 16px;
     }
 
     .source-select {
-      appearance: none;
-      padding: 0 46px 0 18px;
-      background-image:
-        linear-gradient(45deg, transparent 50%, #7183a5 50%),
-        linear-gradient(135deg, #7183a5 50%, transparent 50%);
-      background-position:
-        calc(100% - 21px) 24px,
-        calc(100% - 15px) 24px;
-      background-size: 6px 6px, 6px 6px;
-      background-repeat: no-repeat;
+      padding: 0 14px;
+    }
+
+    .search-box:focus,
+    .source-select:focus {
+      border-color: #92aad0;
+      box-shadow: 0 0 0 4px rgba(39, 75, 122, .08);
     }
 
     .reset-btn {
-      height: 56px;
-      padding: 0 20px;
       border: 0;
-      border-radius: 18px;
-      background: linear-gradient(135deg, var(--navy-900), var(--navy-700));
+      padding: 0 18px;
+      background: var(--navy);
       color: white;
-      font-size: 15px;
-      font-weight: 950;
       cursor: pointer;
-      transition: transform .18s ease, box-shadow .18s ease;
-      box-shadow: 0 12px 24px rgba(10, 42, 87, .18);
+      font-weight: 900;
     }
 
     .reset-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 16px 30px rgba(10, 42, 87, .22);
+      background: var(--navy-2);
     }
 
     .suggestions {
       position: absolute;
-      z-index: 40;
       left: 0;
       right: 0;
-      top: calc(100% + 10px);
+      top: calc(100% + 8px);
+      z-index: 30;
       display: none;
-      overflow: hidden;
       background: white;
       border: 1px solid var(--line);
-      border-radius: 20px;
-      box-shadow: 0 24px 55px rgba(11, 31, 65, .18);
+      border-radius: 16px;
+      box-shadow: 0 18px 36px rgba(15, 23, 42, .12);
+      overflow: hidden;
     }
 
     .suggestions.show { display: block; }
 
     .suggestion-head {
-      padding: 12px 15px 10px;
-      background: var(--blue-050);
+      padding: 10px 14px;
+      background: #f7f9fc;
       color: var(--muted);
-      font-size: 13px;
-      font-weight: 950;
+      font-size: 12px;
+      font-weight: 800;
       border-bottom: 1px solid var(--line);
     }
 
     .suggestion-item {
       width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 12px;
       border: 0;
       border-bottom: 1px solid var(--line);
       background: white;
-      color: var(--ink);
       text-align: left;
-      padding: 13px 15px;
-      cursor: pointer;
+      padding: 12px 14px;
+      display: flex;
+      gap: 12px;
       font: inherit;
-      transition: .16s ease;
+      cursor: pointer;
     }
 
     .suggestion-item:last-child { border-bottom: 0; }
-
     .suggestion-item:hover,
-    .suggestion-item.active {
-      background: var(--blue-050);
-    }
+    .suggestion-item.active { background: #f8fbff; }
 
     .suggestion-code {
-      min-width: 64px;
-      color: var(--red-700);
-      font-size: 15px;
-      font-weight: 950;
+      min-width: 60px;
+      color: var(--red);
+      font-size: 14px;
+      font-weight: 900;
     }
 
     .suggestion-name {
-      font-size: 15px;
-      font-weight: 800;
+      font-size: 14px;
+      font-weight: 700;
       line-height: 1.5;
     }
 
     .suggestion-empty {
-      padding: 14px 15px 16px;
+      padding: 12px 14px;
       color: var(--muted);
       font-size: 14px;
-      font-weight: 700;
       line-height: 1.7;
     }
 
-    .filter-helper {
+    .helper-text {
+      margin-top: 10px;
       color: var(--muted);
       font-size: 13px;
-      font-weight: 700;
       line-height: 1.6;
-      padding-left: 4px;
+      font-weight: 600;
     }
 
     .chips {
       display: flex;
+      gap: 8px;
       flex-wrap: wrap;
-      gap: 9px;
+      margin-top: 14px;
     }
 
     .chip {
-      appearance: none;
-      border: 1px solid #cfdbed;
+      border: 1px solid #dce5f0;
       background: white;
-      color: var(--navy-800);
+      color: var(--navy);
       border-radius: 999px;
-      padding: 10px 14px;
+      padding: 9px 13px;
       font-size: 14px;
-      line-height: 1;
-      font-weight: 950;
+      font-weight: 800;
       cursor: pointer;
-      transition: .18s ease;
-    }
-
-    .chip:hover {
-      border-color: rgba(37, 99, 235, .45);
-      background: var(--blue-050);
     }
 
     .chip.active {
+      background: var(--navy);
+      border-color: var(--navy);
       color: white;
-      border-color: var(--navy-900);
-      background: linear-gradient(135deg, var(--navy-900), var(--navy-700));
-      box-shadow: 0 12px 22px rgba(10, 42, 87, .18);
     }
 
     .content-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.68fr) minmax(330px, .92fr);
-      gap: 18px;
-      margin-top: 18px;
+      grid-template-columns: minmax(0, 1.7fr) minmax(320px, .95fr);
+      gap: 16px;
       align-items: start;
     }
 
-    .events-panel {
-      padding: 20px;
+    .events-panel,
+    .summary-panel {
+      padding: 18px 20px 20px;
     }
 
-    .panel-head {
+    .section-head {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 16px;
-    }
-
-    .panel-title {
-      display: inline-flex;
       align-items: center;
-      gap: 10px;
-      margin: 0;
-      color: var(--navy-900);
-      font-size: 20px;
-      font-weight: 950;
-      line-height: 1.35;
-    }
-
-    .panel-title svg {
-      width: 21px;
-      height: 21px;
-      color: var(--navy-700);
+      gap: 12px;
+      margin-bottom: 14px;
     }
 
     .result-count {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 12px;
-      border-radius: 999px;
+      color: var(--navy);
+      background: #f7f9fc;
       border: 1px solid var(--line);
-      background: var(--blue-050);
-      color: var(--navy-800);
+      border-radius: 999px;
+      padding: 8px 12px;
       font-size: 13px;
-      font-weight: 950;
+      font-weight: 800;
       white-space: nowrap;
     }
 
     .events-list {
       display: grid;
-      gap: 13px;
+      gap: 12px;
     }
 
     .event-card {
-      display: grid;
-      grid-template-columns: 150px 1fr auto;
-      gap: 18px;
-      align-items: stretch;
-      padding: 14px;
       border: 1px solid var(--line);
-      border-radius: 22px;
-      background: linear-gradient(180deg, #fff, #fbfcff);
-      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
-    }
-
-    .event-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(37, 99, 235, .30);
-      box-shadow: 0 18px 36px rgba(11, 31, 65, .10);
-    }
-
-    .date-card {
       border-radius: 18px;
-      background: linear-gradient(180deg, #f5f9ff, #eaf2ff);
-      border: 1px solid rgba(37, 99, 235, .16);
-      padding: 15px 12px;
+      background: white;
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 140px 1fr auto;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .date-box {
+      border: 1px solid #dbe4f0;
+      border-radius: 16px;
+      background: #f8fbff;
+      padding: 14px 12px;
+      text-align: center;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      text-align: center;
       min-height: 142px;
     }
 
-    .event-date-label {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 950;
-      letter-spacing: .10em;
-      margin-bottom: 8px;
-    }
-
-    .event-date-value {
-      color: var(--navy-800);
-      font-size: 23px;
-      font-weight: 950;
-      line-height: 1.25;
-      word-break: break-word;
-    }
-
-    .event-system-time {
-      margin-top: 11px;
+    .date-label {
       color: var(--muted);
       font-size: 12px;
       font-weight: 800;
-      line-height: 1.5;
+      letter-spacing: .08em;
+      margin-bottom: 8px;
+    }
+
+    .date-value {
+      color: var(--navy);
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1.45;
+    }
+
+    .first-seen {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+      font-weight: 600;
     }
 
     .event-main {
@@ -691,65 +500,59 @@
       justify-content: center;
     }
 
-    .event-company {
+    .company-name {
       margin: 0;
       color: var(--ink);
-      font-size: 23px;
-      line-height: 1.35;
-      font-weight: 950;
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.4;
     }
 
     .badges {
       display: flex;
-      gap: 8px;
       flex-wrap: wrap;
-      margin-top: 9px;
+      gap: 8px;
+      margin-top: 8px;
     }
 
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
       border-radius: 999px;
-      padding: 8px 11px;
+      padding: 7px 11px;
       font-size: 13px;
-      line-height: 1;
-      font-weight: 950;
-      border: 1px solid transparent;
+      font-weight: 800;
     }
 
     .badge.type {
-      color: var(--navy-800);
-      background: var(--blue-100);
-      border-color: rgba(37, 99, 235, .12);
+      color: var(--navy);
+      background: var(--soft-blue);
     }
 
     .badge.stage {
-      color: var(--green-700);
-      background: var(--green-100);
-      border-color: rgba(21, 128, 61, .14);
+      color: var(--green);
+      background: var(--soft-green);
     }
 
     .badge.source {
-      color: var(--amber-700);
-      background: var(--amber-100);
-      border-color: rgba(180, 83, 9, .14);
+      color: var(--amber);
+      background: var(--soft-amber);
     }
 
     .event-title {
-      margin: 13px 0 0;
-      color: var(--ink);
+      margin: 12px 0 0;
       font-size: 16px;
-      font-weight: 850;
-      line-height: 1.75;
+      font-weight: 800;
+      line-height: 1.8;
+      color: var(--ink);
     }
 
     .event-detail {
       margin: 8px 0 0;
       color: var(--muted);
       font-size: 14px;
-      font-weight: 700;
       line-height: 1.75;
+      font-weight: 600;
     }
 
     .event-action {
@@ -763,98 +566,73 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      min-height: 48px;
-      padding: 0 15px;
-      border-radius: 16px;
-      text-decoration: none;
+      min-height: 46px;
+      padding: 0 14px;
+      border-radius: 14px;
+      background: var(--navy);
       color: white;
-      background: linear-gradient(135deg, var(--navy-900), var(--navy-700));
+      text-decoration: none;
       font-size: 14px;
-      font-weight: 950;
-      box-shadow: 0 14px 24px rgba(10, 42, 87, .18);
-      transition: transform .18s ease, box-shadow .18s ease;
+      font-weight: 900;
       white-space: nowrap;
     }
 
     .official-link:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 18px 30px rgba(10, 42, 87, .22);
+      background: var(--navy-2);
+    }
+
+    .empty-state {
+      border: 1px dashed #ccd6e4;
+      border-radius: 16px;
+      background: #fafbfd;
+      padding: 28px 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+      font-weight: 600;
     }
 
     .sidebar {
       display: grid;
-      gap: 18px;
+      gap: 16px;
     }
 
-    .summary-panel {
-      padding: 20px;
-    }
-
-    .summary-list {
+    .summary-list,
+    .source-list {
       display: grid;
-      gap: 11px;
-      margin-top: 15px;
+      gap: 10px;
+    }
+
+    .summary-row,
+    .source-row {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+      background: #fbfcfe;
     }
 
     .summary-row {
       display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
+      grid-template-columns: 1fr auto;
       gap: 10px;
-      font-size: 14px;
-      font-weight: 850;
-      color: var(--ink);
+      align-items: center;
     }
-
-    .summary-dot {
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background: var(--blue-500);
-      box-shadow: 0 0 0 4px rgba(59, 130, 246, .12);
-    }
-
-    .summary-dot.secondary { background: #14b8a6; box-shadow: 0 0 0 4px rgba(20,184,166,.12); }
-    .summary-dot.third { background: #f59e0b; box-shadow: 0 0 0 4px rgba(245,158,11,.12); }
-    .summary-dot.fourth { background: #8b5cf6; box-shadow: 0 0 0 4px rgba(139,92,246,.12); }
-    .summary-dot.fifth { background: #ef4444; box-shadow: 0 0 0 4px rgba(239,68,68,.12); }
 
     .summary-name {
-      min-width: 0;
-      line-height: 1.55;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.5;
     }
 
     .summary-count {
-      color: var(--navy-800);
+      color: var(--navy);
       font-size: 16px;
-      font-weight: 950;
-    }
-
-    .summary-total {
-      margin-top: 16px;
-      padding: 13px 14px;
-      border-radius: 16px;
-      background: var(--blue-050);
-      border: 1px solid var(--line);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      color: var(--navy-800);
-      font-weight: 950;
-    }
-
-    .source-list {
-      display: grid;
-      gap: 12px;
-      margin-top: 15px;
+      font-weight: 900;
     }
 
     .source-row {
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: #fbfcff;
-      padding: 13px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -864,8 +642,8 @@
     .source-name {
       color: var(--ink);
       font-size: 14px;
-      font-weight: 850;
-      line-height: 1.55;
+      font-weight: 700;
+      line-height: 1.5;
     }
 
     .source-meta {
@@ -875,84 +653,63 @@
       flex: 0 0 auto;
     }
 
-    .source-ok,
-    .source-fail {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+    .source-status {
       min-width: 48px;
-      height: 28px;
-      padding: 0 9px;
+      padding: 6px 8px;
       border-radius: 999px;
       font-size: 12px;
-      font-weight: 950;
+      font-weight: 800;
+      text-align: center;
     }
 
-    .source-ok {
-      color: var(--green-700);
-      background: var(--green-100);
+    .source-status.ok {
+      color: var(--green);
+      background: var(--soft-green);
     }
 
-    .source-fail {
-      color: var(--red-700);
-      background: var(--red-100);
+    .source-status.fail {
+      color: var(--red);
+      background: var(--soft-red);
     }
 
     .source-count {
-      color: var(--navy-800);
-      font-size: 16px;
-      font-weight: 950;
+      color: var(--navy);
+      font-size: 15px;
+      font-weight: 900;
     }
 
-    .empty-state {
-      padding: 32px 22px;
-      border: 1px dashed #cbd8ed;
-      border-radius: 22px;
-      background: linear-gradient(180deg, #fff, #fbfcff);
-      color: var(--muted);
-      text-align: center;
-      line-height: 1.85;
-      font-size: 15px;
-      font-weight: 750;
+    .summary-total {
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+      background: #f7f9fc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--navy);
+      font-size: 14px;
+      font-weight: 800;
     }
 
     .footer {
-      max-width: 1380px;
-      margin: 20px auto 0;
-      padding: 0 22px 34px;
+      padding: 0 0 28px;
     }
 
     .footer-inner {
-      border-radius: var(--radius-lg);
-      padding: 18px 20px;
-      color: rgba(255,255,255,.88);
-      background: linear-gradient(135deg, var(--navy-950), var(--navy-900));
+      border-top: 1px solid var(--line);
+      padding-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+      font-weight: 600;
       display: flex;
       justify-content: space-between;
-      gap: 18px;
+      gap: 14px;
       flex-wrap: wrap;
-      font-size: 13px;
-      font-weight: 750;
-      line-height: 1.8;
-      box-shadow: var(--shadow);
-    }
-
-    .muted-inline {
-      color: var(--muted);
-      font-weight: 750;
     }
 
     @media (max-width: 1180px) {
-      .header-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .main-nav {
-        width: 100%;
-        justify-content: flex-start;
-      }
-
       .stats-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -966,16 +723,23 @@
       }
     }
 
-    @media (max-width: 900px) {
-      .status-hero {
+    @media (max-width: 920px) {
+      .topbar-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 14px;
+        padding-bottom: 14px;
+      }
+
+      .hero-status {
         grid-template-columns: 1fr;
       }
 
-      .status-pill {
-        justify-self: start;
+      .hero-time {
+        min-width: 0;
       }
 
-      .filter-top {
+      .filter-grid {
         grid-template-columns: 1fr;
       }
 
@@ -989,33 +753,11 @@
     }
 
     @media (max-width: 720px) {
+      .topbar-inner,
       .page,
-      .header-inner,
-      .footer {
+      .footer-inner {
         padding-left: 14px;
         padding-right: 14px;
-      }
-
-      .brand {
-        align-items: flex-start;
-      }
-
-      .brand-mark {
-        width: 52px;
-        height: 52px;
-      }
-
-      .brand-title {
-        white-space: normal;
-      }
-
-      .main-nav {
-        gap: 5px;
-      }
-
-      .nav-link {
-        padding: 10px 12px;
-        font-size: 14px;
       }
 
       .stats-grid,
@@ -1023,137 +765,73 @@
         grid-template-columns: 1fr;
       }
 
-      .stat-card {
-        min-height: 116px;
-      }
-
-      .schedule-panel {
-        align-items: flex-start;
-      }
-
-      .schedule-times {
-        justify-content: flex-start;
-      }
-
-      .panel-head {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .event-company {
+      .company-name {
         font-size: 20px;
       }
 
-      .footer-inner {
-        padding: 17px 16px;
+      .hero-title {
+        font-size: 28px;
       }
     }
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="brand">
-        <div class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 48 48" fill="none">
-            <path d="M8 35V22M18 35V15M28 35V25M38 35V10" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-            <path d="M8 28L18 20L28 23L39 11" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div>
-          <h1 class="brand-title">台灣興櫃轉板進度監測站</h1>
-          <p class="brand-subtitle">追蹤興櫃公司申請上市、上櫃、創新板上市與轉板進度重大更新</p>
-        </div>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div>
+        <h1 class="brand-title">台灣興櫃轉板進度監測站</h1>
+        <p class="brand-subtitle">監測申請上市、申請上櫃、申請創新板上市及轉板進度重大更新</p>
       </div>
-      <nav class="main-nav" aria-label="主要導覽">
-        <a class="nav-link active" href="#overview">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1v-9.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-          首頁
-        </a>
-        <a class="nav-link" href="#events-section">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M7 5h10M7 12h10M7 19h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="4" cy="5" r="1.5" fill="currentColor"/><circle cx="4" cy="12" r="1.5" fill="currentColor"/><circle cx="4" cy="19" r="1.5" fill="currentColor"/></svg>
-          事件總覽
-        </a>
-        <a class="nav-link" href="#summary-section">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M5 19V9m7 10V5m7 14v-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
-          資料摘要
-        </a>
-        <a class="nav-link" href="#schedule">
-          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          更新時程
-        </a>
+      <nav class="top-nav" aria-label="主要導覽">
+        <a href="#overview">總覽</a>
+        <a href="#events-section">事件清單</a>
+        <a href="#summary-section">摘要</a>
+        <a href="#schedule">更新時程</a>
       </nav>
     </div>
   </header>
 
   <main class="page" id="overview">
-    <section class="status-hero" aria-live="polite">
-      <div class="status-icon" id="statusIcon" aria-hidden="true">
-        <svg id="statusIconSvg" viewBox="0 0 48 48" fill="none">
-          <path d="m12 24 8 8 17-20" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+    <section class="hero-status" aria-live="polite">
+      <div>
+        <div class="hero-eyebrow">MONITOR STATUS</div>
+        <h2 class="hero-title" id="runStatusTitle">載入本輪檢查結果中…</h2>
+        <p class="hero-desc" id="runStatusDesc">系統正在讀取最新監測狀態。</p>
       </div>
-      <div class="status-copy">
-        <h2 class="status-title" id="runStatusTitle">載入本輪檢查結果中…</h2>
-        <p class="status-desc" id="runStatusDesc">系統正在讀取最新監測狀態。</p>
-      </div>
-      <div class="status-pill">
-        <span class="status-pill-label">LATEST CHECK</span>
-        <span class="status-pill-value" id="lastCheckedCompact">—</span>
+      <div class="hero-time">
+        <span class="hero-time-label">上次檢查時間</span>
+        <div class="hero-time-value" id="lastCheckedCompact">—</div>
       </div>
     </section>
 
-    <section class="dashboard-grid stats-grid" aria-label="監測摘要">
+    <section class="stats-grid">
       <article class="stat-card">
-        <div class="stat-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        </div>
-        <div class="stat-content">
-          <span class="stat-label">上次檢查時間</span>
-          <div class="stat-value" id="lastChecked">—</div>
-          <span class="stat-note">排程執行後自動更新</span>
-        </div>
+        <span class="stat-label">上次檢查時間</span>
+        <div class="stat-value" id="lastChecked">—</div>
+        <span class="stat-note">系統排程完成後自動更新</span>
       </article>
 
       <article class="stat-card">
-        <div class="stat-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M6 4h9l3 3v13H6V4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M15 4v4h4M9 12h6M9 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        </div>
-        <div class="stat-content">
-          <span class="stat-label">資料索取範圍</span>
-          <div class="stat-value" id="dataWindowLabel">近 3 年資料</div>
-          <span class="stat-note">超期資料將自動汰除</span>
-        </div>
+        <span class="stat-label">資料索取範圍</span>
+        <div class="stat-value" id="dataWindowLabel">近 3 年資料</div>
+        <span class="stat-note">超過期間的舊資料會自動汰除</span>
       </article>
 
       <article class="stat-card">
-        <div class="stat-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="15" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 3v4M16 3v4M4 10h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        </div>
-        <div class="stat-content">
-          <span class="stat-label">目前保留期間</span>
-          <div class="stat-value"><span id="dataWindowStart">—</span> ～ <span id="dataWindowEnd">—</span></div>
-          <span class="stat-note">依近三年滾動更新</span>
-        </div>
+        <span class="stat-label">目前保留期間</span>
+        <div class="stat-value"><span id="dataWindowStart">—</span> ～ <span id="dataWindowEnd">—</span></div>
+        <span class="stat-note">依每日更新自動往前滾動</span>
       </article>
 
       <article class="stat-card">
-        <div class="stat-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M20 12a8 8 0 1 1-2.34-5.66" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M20 5v6h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="stat-content">
-          <span class="stat-label">每日自動更新</span>
-          <div class="stat-value">9 次</div>
-          <span class="stat-note">定時檢查最新公開資訊</span>
-        </div>
+        <span class="stat-label">每日自動更新</span>
+        <div class="stat-value">9 次</div>
+        <span class="stat-note">固定時段檢查最新公開資訊</span>
       </article>
     </section>
 
-    <section class="panel schedule-panel" id="schedule" aria-label="每日更新時程">
-      <div class="schedule-title">
-        <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="15" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 3v4M16 3v4M4 10h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        每日預計更新時間（台灣時間）
-      </div>
+    <section class="panel schedule-panel" id="schedule">
+      <h2 class="panel-title">每日預計更新時間（台灣時間）</h2>
       <div class="schedule-times">
         <span class="schedule-time">08:00</span>
         <span class="schedule-time">09:00</span>
@@ -1167,43 +845,37 @@
       </div>
     </section>
 
-    <section class="panel filter-panel" aria-label="事件搜尋與篩選">
-      <div class="filter-top">
+    <section class="panel filter-panel">
+      <div class="filter-grid">
         <div class="search-wrap" id="searchWrap">
-          <div class="search-shell">
-            <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="2"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            <input
-              id="search"
-              class="search-input"
-              type="search"
-              autocomplete="off"
-              placeholder="輸入公司代號、公司名稱、公告標題或進度內容"
-              aria-autocomplete="list"
-              aria-controls="companySuggestions"
-              aria-expanded="false"
-            />
-          </div>
+          <input
+            id="search"
+            class="search-box"
+            type="search"
+            autocomplete="off"
+            placeholder="搜尋公司代號、公司名稱、公告標題或進度內容"
+            aria-autocomplete="list"
+            aria-controls="companySuggestions"
+            aria-expanded="false"
+          />
           <div id="companySuggestions" class="suggestions" role="listbox"></div>
         </div>
 
         <select id="sourceSelect" class="source-select" aria-label="資料來源篩選">
-          <option value="">資料來源：全部</option>
+          <option value="">全部來源</option>
         </select>
 
         <button id="reset" class="reset-btn" type="button">清除篩選</button>
       </div>
 
-      <div class="filter-helper">可直接輸入公司代號或名稱，系統會提供公司建議並同步篩選事件。</div>
+      <div class="helper-text">輸入公司代號或名稱時，系統會自動顯示相關公司建議。</div>
       <div class="chips" id="chips"></div>
     </section>
 
     <section class="content-grid" id="events-section">
       <section class="panel events-panel">
-        <div class="panel-head">
-          <h2 class="panel-title">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M6 4h9l3 3v13H6V4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M15 4v4h4M9 12h6M9 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            事件總覽
-          </h2>
+        <div class="section-head">
+          <h2 class="panel-title" style="margin:0;">事件清單</h2>
           <div class="result-count">目前顯示 <span id="visibleCount">—</span> 筆</div>
         </div>
         <div id="events" class="events-list"></div>
@@ -1211,12 +883,7 @@
 
       <aside class="sidebar" id="summary-section">
         <section class="panel summary-panel">
-          <div class="panel-head">
-            <h2 class="panel-title">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3a9 9 0 1 0 9 9h-9V3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15V3.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-              事件類型摘要
-            </h2>
-          </div>
+          <h2 class="panel-title">事件類型摘要</h2>
           <div id="typeSummary" class="summary-list"></div>
           <div class="summary-total">
             <span>事件總數</span>
@@ -1225,12 +892,7 @@
         </section>
 
         <section class="panel summary-panel">
-          <div class="panel-head">
-            <h2 class="panel-title">
-              <svg viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="6" rx="7" ry="3" stroke="currentColor" stroke-width="2"/><path d="M5 6v6c0 1.66 3.13 3 7 3s7-1.34 7-3V6M5 12v6c0 1.66 3.13 3 7 3s7-1.34 7-3v-6" stroke="currentColor" stroke-width="2"/></svg>
-              資料來源本輪抓取
-            </h2>
-          </div>
+          <h2 class="panel-title">資料來源本輪抓取</h2>
           <div id="sourceSummary" class="source-list"></div>
           <div class="summary-total">
             <span>本輪來源總筆數</span>
@@ -1309,6 +971,39 @@
       return text.replace("T", " ").replace("+08:00", "");
     }
 
+    function formatROCDate(value) {
+      const raw = String(value ?? "").trim();
+      if (!raw) return "—";
+
+      // YYYYMMDD
+      let m = raw.match(/^(\d{4})(\d{2})(\d{2})$/);
+      if (m) {
+        const year = Number(m[1]) - 1911;
+        return `${year}/${m[2]}/${m[3]}`;
+      }
+
+      // YYYMMDD
+      m = raw.match(/^(\d{3})(\d{2})(\d{2})$/);
+      if (m) {
+        return `${m[1]}/${m[2]}/${m[3]}`;
+      }
+
+      // YYYY-MM-DD or YYYY/MM/DD
+      m = raw.match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})$/);
+      if (m) {
+        const year = Number(m[1]) - 1911;
+        return `${year}/${String(m[2]).padStart(2, "0")}/${String(m[3]).padStart(2, "0")}`;
+      }
+
+      // YYY-MM-DD or YYY/MM/DD
+      m = raw.match(/^(\d{2,3})[-/.](\d{1,2})[-/.](\d{1,2})$/);
+      if (m) {
+        return `${m[1]}/${String(m[2]).padStart(2, "0")}/${String(m[3]).padStart(2, "0")}`;
+      }
+
+      return raw;
+    }
+
     function buildCompanyIndex() {
       const map = new Map();
 
@@ -1384,7 +1079,7 @@
       if (!items.length) {
         suggestionsEl.innerHTML = `
           <div class="suggestion-head">公司建議</div>
-          <div class="suggestion-empty">找不到符合「${esc(keyword)}」的公司建議，但仍可使用該文字搜尋公告內容。</div>
+          <div class="suggestion-empty">找不到符合「${esc(keyword)}」的公司建議，但仍可用此文字搜尋公告內容。</div>
         `;
         return;
       }
@@ -1450,24 +1145,19 @@
 
     function renderRunStatus() {
       const newCount = Number(status.new_event_count ?? 0);
-      const titleEl = document.getElementById("runStatusTitle");
-      const descEl = document.getElementById("runStatusDesc");
-      const iconEl = document.getElementById("statusIconSvg");
 
       document.getElementById("lastChecked").textContent = compactDateTime(status.last_checked_at);
       document.getElementById("lastCheckedCompact").textContent = compactDateTime(status.last_checked_at);
       document.getElementById("dataWindowLabel").textContent = status.data_window_label || "近 3 年資料";
-      document.getElementById("dataWindowStart").textContent = status.data_window_start || "—";
-      document.getElementById("dataWindowEnd").textContent = status.data_window_end || "—";
+      document.getElementById("dataWindowStart").textContent = formatROCDate(status.data_window_start);
+      document.getElementById("dataWindowEnd").textContent = formatROCDate(status.data_window_end);
 
       if (newCount > 0) {
-        titleEl.textContent = `本輪新增 ${newCount} 筆新事件`;
-        descEl.textContent = `系統已於 ${compactDateTime(status.last_checked_at)} 完成檢查，並更新最新符合條件的公開事件。`;
-        iconEl.innerHTML = '<path d="M24 8v32M8 24h32" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>';
+        document.getElementById("runStatusTitle").textContent = `本輪新增 ${newCount} 筆新事件`;
+        document.getElementById("runStatusDesc").textContent = `系統已於 ${compactDateTime(status.last_checked_at)} 完成檢查，並更新最新符合條件的公開事件。`;
       } else {
-        titleEl.textContent = "本輪無新事件";
-        descEl.textContent = `系統已於 ${compactDateTime(status.last_checked_at)} 完成排程檢查，未發現符合條件之新事件。`;
-        iconEl.innerHTML = '<path d="m12 24 8 8 17-20" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>';
+        document.getElementById("runStatusTitle").textContent = "本輪無新事件";
+        document.getElementById("runStatusDesc").textContent = `系統已於 ${compactDateTime(status.last_checked_at)} 完成例行檢查，未發現符合條件之新事件。`;
       }
     }
 
@@ -1489,7 +1179,7 @@
 
     function renderSourceOptions() {
       const labels = [...new Set(events.map(event => event.source_label).filter(Boolean))];
-      sourceEl.innerHTML = '<option value="">資料來源：全部</option>' + labels.map(label => `
+      sourceEl.innerHTML = '<option value="">全部來源</option>' + labels.map(label => `
         <option value="${esc(label)}">${esc(label)}</option>
       `).join("");
     }
@@ -1541,14 +1231,14 @@
         const code = event.company_code ? `（${event.company_code}）` : "";
         return `
           <article class="event-card">
-            <div class="date-card">
-              <div class="event-date-label">事件日期</div>
-              <div class="event-date-value">${esc(event.event_date || "—")}</div>
-              <div class="event-system-time">系統收錄時間<br>${esc(compactDateTime(event.first_seen_at))}</div>
+            <div class="date-box">
+              <div class="date-label">事件日期</div>
+              <div class="date-value">${esc(formatROCDate(event.event_date || "—"))}</div>
+              <div class="first-seen">系統收錄時間<br>${esc(compactDateTime(event.first_seen_at))}</div>
             </div>
 
             <div class="event-main">
-              <h3 class="event-company">${esc(company)}${esc(code)}</h3>
+              <h3 class="company-name">${esc(company)}${esc(code)}</h3>
               <div class="badges">
                 <span class="badge type">${esc(event.event_type)}</span>
                 <span class="badge stage">${esc(event.stage)}</span>
@@ -1559,18 +1249,11 @@
             </div>
 
             <div class="event-action">
-              <a class="official-link" href="${esc(event.url)}" target="_blank" rel="noopener noreferrer">
-                查看官方來源
-              </a>
+              <a class="official-link" href="${esc(event.url)}" target="_blank" rel="noopener noreferrer">查看官方來源</a>
             </div>
           </article>
         `;
       }).join("");
-    }
-
-    function dotClassByIndex(index) {
-      const classes = ["", "secondary", "third", "fourth", "fifth"];
-      return classes[index % classes.length];
     }
 
     function renderTypeSummary() {
@@ -1581,12 +1264,10 @@
         ...STAGE_SUMMARY_ORDER.map(name => ({ name, count: stageCounts[name] || 0 }))
       ];
 
-      const total = Number(status.total_event_count ?? events.length ?? 0);
-      document.getElementById("summaryTotal").textContent = total;
+      document.getElementById("summaryTotal").textContent = Number(status.total_event_count ?? events.length ?? 0);
 
-      document.getElementById("typeSummary").innerHTML = items.map((item, index) => `
+      document.getElementById("typeSummary").innerHTML = items.map(item => `
         <div class="summary-row">
-          <span class="summary-dot ${dotClassByIndex(index)}"></span>
           <span class="summary-name">${esc(item.name)}</span>
           <span class="summary-count">${esc(item.count)}</span>
         </div>
@@ -1604,7 +1285,7 @@
           <div class="source-row">
             <div class="source-name">${esc(item.label || "未知來源")}</div>
             <div class="source-meta">
-              <span class="${item.ok === false ? "source-fail" : "source-ok"}">${item.ok === false ? "異常" : "正常"}</span>
+              <span class="source-status ${item.ok === false ? "fail" : "ok"}">${item.ok === false ? "異常" : "正常"}</span>
               <span class="source-count">${esc(fetched)}</span>
             </div>
           </div>
@@ -1634,7 +1315,7 @@
         renderSourceSummary();
       } catch (error) {
         document.getElementById("runStatusTitle").textContent = "資料載入失敗";
-        document.getElementById("runStatusDesc").textContent = "網站無法讀取最新 JSON 資料，請稍後重新整理。";
+        document.getElementById("runStatusDesc").textContent = "網站暫時無法讀取最新資料，請稍後重新整理。";
         eventsEl.innerHTML = '<div class="empty-state">資料讀取失敗，請稍後重新整理。</div>';
       }
     }
