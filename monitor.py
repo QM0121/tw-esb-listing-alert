@@ -36,9 +36,24 @@ TPEX_APPLY_OTC_URL = "https://www.tpex.org.tw/zh-tw/mainboard/applying/status/co
 TPEX_APPLY_OTC_CSV_URL = "https://www.tpex.org.tw/web/regular_emerging/apply_schedule/applicant/applicant_companies_download_UTF-8.php?l=zh-tw&y=ALL"
 TIB_NEWS_URL = "https://www.twse.com.tw/TIB/zh/news.html"
 
-SCHEMA_VERSION = 4
+SCHEMA_VERSION = 6
 MAX_EVENTS_TO_KEEP = 5000
 MAX_SEEN_TO_KEEP = 30000
+
+# 網站與通知僅保留「近三年」資料，並於每次執行時自動汰除超出期間的事件。
+DATA_RETENTION_YEARS = 3
+
+def subtract_years_safe(dt: datetime, years: int) -> datetime:
+    """將日期往前推指定年數；遇到 2/29 時以 2/28 處理。"""
+    try:
+        return dt.replace(year=dt.year - years)
+    except ValueError:
+        return dt.replace(year=dt.year - years, month=2, day=28)
+
+def current_data_window() -> tuple[datetime, datetime]:
+    end_dt = taipei_now()
+    start_dt = subtract_years_safe(end_dt, DATA_RETENTION_YEARS)
+    return start_dt, end_dt
 
 SOURCE_LABELS = {
     "mops": "MOPS 即時重大訊息",
@@ -186,7 +201,7 @@ def parse_mops_realtime(html: str, esb_companies: dict[str, str]) -> list[dict[s
         if len(cells) < 5:
             continue
 
-        code = clean_stock_code(cells[0])
+        code = clean_stock_code(cells[0], retention_start)
         if not code or code not in esb_companies:
             continue
 
@@ -259,7 +274,7 @@ def ensure_reasonable_row_count(source: str, rows: list[list[str]], max_rows: in
 # ----------------------------------------
 def parse_twse_apply(html: str) -> list[dict[str, str]]:
     soup = BeautifulSoup(html, "html.parser")
-    table = find_table_by_headers(soup, ["公司代號", "公司簡稱", "申請日期"])
+    table = find_table_by_headers(soup, ["公司代號", "公司簡稱", "申請日期"], retention_start)
     rows = table_rows(table)
     ensure_reasonable_row_count("TWSE 申請上市公司", rows)
 
@@ -549,6 +564,24 @@ def parse_roc_or_iso_date(value: str) -> datetime:
             pass
     return datetime(1970, 1, 1, tzinfo=timezone(timedelta(hours=8)))
 
+
+def is_event_within_retention_window(event: dict[str, str], window_start: datetime) -> bool:
+    """
+    只保留近三年資料。
+    無法解析日期者保留，避免漏掉格式異常但可能重要的新公告。
+    """
+    parsed = parse_roc_or_iso_date(event.get("event_date", ""))
+    if parsed.year == 1970:
+        return True
+    return parsed >= window_start
+
+
+def filter_events_within_retention_window(
+    events: list[dict[str, str]],
+    window_start: datetime,
+) -> list[dict[str, str]]:
+    return [event for event in events if is_event_within_retention_window(event, window_start)]
+
 def event_sort_key(event: dict[str, str]) -> tuple[datetime, str, str]:
     return (
         parse_roc_or_iso_date(event.get("event_date", "")),
@@ -603,6 +636,7 @@ def summarize(events: list[dict[str, str]]) -> dict[str, Any]:
 
 def main() -> None:
     checked_at = taipei_now_iso()
+    retention_start, retention_end = current_data_window()
     status: dict[str, Any] = {
         "last_checked_at": checked_at,
         "last_run_ok": False,
@@ -612,6 +646,10 @@ def main() -> None:
         "new_event_count": 0,
         "telegram_sent_count": 0,
         "total_event_count": 0,
+        "data_retention_years": DATA_RETENTION_YEARS,
+        "data_window_start": retention_start.strftime("%Y-%m-%d"),
+        "data_window_end": retention_end.strftime("%Y-%m-%d"),
+        "data_window_label": f"近 {DATA_RETENTION_YEARS} 年資料",
     }
 
     try:
@@ -630,10 +668,10 @@ def main() -> None:
 
         # MOPS 是即時重大訊息，保留歷史累積；
         # TWSE / TPEx / TIB 官方頁面每次重建，避免舊版錯誤資料殘留。
-        preserved_mops_events = [
+        preserved_mops_events = filter_events_within_retention_window([
             event for event in existing_events
             if isinstance(event, dict) and event.get("source") == "mops"
-        ]
+        ])
 
         esb_companies = fetch_esb_companies()
 
@@ -649,7 +687,8 @@ def main() -> None:
 
         for source, fetcher in fetchers.items():
             try:
-                source_events[source] = fetcher()
+                fetched_events = fetcher()
+                source_events[source] = filter_events_within_retention_window(fetched_events, retention_start)
                 status["sources"][source] = {
                     "label": SOURCE_LABELS.get(source, source),
                     "fetched": len(source_events[source]),
@@ -668,10 +707,10 @@ def main() -> None:
         # 網站資料：
         # - 成功抓取的官方來源每次重建
         # - 單一來源暫時失敗時，保留既有資料，避免整站因官方網站偶發錯誤而缺資料
-        preserved_failed_source_events = [
+        preserved_failed_source_events = filter_events_within_retention_window([
             event for event in existing_events
             if isinstance(event, dict) and event.get("source") in source_errors
-        ]
+        ])
         website_events = (
             source_events.get("twse_apply", [])
             + source_events.get("tpex_apply", [])
@@ -680,7 +719,7 @@ def main() -> None:
             + preserved_mops_events
             + source_events.get("mops", [])
         )
-        website_events = dedupe_events(website_events)
+        website_events = filter_events_within_retention_window(dedupe_events(website_events), retention_start)
         website_events.sort(key=event_sort_key, reverse=True)
         website_events = website_events[:MAX_EVENTS_TO_KEEP]
 
@@ -717,12 +756,12 @@ def main() -> None:
             status["message"] = (
                 f"完成但有部分來源暫時抓取失敗：{', '.join(source_errors.keys())}。"
                 f"網站資料共 {len(website_events)} 筆事件，本輪新增 {len(new_events)} 筆，"
-                f"Telegram 推播 {telegram_sent_count} 筆。"
+                f"Telegram 推播 {telegram_sent_count} 筆；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。"
             )
         else:
             status["message"] = (
                 f"完成：網站重建 {len(website_events)} 筆事件，"
-                f"本輪新增事件 {len(new_events)} 筆，Telegram 推播 {telegram_sent_count} 筆。"
+                f"本輪新增事件 {len(new_events)} 筆，Telegram 推播 {telegram_sent_count} 筆；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。"
             )
 
         write_json(SEEN_PATH, {
