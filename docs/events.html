@@ -376,22 +376,130 @@
         padding-bottom: 14px;
       }
 
+      .back-link {
+        width: 100%;
+        text-align: center;
+      }
+
       .filter-grid,
       .event-card {
         grid-template-columns: 1fr;
       }
 
-      .event-action {
-        justify-content: flex-start;
+      .search-box,
+      .source-select,
+      .reset-btn {
+        width: 100%;
       }
+
+      .chips {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 6px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+
+      .chips::-webkit-scrollbar {
+        display: none;
+      }
+
+      .chip {
+        flex: 0 0 auto;
+      }
+
+      .event-card {
+        gap: 12px;
+        padding: 14px;
+      }
+
+      .date-box {
+        min-height: auto;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+        text-align: left;
+      }
+
+      .date-label {
+        margin-bottom: 0;
+      }
+
+      .date-value {
+        font-size: 20px;
+      }
+
+      .first-seen {
+        width: 100%;
+        margin-top: 0;
+      }
+
+      .event-action {
+        justify-content: stretch;
+      }
+
+      .official-link {
+        width: 100%;
+      }
+
     }
 
     @media (max-width: 720px) {
       .shell {
-        padding-left: 14px;
-        padding-right: 14px;
+        padding-left: 12px;
+        padding-right: 12px;
       }
-      .company-name { font-size: 20px; }
+
+      .page {
+        padding-top: 14px;
+        padding-bottom: 24px;
+      }
+
+      .brand-title {
+        font-size: 23px;
+      }
+
+      .brand-subtitle {
+        font-size: 13px;
+      }
+
+      .hero,
+      .panel {
+        padding: 16px;
+        border-radius: 18px;
+      }
+
+      .hero-title {
+        font-size: 28px;
+      }
+
+      .hero-desc {
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .panel-title {
+        font-size: 17px;
+      }
+
+      .summary-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .company-name,
+      .event-company-line {
+        font-size: 20px;
+      }
+
+      .event-title {
+        font-size: 18px;
+        line-height: 1.6;
+      }
+
     }
   </style>
 </head>

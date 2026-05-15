@@ -1413,23 +1413,161 @@
         padding-bottom: 14px;
       }
 
+      .nav {
+        width: 100%;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 8px;
+        padding-bottom: 2px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+
+      .nav::-webkit-scrollbar,
+      .chips::-webkit-scrollbar {
+        display: none;
+      }
+
+      .nav a {
+        flex: 0 0 auto;
+      }
+
+      .hero-main {
+        padding: 20px 20px 20px 24px;
+      }
+
+      .hero-title {
+        font-size: 34px;
+      }
+
+      .hero-desc {
+        font-size: 14px;
+      }
+
       .filter-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .reset-btn,
+      .search-box,
+      .source-select {
+        width: 100%;
+      }
+
+      .chips {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 6px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+
+      .chip {
+        flex: 0 0 auto;
+      }
+
+      .timeline-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .timeline-current {
+        width: 100%;
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
         grid-template-columns: 1fr;
       }
 
       .event-card {
         grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 14px;
+      }
+
+      .date-box {
+        min-height: auto;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+        text-align: left;
+      }
+
+      .date-label {
+        margin-bottom: 0;
+      }
+
+      .date-value {
+        font-size: 20px;
+      }
+
+      .first-seen {
+        width: 100%;
+        margin-top: 0;
       }
 
       .event-action {
-        justify-content: flex-start;
+        justify-content: stretch;
       }
+
+      .official-link {
+        width: 100%;
+      }
+
     }
 
     @media (max-width: 720px) {
       .shell {
-        padding-left: 14px;
-        padding-right: 14px;
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .page {
+        padding-top: 14px;
+        padding-bottom: 24px;
+      }
+
+      .brand-title {
+        font-size: 23px;
+      }
+
+      .brand-subtitle {
+        font-size: 13px;
+      }
+
+      .nav a {
+        padding: 9px 12px;
+        font-size: 13px;
+      }
+
+      .hero-main {
+        padding: 18px 16px 18px 20px;
+        border-radius: 20px;
+      }
+
+      .hero-main::before {
+        width: 5px;
+      }
+
+      .hero-eyebrow {
+        font-size: 11px;
+        margin-bottom: 8px;
+      }
+
+      .hero-title {
+        font-size: 28px;
+      }
+
+      .hero-desc {
+        font-size: 13px;
+        line-height: 1.7;
       }
 
       .kpi-grid,
@@ -1439,22 +1577,116 @@
         grid-template-columns: 1fr;
       }
 
+      .kpi-card,
+      .panel,
+      .timeline-panel,
+      .latest-panel,
+      .active-panel,
+      .monitor-note-panel {
+        padding: 16px;
+        border-radius: 18px;
+      }
+
+      .panel-title {
+        font-size: 17px;
+      }
+
+      .section-head,
+      .events-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .events-toolbar-left {
+        width: 100%;
+        align-items: flex-start;
+      }
+
+      .result-count {
+        font-size: 12px;
+      }
+
+      .events-open-all,
+      .active-open-all {
+        width: 100%;
+      }
+
       .latest-item,
       .active-item {
         grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 12px;
       }
 
-      .brand-title {
-        font-size: 26px;
+      .mini-date-box {
+        min-height: auto;
+        padding: 10px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        text-align: left;
       }
 
-      .hero-title {
-        font-size: 28px;
+      .mini-date-label {
+        margin-bottom: 0;
       }
 
-      .company-name {
+      .mini-date-value {
+        font-size: 17px;
+      }
+
+      .mini-company-line,
+      .event-company-line {
         font-size: 20px;
       }
+
+      .latest-title,
+      .active-stage,
+      .event-title {
+        font-size: 18px;
+        line-height: 1.6;
+      }
+
+      .timeline-company {
+        font-size: 18px;
+      }
+
+      .timeline-list {
+        padding-left: 14px;
+      }
+
+      .timeline-list::before {
+        left: 5px;
+      }
+
+      .timeline-item::before {
+        left: -15px;
+      }
+
+      .summary-row,
+      .source-row {
+        padding: 11px 12px;
+      }
+
+      .source-row {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .source-meta {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .monitor-note-value {
+        font-size: 14px;
+      }
+
+      .footer-inner {
+        font-size: 12px;
+      }
+
     }
   </style>
 </head>

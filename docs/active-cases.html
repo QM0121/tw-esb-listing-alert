@@ -335,16 +335,101 @@
         padding-bottom: 14px;
       }
 
+      .back-link {
+        width: 100%;
+        text-align: center;
+      }
+
       .summary-grid,
       .filter-grid,
       .case-card {
         grid-template-columns: 1fr;
       }
+
+      .search-box,
+      .track-select,
+      .reset-btn {
+        width: 100%;
+      }
+
+      .case-card {
+        gap: 12px;
+        padding: 14px;
+      }
+
+      .date-box {
+        min-height: auto;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        text-align: left;
+      }
+
+      .date-label {
+        margin-bottom: 0;
+      }
+
+      .date-value {
+        font-size: 20px;
+      }
+
     }
 
     @media (max-width: 720px) {
-      .shell { padding-left: 14px; padding-right: 14px; }
-      .case-company { font-size: 20px; }
+      .shell {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .page {
+        padding-top: 14px;
+        padding-bottom: 24px;
+      }
+
+      .brand-title {
+        font-size: 23px;
+      }
+
+      .brand-subtitle {
+        font-size: 13px;
+      }
+
+      .hero,
+      .panel {
+        padding: 16px;
+        border-radius: 18px;
+      }
+
+      .hero-title {
+        font-size: 28px;
+      }
+
+      .hero-desc {
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .panel-title {
+        font-size: 17px;
+      }
+
+      .case-company,
+      .case-company-line {
+        font-size: 20px;
+      }
+
+      .case-title {
+        font-size: 18px;
+        line-height: 1.6;
+      }
+
+      .toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
     }
   </style>
 </head>
