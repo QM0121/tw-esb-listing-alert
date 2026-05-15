@@ -222,7 +222,7 @@
 
     .case-card {
       display: grid;
-      grid-template-columns: 150px 1fr;
+      grid-template-columns: 164px 1fr;
       gap: 18px;
       border: 1px solid var(--line);
       border-radius: 18px;
@@ -255,6 +255,8 @@
       font-size: 22px;
       line-height: 1.4;
       font-weight: 900;
+      white-space: nowrap;
+      word-break: normal;
     }
 
     .case-main {
@@ -262,14 +264,6 @@
       flex-direction: column;
       justify-content: center;
       min-width: 0;
-    }
-
-    .case-company {
-      margin: 0;
-      color: var(--text);
-      font-size: 22px;
-      line-height: 1.4;
-      font-weight: 900;
     }
 
     .badges {
@@ -544,13 +538,12 @@
               <div class="date-value">${esc(formatROCDate(item.latest.event_date || "—"))}</div>
             </div>
             <div class="case-main">
-              <h3 class="case-company">${esc(company)}</h3>
               <div class="badges">
                 <span class="badge type">${esc(item.track)}</span>
                 <span class="badge stage">${esc(item.latest.stage || "最新進度")}</span>
                 <span class="badge source">${esc(item.latest.source_label || "")}</span>
               </div>
-              <p class="case-title">${esc(item.latest.title || "")}</p>
+              <p class="case-title" style="margin-top:10px;">${esc(item.latest.title || "")}</p>
             </div>
           </article>
         `;

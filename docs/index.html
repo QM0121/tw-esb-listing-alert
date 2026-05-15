@@ -410,7 +410,7 @@
       background: #fbfcfe;
       padding: 14px;
       display: grid;
-      grid-template-columns: 112px 1fr;
+      grid-template-columns: 132px 1fr;
       gap: 14px;
       align-items: stretch;
       transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
@@ -448,7 +448,8 @@
       font-size: 18px;
       line-height: 1.38;
       font-weight: 900;
-      word-break: break-word;
+      white-space: nowrap;
+      word-break: normal;
     }
 
     .mini-content {
@@ -465,14 +466,6 @@
       justify-content: space-between;
       gap: 12px;
       flex-wrap: wrap;
-    }
-
-    .latest-company,
-    .active-company {
-      color: var(--navy);
-      font-size: 16px;
-      line-height: 1.5;
-      font-weight: 900;
     }
 
     .latest-title,
@@ -809,7 +802,8 @@
       font-size: 22px;
       line-height: 1.4;
       font-weight: 900;
-      word-break: break-word;
+      white-space: nowrap;
+      word-break: normal;
     }
 
     .first-seen {
@@ -1049,7 +1043,7 @@
       background: #fbfcfe;
       padding: 14px;
       display: grid;
-      grid-template-columns: 112px 1fr;
+      grid-template-columns: 132px 1fr;
       gap: 14px;
       align-items: stretch;
       transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
@@ -1087,7 +1081,8 @@
       font-size: 18px;
       line-height: 1.38;
       font-weight: 900;
-      word-break: break-word;
+      white-space: nowrap;
+      word-break: normal;
     }
 
     .mini-content {
@@ -1104,14 +1099,6 @@
       justify-content: space-between;
       gap: 12px;
       flex-wrap: wrap;
-    }
-
-    .latest-company,
-    .active-company {
-      color: var(--navy);
-      font-size: 16px;
-      line-height: 1.5;
-      font-weight: 900;
     }
 
     .latest-title,
@@ -2023,9 +2010,6 @@
             <div class="mini-date-value">${esc(formatROCDate(event.event_date || "—"))}</div>
           </div>
           <div class="mini-content">
-            <div class="latest-top">
-              <div class="latest-company">${esc(companyDisplay(event))}</div>
-            </div>
             <div class="inline-badges">
               <span class="small-badge type">${esc(event.event_type || "未分類")}</span>
               <span class="small-badge stage">${esc(event.stage || "未分類")}</span>
@@ -2073,9 +2057,6 @@
               <div class="mini-date-value">${esc(formatROCDate(item.latest.event_date || "—"))}</div>
             </div>
             <div class="mini-content">
-              <div class="active-top">
-                <div class="active-company">${esc(company)}</div>
-              </div>
               <div class="inline-badges">
                 <span class="small-badge type">${esc(item.track)}</span>
                 <span class="small-badge stage">${esc(item.latest.stage || "最新進度")}</span>
