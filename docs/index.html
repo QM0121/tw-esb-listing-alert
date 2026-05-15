@@ -1013,6 +1013,48 @@
       font-weight: 600;
     }
 
+
+    .monitor-note-panel {
+      margin-top: 16px;
+      padding: 20px;
+    }
+
+    .monitor-note-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .monitor-note-item {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fbfcfe;
+      padding: 14px;
+    }
+
+    .monitor-note-label {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      font-weight: 800;
+      margin-bottom: 7px;
+    }
+
+    .monitor-note-value {
+      color: var(--navy);
+      font-size: 15px;
+      line-height: 1.75;
+      font-weight: 800;
+    }
+
+    .monitor-note-foot {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+      font-weight: 600;
+    }
+
     .footer {
       padding-bottom: 28px;
     }
@@ -1378,7 +1420,8 @@
 
       .kpi-grid,
       .sidebar,
-      .active-summary {
+      .active-summary,
+      .monitor-note-grid {
         grid-template-columns: 1fr;
       }
 
@@ -1412,6 +1455,7 @@
         <a href="#overview">總覽</a>
         <a href="#events-section">事件清單</a>
         <a href="#summary-section">資料摘要</a>
+        <a href="#monitor-note">監測說明</a>
       </nav>
     </div>
   </header>
@@ -1505,6 +1549,9 @@
           <h2 class="panel-title" style="margin:0;">目前進行中案件</h2>
           <div class="result-count"><span id="activeCaseTotal">—</span> 件</div>
         </div>
+        <div class="helper-text" style="margin-top:-2px; margin-bottom:12px;">
+          依目前可取得之公開事件推估；若案件已撤回或已掛牌，將不列入進行中案件。
+        </div>
         <div id="activeSummary" class="active-summary"></div>
         <div id="activeCases" class="mini-list"></div>
         <a class="active-open-all" href="./active-cases.html" target="_blank" rel="noopener noreferrer">在新分頁查看全部</a>
@@ -1543,6 +1590,30 @@
           </div>
         </section>
       </aside>
+    </section>
+    <section id="monitor-note" class="panel monitor-note-panel">
+      <h2 class="panel-title">監測說明</h2>
+      <div class="monitor-note-grid">
+        <div class="monitor-note-item">
+          <div class="monitor-note-label">監測範圍</div>
+          <div class="monitor-note-value">申請上市、申請上櫃、申請創新板上市與轉板進度重大更新。</div>
+        </div>
+        <div class="monitor-note-item">
+          <div class="monitor-note-label">更新頻率</div>
+          <div class="monitor-note-value">系統每小時自動檢查一次公開資訊來源。</div>
+        </div>
+        <div class="monitor-note-item">
+          <div class="monitor-note-label">資料保留</div>
+          <div class="monitor-note-value">網站僅保留近三年事件，超出期間會自動汰除。</div>
+        </div>
+        <div class="monitor-note-item">
+          <div class="monitor-note-label">Telegram 推播</div>
+          <div class="monitor-note-value">僅於偵測到新的符合條件事件時通知，不會重複推送舊資料。</div>
+        </div>
+      </div>
+      <div class="monitor-note-foot">
+        本站提供公開資訊整理與追蹤用途，實際事件內容與程序進度仍應以官方公告為準。
+      </div>
     </section>
   </main>
 

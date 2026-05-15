@@ -131,6 +131,19 @@
       font-weight: 900;
     }
 
+
+    .definition-note {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      background: #fbfcfe;
+      border-radius: 14px;
+      padding: 14px 16px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+      font-weight: 650;
+    }
+
     .summary-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -350,6 +363,9 @@
     <section class="hero">
       <h2 class="hero-title">目前進行中案件</h2>
       <p class="hero-desc">此頁整理仍可判定為進行中的申請案件，並依最新已知事件日期排序。</p>
+      <div class="definition-note">
+        進行中案件係依目前可取得之公開事件推估；若案件已撤回或已完成掛牌，將不列入此清單。
+      </div>
     </section>
 
     <section class="panel">
