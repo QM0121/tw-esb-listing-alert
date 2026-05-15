@@ -386,7 +386,7 @@
 
     .insight-grid {
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1.15fr) minmax(360px, .85fr);
       gap: 16px;
       margin-bottom: 16px;
       align-items: start;
@@ -690,7 +690,7 @@
 
     .content-grid {
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1.72fr) minmax(340px, .98fr);
       gap: 18px;
       align-items: start;
     }
@@ -757,6 +757,20 @@
     .events-open-all:hover {
       background: var(--navy-2);
       border-color: var(--navy-2);
+    }
+
+    .events-filter-label {
+      margin-top: 10px;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      font-weight: 800;
+    }
+
+    .event-list-chips {
+      margin-top: 0;
+      margin-bottom: 12px;
     }
 
     .events-hint {
@@ -1080,7 +1094,7 @@
   
     .insight-grid {
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1.15fr) minmax(360px, .85fr);
       gap: 16px;
       margin-bottom: 16px;
       align-items: start;
@@ -1520,7 +1534,6 @@
       </div>
 
       <div class="helper-text">輸入公司代號或名稱時，系統會自動顯示相關公司建議。</div>
-      <div class="chips" id="chips"></div>
     </section>
 
     <section id="timelinePanel" class="panel timeline-panel">
@@ -1534,10 +1547,6 @@
       </div>
       <div id="timelineList" class="timeline-list"></div>
     </section>
-
-    <div class="helper-text" style="margin-top:-2px; margin-bottom:12px;">
-      為了讓畫面更整齊、避免區塊間出現空白落差，首頁已改為較一致的單欄排列。
-    </div>
 
     <section class="insight-grid">
       <section class="panel latest-panel">
@@ -1571,6 +1580,8 @@
           </div>
           <a id="openAllEvents" class="events-open-all" href="./events.html" target="_blank" rel="noopener noreferrer">在新分頁查看全部</a>
         </div>
+        <div class="events-filter-label">事件類型篩選</div>
+        <div class="chips event-list-chips" id="chips"></div>
         <div class="events-hint">首頁僅顯示最新幾筆符合條件的事件；完整清單請於新分頁查看。</div>
         <div id="events" class="events-list" style="margin-top:14px;"></div>
       </section>
