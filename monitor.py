@@ -33,10 +33,10 @@ TPEX_ESB_COMPANIES_URL = "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap04_O"
 MOPS_REALTIME_URL = "https://mopsov.twse.com.tw/mops/web/t05sr01_1"
 TWSE_APPLY_LISTING_URL = "https://www.twse.com.tw/rwd/zh/company/applylisting?response=html"
 TPEX_APPLY_OTC_URL = "https://www.tpex.org.tw/zh-tw/mainboard/applying/status/company.html"
-TPEX_APPLY_OTC_CSV_URL = "https://www.tpex.org.tw/web/regular_emerging/apply_schedule/applicant/applicant_companies_download_UTF-8.php?l=zh-tw&y=ALL"
+TPEX_APPLY_OTC_CSV_URL_TEMPLATE = "https://www.tpex.org.tw/web/regular_emerging/apply_schedule/applicant/applicant_companies_download_UTF-8.php?l=zh-tw&y={year}"
 TIB_NEWS_URL = "https://www.twse.com.tw/TIB/zh/news.html"
 
-SCHEMA_VERSION = 8
+SCHEMA_VERSION = 9
 MAX_EVENTS_TO_KEEP = 5000
 MAX_SEEN_TO_KEEP = 30000
 
@@ -54,6 +54,17 @@ def current_data_window() -> tuple[datetime, datetime]:
     end_dt = taipei_now()
     start_dt = subtract_years_safe(end_dt, DATA_RETENTION_YEARS)
     return start_dt, end_dt
+
+
+def roc_year(dt: datetime) -> int:
+    return dt.year - 1911
+
+
+def tpex_candidate_roc_years(window_start: datetime, window_end: datetime) -> list[int]:
+    # 近三年是滾動區間，可能跨 4 個民國年度，例如 2023/05～2026/05 = 112、113、114、115。
+    start_year = roc_year(window_start)
+    end_year = roc_year(window_end)
+    return list(range(end_year, start_year - 1, -1))
 
 SOURCE_LABELS = {
     "mops": "MOPS 即時重大訊息",
@@ -828,14 +839,49 @@ def main() -> None:
         source_errors: dict[str, str] = {}
 
         def fetch_tpex_apply_events() -> list[dict[str, str]]:
-            csv_events = parse_tpex_apply(get_text(TPEX_APPLY_OTC_CSV_URL))
-            csv_events = filter_events_within_retention_window(csv_events, retention_start)
-            if csv_events:
-                return csv_events
+            """
+            申請上櫃資料優先改成「依民國年度分批抓 CSV」：
+            - 近三年滾動區間可能跨 4 個民國年度
+            - 避免 y=ALL 一次抓取時偶發回傳異常或解析為 0
+            """
+            combined_events: list[dict[str, str]] = []
+            year_debug: dict[str, dict[str, int]] = {}
 
-            # CSV 若解析後為 0 筆，改抓官方 HTML 頁面當備援。
+            for year in tpex_candidate_roc_years(retention_start, retention_end):
+                url = TPEX_APPLY_OTC_CSV_URL_TEMPLATE.format(year=year)
+                csv_events = parse_tpex_apply(get_text(url))
+                filtered_events = filter_events_within_retention_window(csv_events, retention_start)
+                year_debug[str(year)] = {
+                    "parsed": len(csv_events),
+                    "retained": len(filtered_events),
+                }
+                combined_events.extend(filtered_events)
+
+            combined_events = dedupe_events(combined_events)
+
+            # 將年度抓取狀況放入 status，方便日後檢查。
+            status.setdefault("debug", {})["tpex_apply_by_year"] = year_debug
+
+            if combined_events:
+                return combined_events
+
+            # 若分年 CSV 仍完全抓不到，再以 y=ALL 試一次。
+            all_url = TPEX_APPLY_OTC_CSV_URL_TEMPLATE.format(year="ALL")
+            all_csv_events = parse_tpex_apply(get_text(all_url))
+            all_filtered_events = filter_events_within_retention_window(all_csv_events, retention_start)
+            status.setdefault("debug", {})["tpex_apply_all_csv"] = {
+                "parsed": len(all_csv_events),
+                "retained": len(all_filtered_events),
+            }
+            if all_filtered_events:
+                return all_filtered_events
+
+            # CSV 都抓不到，再用官方 HTML 作最後備援。
             html_events = parse_tpex_apply_html(get_text(TPEX_APPLY_OTC_URL))
             html_events = filter_events_within_retention_window(html_events, retention_start)
+            status.setdefault("debug", {})["tpex_apply_html_fallback"] = {
+                "retained": len(html_events),
+            }
             return html_events
 
         fetchers = {
@@ -851,7 +897,7 @@ def main() -> None:
                 source_events[source] = filter_events_within_retention_window(fetched_events, retention_start)
 
                 if source == "tpex_apply" and len(source_events[source]) == 0:
-                    raise RuntimeError("TPEx 申請上櫃來源解析後為 0 筆，暫不覆寫既有資料。")
+                    raise RuntimeError("TPEx 申請上櫃來源分年 CSV、ALL CSV 與 HTML 備援皆解析為 0 筆，暫不覆寫既有資料。")
 
                 status["sources"][source] = {
                     "label": SOURCE_LABELS.get(source, source),
