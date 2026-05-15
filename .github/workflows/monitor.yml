@@ -3,8 +3,10 @@ name: Monitor ESB Listing Alerts
 on:
   workflow_dispatch:
 
-    schedule:
-    - cron: "*/5 * * * *"
+  # 這段 GitHub 自己的排程可留著當備援
+  # 但真正穩定觸發會改靠 cron-job.org
+  schedule:
+    - cron: "2,7,12,17,22,27,32,37,42,47,52,57 * * * *"
       timezone: "Asia/Taipei"
 
 permissions:
