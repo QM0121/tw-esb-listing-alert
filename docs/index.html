@@ -4,37 +4,39 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>台灣興櫃轉板進度監測站</title>
-  <meta name="description" content="追蹤台灣興櫃公司申請上市、上櫃、創新板上市與轉板進度重大更新。" />
+  <meta name="description" content="追蹤台灣興櫃公司申請上市、申請上櫃、申請創新板上市與轉板進度重大更新。" />
   <style>
     :root {
-      --bg: #f4f6f8;
-      --card: #ffffff;
-      --ink: #1f2937;
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-soft: #f8fafc;
+      --text: #1f2937;
       --muted: #6b7280;
-      --line: #d9dee7;
-      --navy: #1f3a5f;
-      --navy-2: #274b7a;
-      --soft-blue: #eef4fb;
-      --soft-green: #edf7f0;
-      --soft-amber: #fff7ea;
-      --soft-red: #fff2f2;
-      --green: #157347;
+      --line: #d7dee8;
+      --navy: #19324d;
+      --navy-2: #284b6f;
+      --navy-3: #355f8b;
+      --blue-soft: #eef4fb;
+      --green-soft: #edf7f1;
+      --amber-soft: #fff7ec;
+      --red-soft: #fff3f2;
+      --green: #1f7a4d;
       --amber: #a16207;
       --red: #b42318;
-      --shadow: 0 8px 24px rgba(15, 23, 42, .06);
-      --radius-lg: 20px;
-      --radius-md: 16px;
-      --radius-sm: 12px;
+      --shadow: 0 8px 24px rgba(15, 23, 42, .05);
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
     }
 
     * { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
       background: var(--bg);
-      color: var(--ink);
+      color: var(--text);
       font-family:
         "Noto Sans TC",
         "PingFang TC",
@@ -47,171 +49,186 @@
 
     a { color: inherit; }
 
-    .topbar {
-      background: var(--card);
-      border-bottom: 1px solid var(--line);
+    .site-header {
       position: sticky;
       top: 0;
       z-index: 50;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
     }
 
-    .topbar-inner,
-    .page,
-    .footer-inner {
-      max-width: 1360px;
+    .shell {
+      max-width: 1380px;
       margin: 0 auto;
       padding-left: 22px;
       padding-right: 22px;
     }
 
-    .topbar-inner {
+    .header-inner {
       min-height: 76px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      gap: 18px;
     }
 
     .brand-title {
       margin: 0;
       color: var(--navy);
-      font-size: clamp(24px, 2.3vw, 34px);
+      font-size: clamp(24px, 2.25vw, 34px);
       font-weight: 900;
-      line-height: 1.15;
+      line-height: 1.12;
     }
 
     .brand-subtitle {
       margin: 6px 0 0;
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.6;
       font-weight: 600;
+      line-height: 1.6;
     }
 
-    .top-nav {
+    .nav {
       display: flex;
+      align-items: center;
       gap: 8px;
       flex-wrap: wrap;
     }
 
-    .top-nav a {
+    .nav a {
       text-decoration: none;
       color: var(--navy);
-      border: 1px solid transparent;
-      border-radius: 999px;
-      padding: 10px 14px;
       font-size: 14px;
       font-weight: 800;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
     }
 
-    .top-nav a:hover {
-      background: var(--soft-blue);
-      border-color: #d8e4f4;
+    .nav a:hover {
+      background: var(--surface-soft);
+      border-color: var(--line);
     }
 
     .page {
       padding-top: 22px;
-      padding-bottom: 30px;
+      padding-bottom: 34px;
     }
 
-    .hero-status {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 22px 24px;
-      box-shadow: var(--shadow);
+    .hero {
       display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: minmax(0, 1.5fr) 300px;
       gap: 16px;
-      align-items: center;
       margin-bottom: 16px;
     }
 
+    .hero-main,
+    .hero-side,
+    .kpi-card,
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-main {
+      border-radius: var(--radius-xl);
+      padding: 24px 26px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-main::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 7px;
+      background: linear-gradient(180deg, var(--navy), var(--navy-3));
+    }
+
     .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
+      display: inline-block;
       color: var(--navy-2);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 900;
-      letter-spacing: .06em;
+      letter-spacing: .08em;
+      margin-bottom: 10px;
+      margin-left: 4px;
     }
 
     .hero-title {
       margin: 0;
       color: var(--navy);
-      font-size: clamp(28px, 2.7vw, 40px);
+      font-size: clamp(30px, 2.8vw, 42px);
+      line-height: 1.14;
       font-weight: 900;
-      line-height: 1.15;
     }
 
     .hero-desc {
-      margin: 10px 0 0;
+      margin: 12px 0 0;
       color: var(--muted);
       font-size: 15px;
-      line-height: 1.8;
+      line-height: 1.85;
       font-weight: 600;
+      max-width: 860px;
     }
 
-    .hero-time {
-      min-width: 230px;
-      background: #f8fafc;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 16px 18px;
+    .hero-side {
+      border-radius: var(--radius-xl);
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
-    .hero-time-label {
-      display: block;
+    .hero-side-label {
       color: var(--muted);
       font-size: 12px;
       font-weight: 800;
-      margin-bottom: 7px;
+      margin-bottom: 8px;
     }
 
-    .hero-time-value {
+    .hero-side-value {
       color: var(--navy);
-      font-size: 18px;
+      font-size: 19px;
+      line-height: 1.55;
       font-weight: 900;
-      line-height: 1.5;
+      word-break: break-word;
     }
 
-    .stats-grid {
+    .kpi-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 14px;
       margin-bottom: 16px;
     }
 
-    .stat-card {
-      background: var(--card);
-      border: 1px solid var(--line);
+    .kpi-card {
       border-radius: var(--radius-lg);
       padding: 18px;
-      box-shadow: var(--shadow);
     }
 
-    .stat-label {
-      display: block;
+    .kpi-label {
       color: var(--muted);
       font-size: 13px;
-      font-weight: 800;
-      margin-bottom: 8px;
       line-height: 1.5;
+      font-weight: 800;
+      margin-bottom: 10px;
     }
 
-    .stat-value {
+    .kpi-value {
       color: var(--navy);
-      font-size: clamp(20px, 2vw, 28px);
-      font-weight: 900;
+      font-size: clamp(20px, 1.95vw, 28px);
       line-height: 1.3;
+      font-weight: 900;
       word-break: break-word;
     }
 
-    .stat-note {
-      display: block;
-      margin-top: 7px;
+    .kpi-note {
+      margin-top: 8px;
       color: var(--muted);
       font-size: 12px;
       line-height: 1.6;
@@ -219,48 +236,20 @@
     }
 
     .panel {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow);
+      border-radius: var(--radius-xl);
+      padding: 18px 20px 20px;
     }
 
-    .schedule-panel {
-      padding: 18px 20px;
+    .filter-panel {
       margin-bottom: 16px;
     }
 
     .panel-title {
-      margin: 0 0 12px;
+      margin: 0 0 14px;
       color: var(--navy);
       font-size: 18px;
+      line-height: 1.45;
       font-weight: 900;
-      line-height: 1.4;
-    }
-
-    .schedule-times {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .schedule-time {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 68px;
-      border: 1px solid #dce5f0;
-      border-radius: 999px;
-      padding: 8px 12px;
-      background: #fafcff;
-      color: var(--navy);
-      font-size: 14px;
-      font-weight: 800;
-    }
-
-    .filter-panel {
-      padding: 18px 20px;
-      margin-bottom: 16px;
     }
 
     .filter-grid {
@@ -270,13 +259,15 @@
       align-items: start;
     }
 
-    .search-wrap { position: relative; }
+    .search-wrap {
+      position: relative;
+    }
 
     .search-box,
     .source-select,
     .reset-btn {
       height: 54px;
-      border-radius: 14px;
+      border-radius: 12px;
       font-size: 15px;
       font-weight: 700;
     }
@@ -284,10 +275,11 @@
     .search-box,
     .source-select {
       width: 100%;
+      background: var(--surface);
       border: 1px solid var(--line);
-      background: white;
-      color: var(--ink);
+      color: var(--text);
       outline: none;
+      transition: .16s ease;
     }
 
     .search-box {
@@ -300,17 +292,18 @@
 
     .search-box:focus,
     .source-select:focus {
-      border-color: #92aad0;
-      box-shadow: 0 0 0 4px rgba(39, 75, 122, .08);
+      border-color: #95aac3;
+      box-shadow: 0 0 0 4px rgba(40, 75, 111, .08);
     }
 
     .reset-btn {
       border: 0;
-      padding: 0 18px;
       background: var(--navy);
-      color: white;
-      cursor: pointer;
+      color: #fff;
+      padding: 0 18px;
       font-weight: 900;
+      cursor: pointer;
+      transition: .15s ease;
     }
 
     .reset-btn:hover {
@@ -319,15 +312,15 @@
 
     .suggestions {
       position: absolute;
+      z-index: 30;
       left: 0;
       right: 0;
       top: calc(100% + 8px);
-      z-index: 30;
       display: none;
-      background: white;
+      background: var(--surface);
       border: 1px solid var(--line);
-      border-radius: 16px;
-      box-shadow: 0 18px 36px rgba(15, 23, 42, .12);
+      border-radius: 14px;
+      box-shadow: 0 18px 36px rgba(15, 23, 42, .10);
       overflow: hidden;
     }
 
@@ -335,7 +328,7 @@
 
     .suggestion-head {
       padding: 10px 14px;
-      background: #f7f9fc;
+      background: var(--surface-soft);
       color: var(--muted);
       font-size: 12px;
       font-weight: 800;
@@ -360,7 +353,7 @@
     .suggestion-item.active { background: #f8fbff; }
 
     .suggestion-code {
-      min-width: 60px;
+      min-width: 62px;
       color: var(--red);
       font-size: 14px;
       font-weight: 900;
@@ -389,20 +382,25 @@
 
     .chips {
       display: flex;
-      gap: 8px;
       flex-wrap: wrap;
+      gap: 8px;
       margin-top: 14px;
     }
 
     .chip {
-      border: 1px solid #dce5f0;
-      background: white;
+      border: 1px solid #d7dee8;
+      background: #fff;
       color: var(--navy);
       border-radius: 999px;
       padding: 9px 13px;
       font-size: 14px;
       font-weight: 800;
       cursor: pointer;
+      transition: .14s ease;
+    }
+
+    .chip:hover {
+      background: var(--surface-soft);
     }
 
     .chip.active {
@@ -413,14 +411,9 @@
 
     .content-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.7fr) minmax(320px, .95fr);
+      grid-template-columns: minmax(0, 1.75fr) minmax(320px, .95fr);
       gap: 16px;
       align-items: start;
-    }
-
-    .events-panel,
-    .summary-panel {
-      padding: 18px 20px 20px;
     }
 
     .section-head {
@@ -432,13 +425,15 @@
     }
 
     .result-count {
-      color: var(--navy);
-      background: #f7f9fc;
+      display: inline-flex;
+      align-items: center;
       border: 1px solid var(--line);
       border-radius: 999px;
-      padding: 8px 12px;
+      background: var(--surface-soft);
+      color: var(--navy);
       font-size: 13px;
       font-weight: 800;
+      padding: 8px 12px;
       white-space: nowrap;
     }
 
@@ -448,41 +443,41 @@
     }
 
     .event-card {
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: white;
-      padding: 14px;
       display: grid;
-      grid-template-columns: 140px 1fr auto;
+      grid-template-columns: 142px 1fr auto;
       gap: 16px;
-      align-items: stretch;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      padding: 14px;
     }
 
     .date-box {
-      border: 1px solid #dbe4f0;
-      border-radius: 16px;
+      border: 1px solid #d9e2ee;
       background: #f8fbff;
+      border-radius: 14px;
       padding: 14px 12px;
+      min-height: 146px;
       text-align: center;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      min-height: 142px;
     }
 
     .date-label {
       color: var(--muted);
       font-size: 12px;
       font-weight: 800;
-      letter-spacing: .08em;
+      letter-spacing: .07em;
       margin-bottom: 8px;
     }
 
     .date-value {
       color: var(--navy);
-      font-size: 18px;
+      font-size: 22px;
+      line-height: 1.4;
       font-weight: 900;
-      line-height: 1.45;
+      word-break: break-word;
     }
 
     .first-seen {
@@ -502,17 +497,17 @@
 
     .company-name {
       margin: 0;
-      color: var(--ink);
+      color: var(--text);
       font-size: 22px;
-      font-weight: 900;
       line-height: 1.4;
+      font-weight: 900;
     }
 
     .badges {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 8px;
+      margin-top: 9px;
     }
 
     .badge {
@@ -525,26 +520,26 @@
     }
 
     .badge.type {
+      background: var(--blue-soft);
       color: var(--navy);
-      background: var(--soft-blue);
     }
 
     .badge.stage {
+      background: var(--green-soft);
       color: var(--green);
-      background: var(--soft-green);
     }
 
     .badge.source {
+      background: var(--amber-soft);
       color: var(--amber);
-      background: var(--soft-amber);
     }
 
     .event-title {
       margin: 12px 0 0;
+      color: var(--text);
       font-size: 16px;
-      font-weight: 800;
       line-height: 1.8;
-      color: var(--ink);
+      font-weight: 800;
     }
 
     .event-detail {
@@ -559,7 +554,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-width: 122px;
+      min-width: 124px;
     }
 
     .official-link {
@@ -568,7 +563,7 @@
       justify-content: center;
       min-height: 46px;
       padding: 0 14px;
-      border-radius: 14px;
+      border-radius: 12px;
       background: var(--navy);
       color: white;
       text-decoration: none;
@@ -579,18 +574,6 @@
 
     .official-link:hover {
       background: var(--navy-2);
-    }
-
-    .empty-state {
-      border: 1px dashed #ccd6e4;
-      border-radius: 16px;
-      background: #fafbfd;
-      padding: 28px 18px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.8;
-      font-weight: 600;
     }
 
     .sidebar {
@@ -619,14 +602,16 @@
       align-items: center;
     }
 
-    .summary-name {
-      color: var(--ink);
+    .summary-name,
+    .source-name {
+      color: var(--text);
       font-size: 14px;
       font-weight: 700;
       line-height: 1.5;
     }
 
-    .summary-count {
+    .summary-count,
+    .source-count {
       color: var(--navy);
       font-size: 16px;
       font-weight: 900;
@@ -637,13 +622,6 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-    }
-
-    .source-name {
-      color: var(--ink);
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 1.5;
     }
 
     .source-meta {
@@ -657,60 +635,70 @@
       min-width: 48px;
       padding: 6px 8px;
       border-radius: 999px;
+      text-align: center;
       font-size: 12px;
       font-weight: 800;
-      text-align: center;
     }
 
     .source-status.ok {
+      background: var(--green-soft);
       color: var(--green);
-      background: var(--soft-green);
     }
 
     .source-status.fail {
+      background: var(--red-soft);
       color: var(--red);
-      background: var(--soft-red);
-    }
-
-    .source-count {
-      color: var(--navy);
-      font-size: 15px;
-      font-weight: 900;
     }
 
     .summary-total {
       margin-top: 14px;
       border: 1px solid var(--line);
       border-radius: 14px;
+      background: var(--surface-soft);
       padding: 12px 14px;
-      background: #f7f9fc;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       color: var(--navy);
       font-size: 14px;
       font-weight: 800;
     }
 
+    .empty-state {
+      border: 1px dashed #ccd6e4;
+      border-radius: 14px;
+      background: #fafbfd;
+      padding: 28px 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+      font-weight: 600;
+    }
+
     .footer {
-      padding: 0 0 28px;
+      padding-bottom: 28px;
     }
 
     .footer-inner {
       border-top: 1px solid var(--line);
       padding-top: 18px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.8;
-      font-weight: 600;
       display: flex;
       justify-content: space-between;
       gap: 14px;
       flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+      font-weight: 600;
     }
 
     @media (max-width: 1180px) {
-      .stats-grid {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .kpi-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
@@ -724,19 +712,11 @@
     }
 
     @media (max-width: 920px) {
-      .topbar-inner {
+      .header-inner {
         flex-direction: column;
         align-items: flex-start;
         padding-top: 14px;
         padding-bottom: 14px;
-      }
-
-      .hero-status {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-time {
-        min-width: 0;
       }
 
       .filter-grid {
@@ -753,93 +733,86 @@
     }
 
     @media (max-width: 720px) {
-      .topbar-inner,
-      .page,
-      .footer-inner {
+      .shell {
         padding-left: 14px;
         padding-right: 14px;
       }
 
-      .stats-grid,
+      .kpi-grid,
       .sidebar {
         grid-template-columns: 1fr;
       }
 
-      .company-name {
-        font-size: 20px;
+      .brand-title {
+        font-size: 26px;
       }
 
       .hero-title {
         font-size: 28px;
       }
+
+      .company-name {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="topbar-inner">
+  <header class="site-header">
+    <div class="shell header-inner">
       <div>
         <h1 class="brand-title">台灣興櫃轉板進度監測站</h1>
         <p class="brand-subtitle">監測申請上市、申請上櫃、申請創新板上市及轉板進度重大更新</p>
       </div>
-      <nav class="top-nav" aria-label="主要導覽">
+      <nav class="nav" aria-label="主要導覽">
         <a href="#overview">總覽</a>
         <a href="#events-section">事件清單</a>
-        <a href="#summary-section">摘要</a>
-        <a href="#schedule">更新時程</a>
+        <a href="#summary-section">資料摘要</a>
       </nav>
     </div>
   </header>
 
-  <main class="page" id="overview">
-    <section class="hero-status" aria-live="polite">
-      <div>
-        <div class="hero-eyebrow">MONITOR STATUS</div>
+  <main class="shell page" id="overview">
+    <section class="hero" aria-live="polite">
+      <div class="hero-main">
+        <div class="hero-eyebrow">LISTING MONITOR</div>
         <h2 class="hero-title" id="runStatusTitle">載入本輪檢查結果中…</h2>
         <p class="hero-desc" id="runStatusDesc">系統正在讀取最新監測狀態。</p>
       </div>
-      <div class="hero-time">
-        <span class="hero-time-label">上次檢查時間</span>
-        <div class="hero-time-value" id="lastCheckedCompact">—</div>
+      <div class="hero-side">
+        <div class="hero-side-label">上次檢查時間</div>
+        <div class="hero-side-value" id="lastCheckedCompact">—</div>
       </div>
     </section>
 
-    <section class="stats-grid">
-      <article class="stat-card">
-        <span class="stat-label">上次檢查時間</span>
-        <div class="stat-value" id="lastChecked">—</div>
-        <span class="stat-note">系統排程完成後自動更新</span>
+    <section class="kpi-grid">
+      <article class="kpi-card">
+        <div class="kpi-label">上次檢查時間</div>
+        <div class="kpi-value" id="lastChecked">—</div>
+        <div class="kpi-note">系統排程完成後自動更新</div>
       </article>
 
-      <article class="stat-card">
-        <span class="stat-label">資料索取範圍</span>
-        <div class="stat-value" id="dataWindowLabel">近 3 年資料</div>
-        <span class="stat-note">超過期間的舊資料會自動汰除</span>
+      <article class="kpi-card">
+        <div class="kpi-label">資料索取範圍</div>
+        <div class="kpi-value" id="dataWindowLabel">近 3 年資料</div>
+        <div class="kpi-note">超過期間的舊資料會自動汰除</div>
       </article>
 
-      <article class="stat-card">
-        <span class="stat-label">目前保留期間</span>
-        <div class="stat-value"><span id="dataWindowStart">—</span> ～ <span id="dataWindowEnd">—</span></div>
-        <span class="stat-note">依每日更新自動往前滾動</span>
+      <article class="kpi-card">
+        <div class="kpi-label">目前保留期間</div>
+        <div class="kpi-value"><span id="dataWindowStart">—</span> ～ <span id="dataWindowEnd">—</span></div>
+        <div class="kpi-note">依每日更新自動往前滾動</div>
       </article>
 
-      <article class="stat-card">
-        <span class="stat-label">自動更新頻率</span>
-        <div class="stat-value">每小時 1 次</div>
-        <span class="stat-note">每日共 24 次整點檢查</span>
+      <article class="kpi-card">
+        <div class="kpi-label">自動更新頻率</div>
+        <div class="kpi-value">每小時 1 次</div>
+        <div class="kpi-note">每日共 24 次整點檢查</div>
       </article>
-    </section>
-
-    <section class="panel schedule-panel" id="schedule">
-      <h2 class="panel-title">自動更新時程（台灣時間）</h2>
-      <div class="schedule-times">
-        <span class="schedule-time">每小時整點</span>
-        <span class="schedule-time">00:00 ～ 23:00</span>
-        <span class="schedule-time">每日 24 次</span>
-      </div>
     </section>
 
     <section class="panel filter-panel">
+      <h2 class="panel-title">搜尋與篩選</h2>
       <div class="filter-grid">
         <div class="search-wrap" id="searchWrap">
           <input
@@ -867,7 +840,7 @@
     </section>
 
     <section class="content-grid" id="events-section">
-      <section class="panel events-panel">
+      <section class="panel">
         <div class="section-head">
           <h2 class="panel-title" style="margin:0;">事件清單</h2>
           <div class="result-count">目前顯示 <span id="visibleCount">—</span> 筆</div>
@@ -876,7 +849,7 @@
       </section>
 
       <aside class="sidebar" id="summary-section">
-        <section class="panel summary-panel">
+        <section class="panel">
           <h2 class="panel-title">事件類型摘要</h2>
           <div id="typeSummary" class="summary-list"></div>
           <div class="summary-total">
@@ -885,7 +858,7 @@
           </div>
         </section>
 
-        <section class="panel summary-panel">
+        <section class="panel">
           <h2 class="panel-title">資料來源本輪抓取</h2>
           <div id="sourceSummary" class="source-list"></div>
           <div class="summary-total">
@@ -898,7 +871,7 @@
   </main>
 
   <footer class="footer">
-    <div class="footer-inner">
+    <div class="shell footer-inner">
       <div>本網站資料僅供資訊追蹤，實際內容請以公開資訊觀測站、證交所、櫃買中心與主管機關公告為準。</div>
       <div>© 2026 台灣興櫃轉板進度監測站</div>
     </div>
@@ -969,27 +942,23 @@
       const raw = String(value ?? "").trim();
       if (!raw) return "—";
 
-      // YYYYMMDD
       let m = raw.match(/^(\d{4})(\d{2})(\d{2})$/);
       if (m) {
         const year = Number(m[1]) - 1911;
         return `${year}/${m[2]}/${m[3]}`;
       }
 
-      // YYYMMDD
       m = raw.match(/^(\d{3})(\d{2})(\d{2})$/);
       if (m) {
         return `${m[1]}/${m[2]}/${m[3]}`;
       }
 
-      // YYYY-MM-DD or YYYY/MM/DD
       m = raw.match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})$/);
       if (m) {
         const year = Number(m[1]) - 1911;
         return `${year}/${String(m[2]).padStart(2, "0")}/${String(m[3]).padStart(2, "0")}`;
       }
 
-      // YYY-MM-DD or YYY/MM/DD
       m = raw.match(/^(\d{2,3})[-/.](\d{1,2})[-/.](\d{1,2})$/);
       if (m) {
         return `${m[1]}/${String(m[2]).padStart(2, "0")}/${String(m[3]).padStart(2, "0")}`;
@@ -1004,13 +973,10 @@
       events.forEach(event => {
         const code = String(event.company_code || "").trim();
         const name = String(event.company_name || "").trim();
-
         if (!code && !name) return;
 
         const key = `${code}|${name}`;
-        if (!map.has(key)) {
-          map.set(key, { code, name });
-        }
+        if (!map.has(key)) map.set(key, { code, name });
       });
 
       companies = [...map.values()].sort((a, b) => {
@@ -1096,9 +1062,7 @@
       `;
 
       suggestionsEl.querySelectorAll(".suggestion-item").forEach(item => {
-        item.addEventListener("click", () => {
-          selectSuggestion(item.dataset.code, item.dataset.name);
-        });
+        item.addEventListener("click", () => selectSuggestion(item.dataset.code, item.dataset.name));
       });
     }
 
@@ -1123,9 +1087,7 @@
       if (activeSuggestionIndex < 0) activeSuggestionIndex = items.length - 1;
       if (activeSuggestionIndex >= items.length) activeSuggestionIndex = 0;
 
-      items.forEach((item, index) => {
-        item.classList.toggle("active", index === activeSuggestionIndex);
-      });
+      items.forEach((item, index) => item.classList.toggle("active", index === activeSuggestionIndex));
     }
 
     function confirmActiveSuggestion() {
@@ -1212,9 +1174,7 @@
         const queryText = searchEl.value.trim();
         eventsEl.innerHTML = `
           <div class="empty-state">
-            ${queryText
-              ? `目前找不到符合「${esc(queryText)}」的轉板監測事件。`
-              : "目前沒有符合篩選條件的事件。"}
+            ${queryText ? `目前找不到符合「${esc(queryText)}」的轉板監測事件。` : "目前沒有符合篩選條件的事件。"}
           </div>
         `;
         return;
@@ -1259,7 +1219,6 @@
       ];
 
       document.getElementById("summaryTotal").textContent = Number(status.total_event_count ?? events.length ?? 0);
-
       document.getElementById("typeSummary").innerHTML = items.map(item => `
         <div class="summary-row">
           <span class="summary-name">${esc(item.name)}</span>
@@ -1331,18 +1290,14 @@
         event.preventDefault();
         moveSuggestion(-1);
       } else if (event.key === "Enter") {
-        if (confirmActiveSuggestion()) {
-          event.preventDefault();
-        }
+        if (confirmActiveSuggestion()) event.preventDefault();
       } else if (event.key === "Escape") {
         closeSuggestions();
       }
     });
 
     document.addEventListener("click", event => {
-      if (!searchWrapEl.contains(event.target)) {
-        closeSuggestions();
-      }
+      if (!searchWrapEl.contains(event.target)) closeSuggestions();
     });
 
     sourceEl.addEventListener("change", renderEvents);
