@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-05-15T15:36:48+08:00",
+  "last_checked_at": "2026-05-15T15:42:01+08:00",
   "last_run_ok": true,
-  "schema_version": 9,
-  "message": "完成但有部分來源暫時抓取失敗：tpex_apply。網站資料共 745 筆事件，本輪新增 0 筆，Telegram 推播 0 筆；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "schema_version": 10,
+  "message": "完成：網站重建 1376 筆事件，本輪新增事件 0 筆，Telegram 推播 0 筆；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -16,9 +16,8 @@
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
-      "fetched": 0,
-      "ok": false,
-      "error": "TPEx 申請上櫃來源分年 CSV、ALL CSV 與 HTML 備援皆解析為 0 筆，暫不覆寫既有資料。"
+      "fetched": 631,
+      "ok": true
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
@@ -28,7 +27,7 @@
   },
   "new_event_count": 0,
   "telegram_sent_count": 0,
-  "total_event_count": 745,
+  "total_event_count": 1376,
   "data_retention_years": 3,
   "data_window_start": "2023-05-15",
   "data_window_end": "2026-05-15",
@@ -37,43 +36,38 @@
     "tpex_apply_by_year": {
       "115": {
         "parsed": 22,
-        "retained": 0
+        "retained": 22
       },
       "114": {
         "parsed": 248,
-        "retained": 0
+        "retained": 248
       },
       "113": {
         "parsed": 226,
-        "retained": 0
+        "retained": 226
       },
       "112": {
         "parsed": 146,
-        "retained": 0
+        "retained": 135
       }
-    },
-    "tpex_apply_all_csv": {
-      "parsed": 4277,
-      "retained": 0
-    },
-    "tpex_apply_html_fallback": {
-      "retained": 0
     }
   },
   "summary": {
     "stage_counts": {
-      "轉板進度重大更新": 332,
-      "審議通過": 132,
-      "送件": 146,
-      "受理": 121,
-      "撤回申請": 14
+      "送件": 262,
+      "受理": 237,
+      "轉板進度重大更新": 630,
+      "審議通過": 232,
+      "撤回申請": 15
     },
     "type_counts": {
-      "轉板進度重大更新": 435,
+      "申請上櫃": 233,
+      "轉板進度重大更新": 833,
       "申請上市": 171,
       "申請創新板上市": 139
     },
     "source_counts": {
+      "TPEx 申請上櫃公司": 631,
       "TWSE 申請上市公司": 680,
       "TWSE 臺灣創新板新聞稿": 65
     }
