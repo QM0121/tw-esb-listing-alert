@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>全部事件｜台灣興櫃轉板進度監測站</title>
+  <style>
+    :root {
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-soft: #f8fafc;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #d7dee8;
+      --navy: #19324d;
+      --navy-2: #284b6f;
+      --blue-soft: #eef4fb;
+      --green-soft: #edf7f1;
+      --amber-soft: #fff7ec;
+      --green: #1f7a4d;
+      --amber: #a16207;
+      --shadow: 0 8px 24px rgba(15, 23, 42, .05);
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", "Heiti TC", Arial, sans-serif;
+      letter-spacing: .01em;
+    }
+
+    a { color: inherit; }
+
+    .shell {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding-left: 22px;
+      padding-right: 22px;
+    }
+
+    .site-header {
+      background: rgba(255,255,255,.96);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(8px);
+    }
+
+    .header-inner {
+      min-height: 76px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .brand-title {
+      margin: 0;
+      color: var(--navy);
+      font-size: clamp(24px, 2.25vw, 34px);
+      font-weight: 900;
+      line-height: 1.12;
+    }
+
+    .brand-subtitle {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.6;
+    }
+
+    .back-link {
+      text-decoration: none;
+      color: var(--navy);
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .back-link:hover {
+      background: var(--surface-soft);
+    }
+
+    .page {
+      padding-top: 22px;
+      padding-bottom: 34px;
+    }
+
+    .hero,
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      border-radius: var(--radius-xl);
+      padding: 22px 24px;
+      margin-bottom: 16px;
+    }
+
+    .hero-title {
+      margin: 0;
+      color: var(--navy);
+      font-size: clamp(28px, 2.6vw, 40px);
+      line-height: 1.2;
+      font-weight: 900;
+    }
+
+    .hero-desc {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+      font-weight: 600;
+    }
+
+    .panel {
+      border-radius: var(--radius-xl);
+      padding: 18px 20px 20px;
+      margin-bottom: 16px;
+    }
+
+    .panel-title {
+      margin: 0 0 14px;
+      color: var(--navy);
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1.45;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: minmax(320px, 1fr) 240px auto;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .search-box,
+    .source-select,
+    .reset-btn {
+      height: 54px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .search-box,
+    .source-select {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--text);
+      padding: 0 14px;
+      outline: none;
+    }
+
+    .reset-btn {
+      border: 0;
+      background: var(--navy);
+      color: white;
+      padding: 0 18px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .reset-btn:hover { background: var(--navy-2); }
+
+    .helper-text {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      font-weight: 600;
+    }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .chip {
+      border: 1px solid #d7dee8;
+      background: white;
+      color: var(--navy);
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .chip.active {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: white;
+    }
+
+    .summary-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .result-count {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface-soft);
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 800;
+      padding: 8px 12px;
+    }
+
+    .events-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .event-card {
+      display: grid;
+      grid-template-columns: 142px 1fr auto;
+      gap: 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      padding: 16px;
+    }
+
+    .date-box {
+      border: 1px solid #d9e2ee;
+      background: #f8fbff;
+      border-radius: 14px;
+      padding: 14px 12px;
+      min-height: 146px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .date-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .07em;
+      margin-bottom: 8px;
+    }
+
+    .date-value {
+      color: var(--navy);
+      font-size: 22px;
+      line-height: 1.4;
+      font-weight: 900;
+      word-break: break-word;
+    }
+
+    .first-seen {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+      font-weight: 600;
+    }
+
+    .event-main {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .company-name {
+      margin: 0;
+      color: var(--text);
+      font-size: 22px;
+      line-height: 1.4;
+      font-weight: 900;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 9px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 7px 11px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .badge.type { background: var(--blue-soft); color: var(--navy); }
+    .badge.stage { background: var(--green-soft); color: var(--green); }
+    .badge.source { background: var(--amber-soft); color: var(--amber); }
+
+    .event-title {
+      margin: 12px 0 0;
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.8;
+      font-weight: 800;
+    }
+
+    .event-detail {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75;
+      font-weight: 600;
+    }
+
+    .event-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 124px;
+    }
+
+    .official-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 14px;
+      border-radius: 12px;
+      background: var(--navy);
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .official-link:hover { background: var(--navy-2); }
+
+    .empty-state {
+      border: 1px dashed #ccd6e4;
+      border-radius: 14px;
+      background: #fafbfd;
+      padding: 28px 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+      font-weight: 600;
+    }
+
+    @media (max-width: 920px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 14px;
+        padding-bottom: 14px;
+      }
+
+      .filter-grid,
+      .event-card {
+        grid-template-columns: 1fr;
+      }
+
+      .event-action {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+      .company-name { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <div>
+        <h1 class="brand-title">台灣興櫃轉板進度監測站</h1>
+        <p class="brand-subtitle">全部事件清單｜可依公司、來源與事件類型篩選</p>
+      </div>
+      <a class="back-link" href="./index.html">返回首頁</a>
+    </div>
+  </header>
+
+  <main class="shell page">
+    <section class="hero">
+      <h2 class="hero-title">全部事件</h2>
+      <p class="hero-desc">此頁顯示完整事件清單，並承接首頁帶入的搜尋與篩選條件。</p>
+    </section>
+
+    <section class="panel">
+      <h2 class="panel-title">搜尋與篩選</h2>
+      <div class="filter-grid">
+        <input id="search" class="search-box" type="search" placeholder="搜尋公司代號、公司名稱、公告標題或進度內容" />
+        <select id="sourceSelect" class="source-select">
+          <option value="">全部來源</option>
+        </select>
+        <button id="reset" class="reset-btn" type="button">清除篩選</button>
+      </div>
+      <div class="helper-text">此頁會顯示全部符合條件的事件資料。</div>
+      <div class="chips" id="chips"></div>
+    </section>
+
+    <section class="panel">
+      <div class="summary-row">
+        <h2 class="panel-title" style="margin:0;">事件清單</h2>
+        <div class="result-count">符合條件共 <span id="totalCount">—</span> 筆</div>
+      </div>
+      <div id="events" class="events-list"></div>
+    </section>
+  </main>
+
+  <script>
+    const CATEGORY_OPTIONS = [
+      "全部",
+      "申請上市",
+      "申請上櫃",
+      "申請創新板上市",
+      "轉板進度重大更新",
+      "送件",
+      "受理",
+      "審議通過",
+      "董事會決議申請",
+      "撤回申請"
+    ];
+
+    const searchEl = document.getElementById("search");
+    const sourceEl = document.getElementById("sourceSelect");
+    const resetEl = document.getElementById("reset");
+    const chipsEl = document.getElementById("chips");
+    const eventsEl = document.getElementById("events");
+
+    let events = [];
+    let activeCategory = "全部";
+
+    function esc(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function normalize(value) {
+      return String(value ?? "").trim().toLowerCase();
+    }
+
+    function compactDateTime(value) {
+      const text = String(value || "—");
+      return text.replace("T", " ").replace("+08:00", "");
+    }
+
+    function formatROCDate(value) {
+      const raw = String(value ?? "").trim();
+      if (!raw) return "—";
+
+      let m = raw.match(/^(\d{4})(\d{2})(\d{2})$/);
+      if (m) return `${Number(m[1]) - 1911}/${m[2]}/${m[3]}`;
+
+      m = raw.match(/^(\d{3})(\d{2})(\d{2})$/);
+      if (m) return `${m[1]}/${m[2]}/${m[3]}`;
+
+      m = raw.match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})$/);
+      if (m) return `${Number(m[1]) - 1911}/${String(m[2]).padStart(2, "0")}/${String(m[3]).padStart(2, "0")}`;
+
+      m = raw.match(/^(\d{2,3})[-/.](\d{1,2})[-/.](\d{1,2})$/);
+      if (m) return `${m[1]}/${String(m[2]).padStart(2, "0")}/${String(m[3]).padStart(2, "0")}`;
+
+      return raw;
+    }
+
+    function renderChips() {
+      chipsEl.innerHTML = CATEGORY_OPTIONS.map(label => `
+        <button class="chip ${label === activeCategory ? "active" : ""}" type="button" data-category="${esc(label)}">
+          ${esc(label)}
+        </button>
+      `).join("");
+
+      chipsEl.querySelectorAll(".chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+          activeCategory = chip.dataset.category;
+          syncUrl();
+          renderChips();
+          renderEvents();
+        });
+      });
+    }
+
+    function renderSourceOptions() {
+      const labels = [...new Set(events.map(event => event.source_label).filter(Boolean))];
+      sourceEl.innerHTML = '<option value="">全部來源</option>' + labels.map(label => `
+        <option value="${esc(label)}">${esc(label)}</option>
+      `).join("");
+    }
+
+    function matchesCategory(event) {
+      if (activeCategory === "全部") return true;
+      return event.event_type === activeCategory || event.stage === activeCategory;
+    }
+
+    function filteredEvents() {
+      const keyword = normalize(searchEl.value);
+      const source = sourceEl.value;
+
+      return events.filter(event => {
+        const haystack = [
+          event.company_name,
+          event.company_code,
+          event.title,
+          event.detail,
+          event.event_type,
+          event.stage,
+          event.source_label
+        ].join(" ").toLowerCase();
+
+        const keywordOk = !keyword || haystack.includes(keyword);
+        const sourceOk = !source || event.source_label === source;
+        return keywordOk && sourceOk && matchesCategory(event);
+      });
+    }
+
+    function renderEvents() {
+      const filtered = filteredEvents();
+      document.getElementById("totalCount").textContent = filtered.length;
+
+      if (!filtered.length) {
+        const queryText = searchEl.value.trim();
+        eventsEl.innerHTML = `
+          <div class="empty-state">
+            ${queryText ? `目前找不到符合「${esc(queryText)}」的事件。` : "目前沒有符合篩選條件的事件。"}
+          </div>
+        `;
+        return;
+      }
+
+      eventsEl.innerHTML = filtered.map(event => {
+        const company = event.company_name || "公司名稱待解析";
+        const code = event.company_code ? `（${event.company_code}）` : "";
+        return `
+          <article class="event-card">
+            <div class="date-box">
+              <div class="date-label">事件日期</div>
+              <div class="date-value">${esc(formatROCDate(event.event_date || "—"))}</div>
+              <div class="first-seen">系統收錄時間<br>${esc(compactDateTime(event.first_seen_at))}</div>
+            </div>
+            <div class="event-main">
+              <h3 class="company-name">${esc(company)}${esc(code)}</h3>
+              <div class="badges">
+                <span class="badge type">${esc(event.event_type)}</span>
+                <span class="badge stage">${esc(event.stage)}</span>
+                <span class="badge source">${esc(event.source_label)}</span>
+              </div>
+              <p class="event-title">${esc(event.title)}</p>
+              <p class="event-detail">${esc(event.detail || "重點以官方事件日期為主；系統收錄時間僅供追蹤資料更新。")}</p>
+            </div>
+            <div class="event-action">
+              <a class="official-link" href="${esc(event.url)}" target="_blank" rel="noopener noreferrer">查看官方來源</a>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function applyQueryParams() {
+      const params = new URLSearchParams(window.location.search);
+      const q = params.get("q");
+      const source = params.get("source");
+      const category = params.get("category");
+      if (q) searchEl.value = q;
+      if (category && CATEGORY_OPTIONS.includes(category)) activeCategory = category;
+      return source;
+    }
+
+    function syncUrl() {
+      const params = new URLSearchParams();
+      if (searchEl.value.trim()) params.set("q", searchEl.value.trim());
+      if (sourceEl.value) params.set("source", sourceEl.value);
+      if (activeCategory !== "全部") params.set("category", activeCategory);
+      const query = params.toString();
+      history.replaceState(null, "", query ? `./events.html?${query}` : "./events.html");
+    }
+
+    async function init() {
+      const presetSource = applyQueryParams();
+      const res = await fetch("./data/alerts.json", { cache: "no-store" });
+      events = res.ok ? await res.json() : [];
+      renderSourceOptions();
+      if (presetSource) sourceEl.value = presetSource;
+      renderChips();
+      renderEvents();
+    }
+
+    searchEl.addEventListener("input", () => {
+      syncUrl();
+      renderEvents();
+    });
+
+    sourceEl.addEventListener("change", () => {
+      syncUrl();
+      renderEvents();
+    });
+
+    resetEl.addEventListener("click", () => {
+      searchEl.value = "";
+      sourceEl.value = "";
+      activeCategory = "全部";
+      syncUrl();
+      renderChips();
+      renderEvents();
+    });
+
+    init();
+  </script>
+</body>
+</html>

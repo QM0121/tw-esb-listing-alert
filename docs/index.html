@@ -643,8 +643,8 @@
 
     .content-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.75fr) minmax(320px, .95fr);
-      gap: 16px;
+      grid-template-columns: minmax(0, 1.72fr) minmax(340px, .98fr);
+      gap: 18px;
       align-items: start;
     }
 
@@ -669,6 +669,56 @@
       white-space: nowrap;
     }
 
+
+    .events-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .events-toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .events-open-all {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border-radius: 999px;
+      padding: 0 16px;
+      border: 1px solid var(--navy);
+      background: var(--navy);
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 900;
+      transition: .15s ease;
+      white-space: nowrap;
+    }
+
+    .events-open-all.show {
+      display: inline-flex;
+    }
+
+    .events-open-all:hover {
+      background: var(--navy-2);
+      border-color: var(--navy-2);
+    }
+
+    .events-hint {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+      line-height: 1.6;
+    }
+
     .events-list {
       display: grid;
       gap: 12px;
@@ -677,11 +727,18 @@
     .event-card {
       display: grid;
       grid-template-columns: 142px 1fr auto;
-      gap: 16px;
+      gap: 18px;
       border: 1px solid var(--line);
-      border-radius: 16px;
+      border-radius: 18px;
       background: #fff;
-      padding: 14px;
+      padding: 16px;
+      transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+    }
+
+    .event-card:hover {
+      border-color: #c3d1e3;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, .05);
     }
 
     .date-box {
@@ -1356,11 +1413,15 @@
 
     <section class="content-grid" id="events-section">
       <section class="panel">
-        <div class="section-head">
-          <h2 class="panel-title" style="margin:0;">事件清單</h2>
-          <div class="result-count">目前顯示 <span id="visibleCount">—</span> 筆</div>
+        <div class="events-toolbar">
+          <div class="events-toolbar-left">
+            <h2 class="panel-title" style="margin:0;">事件清單</h2>
+            <div class="result-count">首頁顯示 <span id="visibleCount">—</span> / <span id="totalFilteredCount">—</span> 筆</div>
+          </div>
+          <a id="openAllEvents" class="events-open-all" href="./events.html" target="_blank" rel="noopener noreferrer">在新分頁查看全部</a>
         </div>
-        <div id="events" class="events-list"></div>
+        <div class="events-hint">首頁僅顯示最新幾筆符合條件的事件；完整清單請於新分頁查看。</div>
+        <div id="events" class="events-list" style="margin-top:14px;"></div>
       </section>
 
       <aside class="sidebar" id="summary-section">
@@ -1420,6 +1481,8 @@
       "董事會決議申請",
       "撤回申請"
     ];
+
+    const HOME_EVENT_LIMIT = 8;
 
     const searchEl = document.getElementById("search");
     const searchWrapEl = document.getElementById("searchWrap");
@@ -1801,9 +1864,26 @@
       });
     }
 
+    function buildAllEventsUrl() {
+      const params = new URLSearchParams();
+      const keyword = searchEl.value.trim();
+      const source = sourceEl.value;
+      if (keyword) params.set("q", keyword);
+      if (source) params.set("source", source);
+      if (activeCategory && activeCategory !== "全部") params.set("category", activeCategory);
+      const query = params.toString();
+      return query ? `./events.html?${query}` : "./events.html";
+    }
+
     function renderEvents() {
       const filtered = filteredEvents();
-      document.getElementById("visibleCount").textContent = filtered.length;
+      const visibleEvents = filtered.slice(0, HOME_EVENT_LIMIT);
+      const openAllEl = document.getElementById("openAllEvents");
+
+      document.getElementById("visibleCount").textContent = visibleEvents.length;
+      document.getElementById("totalFilteredCount").textContent = filtered.length;
+      openAllEl.href = buildAllEventsUrl();
+      openAllEl.classList.toggle("show", filtered.length > HOME_EVENT_LIMIT);
 
       if (!filtered.length) {
         const queryText = searchEl.value.trim();
@@ -1815,7 +1895,7 @@
         return;
       }
 
-      eventsEl.innerHTML = filtered.map(event => {
+      eventsEl.innerHTML = visibleEvents.map(event => {
         const company = event.company_name || "公司名稱待解析";
         const code = event.company_code ? `（${event.company_code}）` : "";
         return `
