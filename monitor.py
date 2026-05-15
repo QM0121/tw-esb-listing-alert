@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import csv
 import hashlib
 import json
 import os
@@ -32,9 +33,10 @@ TPEX_ESB_COMPANIES_URL = "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap04_O"
 MOPS_REALTIME_URL = "https://mopsov.twse.com.tw/mops/web/t05sr01_1"
 TWSE_APPLY_LISTING_URL = "https://www.twse.com.tw/rwd/zh/company/applylisting?response=html"
 TPEX_APPLY_OTC_URL = "https://www.tpex.org.tw/zh-tw/mainboard/applying/status/company.html"
+TPEX_APPLY_OTC_CSV_URL = "https://www.tpex.org.tw/web/regular_emerging/apply_schedule/applicant/applicant_companies_download_UTF-8.php?l=zh-tw&y=ALL"
 TIB_NEWS_URL = "https://www.twse.com.tw/TIB/zh/news.html"
 
-SCHEMA_VERSION = 3
+SCHEMA_VERSION = 4
 MAX_EVENTS_TO_KEEP = 5000
 MAX_SEEN_TO_KEEP = 30000
 
@@ -88,11 +90,19 @@ def write_json(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
-def get_text(url: str) -> str:
-    response = requests.get(url, headers=HEADERS, timeout=40)
-    response.raise_for_status()
-    response.encoding = response.apparent_encoding or "utf-8"
-    return response.text
+def get_text(url: str, retries: int = 3) -> str:
+    last_exc: Exception | None = None
+    for attempt in range(1, retries + 1):
+        try:
+            response = requests.get(url, headers=HEADERS, timeout=40)
+            response.raise_for_status()
+            response.encoding = response.apparent_encoding or "utf-8"
+            return response.text
+        except requests.RequestException as exc:
+            last_exc = exc
+            if attempt == retries:
+                break
+    raise RuntimeError(f"抓取來源失敗：{url}；{last_exc}")
 
 def get_json(url: str) -> Any:
     response = requests.get(url, headers=HEADERS, timeout=40)
@@ -350,25 +360,30 @@ def parse_twse_apply(html: str) -> list[dict[str, str]]:
 # 0索引 1股票代號 2公司名稱 3申請日期 4董事長 5股本
 # 6上櫃審議日期 7董事會通過 8同意/核准契約 9上櫃買賣日期 10承銷商 11承銷價 12備註
 # ----------------------------------------
-def parse_tpex_apply(html: str) -> list[dict[str, str]]:
-    soup = BeautifulSoup(html, "html.parser")
-    table = find_table_by_headers(soup, ["股票代號", "公司名稱", "申請日期"])
-    rows = table_rows(table)
-    ensure_reasonable_row_count("TPEx 申請上櫃公司", rows)
+def parse_tpex_apply(csv_text: str) -> list[dict[str, str]]:
+    rows = list(csv.reader(csv_text.splitlines()))
+    if not rows:
+        return []
+
+    # 官方 CSV 欄位依序為：
+    # 0申請日期 1股票代號 2公司名稱 3董事長 4股本(申請時)
+    # 5上櫃審議日期 6董事會通過 7契約同意/核准 8上櫃買賣日期 9承銷商 10承銷價 11備註
+    data_rows = rows[1:] if rows and any("股票代號" in cell for cell in rows[0]) else rows
+    ensure_reasonable_row_count("TPEx 申請上櫃公司 CSV", data_rows, max_rows=5000)
 
     events: list[dict[str, str]] = []
-    for cells in rows:
-        if len(cells) < 10:
+    for cells in data_rows:
+        if len(cells) < 9:
             continue
 
-        code = clean_stock_code(cells[1] if len(cells) > 1 else "")
-        name = cells[2] if len(cells) > 2 else ""
-        app_date = cells[3] if len(cells) > 3 else ""
-        review_date = cells[6] if len(cells) > 6 else ""
-        board_date = cells[7] if len(cells) > 7 else ""
-        contract_date = cells[8] if len(cells) > 8 else ""
-        trading_date = cells[9] if len(cells) > 9 else ""
-        remarks = cells[12] if len(cells) > 12 else ""
+        app_date = normalize_text(cells[0])
+        code = clean_stock_code(cells[1])
+        name = normalize_text(cells[2])
+        review_date = normalize_text(cells[5]) if len(cells) > 5 else ""
+        board_date = normalize_text(cells[6]) if len(cells) > 6 else ""
+        contract_date = normalize_text(cells[7]) if len(cells) > 7 else ""
+        trading_date = normalize_text(cells[8]) if len(cells) > 8 else ""
+        remarks = normalize_text(cells[11]) if len(cells) > 11 else ""
         url = TPEX_APPLY_OTC_URL
 
         if not code or not name or not app_date:
@@ -383,7 +398,7 @@ def parse_tpex_apply(html: str) -> list[dict[str, str]]:
             company_name=name,
             title=f"{name}（{code}）列入櫃買中心申請上櫃公司名單",
             url=url,
-            detail="官方申請上櫃公司表格顯示申請日期",
+            detail="官方申請上櫃公司 CSV 顯示申請日期",
         ))
         events.append(make_event(
             source="tpex_apply",
@@ -407,7 +422,7 @@ def parse_tpex_apply(html: str) -> list[dict[str, str]]:
                 company_name=name,
                 title=f"{name}（{code}）上櫃審議委員會審議日期已更新",
                 url=url,
-                detail="官方申請上櫃公司表格已出現上櫃審議委員會審議日期",
+                detail="官方申請上櫃公司 CSV 已出現上櫃審議委員會審議日期",
             ))
 
         updates = [
@@ -622,26 +637,48 @@ def main() -> None:
 
         esb_companies = fetch_esb_companies()
 
-        source_events: dict[str, list[dict[str, str]]] = {
-            "mops": parse_mops_realtime(get_text(MOPS_REALTIME_URL), esb_companies),
-            "twse_apply": parse_twse_apply(get_text(TWSE_APPLY_LISTING_URL)),
-            "tpex_apply": parse_tpex_apply(get_text(TPEX_APPLY_OTC_URL)),
-            "tib_news": parse_tib_news(get_text(TIB_NEWS_URL)),
+        source_events: dict[str, list[dict[str, str]]] = {}
+        source_errors: dict[str, str] = {}
+
+        fetchers = {
+            "mops": lambda: parse_mops_realtime(get_text(MOPS_REALTIME_URL), esb_companies),
+            "twse_apply": lambda: parse_twse_apply(get_text(TWSE_APPLY_LISTING_URL)),
+            "tpex_apply": lambda: parse_tpex_apply(get_text(TPEX_APPLY_OTC_CSV_URL)),
+            "tib_news": lambda: parse_tib_news(get_text(TIB_NEWS_URL)),
         }
 
-        for source, events in source_events.items():
-            status["sources"][source] = {
-                "label": SOURCE_LABELS.get(source, source),
-                "fetched": len(events),
-            }
+        for source, fetcher in fetchers.items():
+            try:
+                source_events[source] = fetcher()
+                status["sources"][source] = {
+                    "label": SOURCE_LABELS.get(source, source),
+                    "fetched": len(source_events[source]),
+                    "ok": True,
+                }
+            except Exception as exc:
+                source_events[source] = []
+                source_errors[source] = str(exc)
+                status["sources"][source] = {
+                    "label": SOURCE_LABELS.get(source, source),
+                    "fetched": 0,
+                    "ok": False,
+                    "error": str(exc),
+                }
 
-        # 網站資料：官方清單類來源每次重建，MOPS 保留累積紀錄
+        # 網站資料：
+        # - 成功抓取的官方來源每次重建
+        # - 單一來源暫時失敗時，保留既有資料，避免整站因官方網站偶發錯誤而缺資料
+        preserved_failed_source_events = [
+            event for event in existing_events
+            if isinstance(event, dict) and event.get("source") in source_errors
+        ]
         website_events = (
-            source_events["twse_apply"]
-            + source_events["tpex_apply"]
-            + source_events["tib_news"]
+            source_events.get("twse_apply", [])
+            + source_events.get("tpex_apply", [])
+            + source_events.get("tib_news", [])
+            + preserved_failed_source_events
             + preserved_mops_events
-            + source_events["mops"]
+            + source_events.get("mops", [])
         )
         website_events = dedupe_events(website_events)
         website_events.sort(key=event_sort_key, reverse=True)
@@ -676,10 +713,17 @@ def main() -> None:
         status["total_event_count"] = len(website_events)
         status["summary"] = summarize(website_events)
         status["last_run_ok"] = True
-        status["message"] = (
-            f"完成：網站重建 {len(website_events)} 筆事件，"
-            f"本輪新增事件 {len(new_events)} 筆，Telegram 推播 {telegram_sent_count} 筆。"
-        )
+        if source_errors:
+            status["message"] = (
+                f"完成但有部分來源暫時抓取失敗：{', '.join(source_errors.keys())}。"
+                f"網站資料共 {len(website_events)} 筆事件，本輪新增 {len(new_events)} 筆，"
+                f"Telegram 推播 {telegram_sent_count} 筆。"
+            )
+        else:
+            status["message"] = (
+                f"完成：網站重建 {len(website_events)} 筆事件，"
+                f"本輪新增事件 {len(new_events)} 筆，Telegram 推播 {telegram_sent_count} 筆。"
+            )
 
         write_json(SEEN_PATH, {
             "seen": list(seen_ids)[-MAX_SEEN_TO_KEEP:],
