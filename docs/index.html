@@ -383,6 +383,264 @@
       color: white;
     }
 
+
+    .insight-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(360px, .85fr);
+      gap: 16px;
+      margin-bottom: 16px;
+      align-items: start;
+    }
+
+    .latest-panel,
+    .active-panel,
+    .timeline-panel {
+      padding: 18px 20px 20px;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .latest-item,
+    .active-item {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fbfcfe;
+      padding: 12px 14px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .latest-top,
+    .active-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .latest-company,
+    .active-company {
+      color: var(--navy);
+      font-size: 15px;
+      line-height: 1.5;
+      font-weight: 900;
+    }
+
+    .latest-date,
+    .active-date {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .latest-title,
+    .active-stage {
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.7;
+      font-weight: 700;
+    }
+
+    .inline-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .small-badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 800;
+    }
+
+    .small-badge.type {
+      background: var(--blue-soft);
+      color: var(--navy);
+    }
+
+    .small-badge.stage {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .active-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .active-summary-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fbfcfe;
+      padding: 12px;
+    }
+
+    .active-summary-label {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .active-summary-value {
+      color: var(--navy);
+      font-size: 22px;
+      line-height: 1.3;
+      font-weight: 900;
+    }
+
+    .active-toggle {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--navy);
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .active-toggle:hover {
+      background: var(--surface-soft);
+    }
+
+    .timeline-panel {
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .timeline-panel.show {
+      display: block;
+    }
+
+    .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .timeline-company {
+      color: var(--navy);
+      font-size: 20px;
+      line-height: 1.45;
+      font-weight: 900;
+      margin: 0;
+    }
+
+    .timeline-note {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+      font-weight: 600;
+      margin: 6px 0 0;
+    }
+
+    .timeline-current {
+      border: 1px solid var(--line);
+      background: #fbfcfe;
+      border-radius: 14px;
+      padding: 10px 12px;
+      color: var(--navy);
+      font-size: 13px;
+      line-height: 1.6;
+      font-weight: 800;
+    }
+
+    .timeline-list {
+      position: relative;
+      display: grid;
+      gap: 12px;
+      padding-left: 18px;
+    }
+
+    .timeline-list::before {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: #d8e2ef;
+    }
+
+    .timeline-item {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fbfcfe;
+      padding: 12px 14px 12px 16px;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -18px;
+      top: 18px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--navy);
+      box-shadow: 0 0 0 4px #edf3f9;
+    }
+
+    .timeline-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 7px;
+    }
+
+    .timeline-stage {
+      color: var(--navy);
+      font-size: 14px;
+      line-height: 1.5;
+      font-weight: 900;
+    }
+
+    .timeline-date {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      font-weight: 700;
+    }
+
+    .timeline-title {
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.75;
+      font-weight: 700;
+    }
+
+    .timeline-empty {
+      border: 1px dashed #ccd6e4;
+      border-radius: 14px;
+      background: #fafbfd;
+      padding: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+      font-weight: 600;
+    }
+
     .content-grid {
       display: grid;
       grid-template-columns: minmax(0, 1.75fr) minmax(320px, .95fr);
@@ -672,7 +930,265 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .content-grid {
+  
+    .insight-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(360px, .85fr);
+      gap: 16px;
+      margin-bottom: 16px;
+      align-items: start;
+    }
+
+    .latest-panel,
+    .active-panel,
+    .timeline-panel {
+      padding: 18px 20px 20px;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .latest-item,
+    .active-item {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fbfcfe;
+      padding: 12px 14px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .latest-top,
+    .active-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .latest-company,
+    .active-company {
+      color: var(--navy);
+      font-size: 15px;
+      line-height: 1.5;
+      font-weight: 900;
+    }
+
+    .latest-date,
+    .active-date {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .latest-title,
+    .active-stage {
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.7;
+      font-weight: 700;
+    }
+
+    .inline-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .small-badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 800;
+    }
+
+    .small-badge.type {
+      background: var(--blue-soft);
+      color: var(--navy);
+    }
+
+    .small-badge.stage {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .active-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .active-summary-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fbfcfe;
+      padding: 12px;
+    }
+
+    .active-summary-label {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .active-summary-value {
+      color: var(--navy);
+      font-size: 22px;
+      line-height: 1.3;
+      font-weight: 900;
+    }
+
+    .active-toggle {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--navy);
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .active-toggle:hover {
+      background: var(--surface-soft);
+    }
+
+    .timeline-panel {
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .timeline-panel.show {
+      display: block;
+    }
+
+    .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .timeline-company {
+      color: var(--navy);
+      font-size: 20px;
+      line-height: 1.45;
+      font-weight: 900;
+      margin: 0;
+    }
+
+    .timeline-note {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+      font-weight: 600;
+      margin: 6px 0 0;
+    }
+
+    .timeline-current {
+      border: 1px solid var(--line);
+      background: #fbfcfe;
+      border-radius: 14px;
+      padding: 10px 12px;
+      color: var(--navy);
+      font-size: 13px;
+      line-height: 1.6;
+      font-weight: 800;
+    }
+
+    .timeline-list {
+      position: relative;
+      display: grid;
+      gap: 12px;
+      padding-left: 18px;
+    }
+
+    .timeline-list::before {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: #d8e2ef;
+    }
+
+    .timeline-item {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fbfcfe;
+      padding: 12px 14px 12px 16px;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -18px;
+      top: 18px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--navy);
+      box-shadow: 0 0 0 4px #edf3f9;
+    }
+
+    .timeline-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 7px;
+    }
+
+    .timeline-stage {
+      color: var(--navy);
+      font-size: 14px;
+      line-height: 1.5;
+      font-weight: 900;
+    }
+
+    .timeline-date {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      font-weight: 700;
+    }
+
+    .timeline-title {
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.75;
+      font-weight: 700;
+    }
+
+    .timeline-empty {
+      border: 1px dashed #ccd6e4;
+      border-radius: 14px;
+      background: #fafbfd;
+      padding: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+      font-weight: 600;
+    }
+
+    .content-grid {
         grid-template-columns: 1fr;
       }
 
@@ -709,7 +1225,8 @@
       }
 
       .kpi-grid,
-      .sidebar {
+      .sidebar,
+      .active-summary {
         grid-template-columns: 1fr;
       }
 
@@ -805,6 +1322,38 @@
       <div class="chips" id="chips"></div>
     </section>
 
+    <section class="insight-grid">
+      <section class="panel latest-panel">
+        <div class="section-head">
+          <h2 class="panel-title" style="margin:0;">最新事件</h2>
+          <div class="result-count">依事件日期排序</div>
+        </div>
+        <div id="latestEvents" class="mini-list"></div>
+      </section>
+
+      <section class="panel active-panel">
+        <div class="section-head">
+          <h2 class="panel-title" style="margin:0;">目前進行中案件</h2>
+          <div class="result-count"><span id="activeCaseTotal">—</span> 件</div>
+        </div>
+        <div id="activeSummary" class="active-summary"></div>
+        <div id="activeCases" class="mini-list"></div>
+        <button id="toggleActiveCases" class="active-toggle" type="button">展開全部</button>
+      </section>
+    </section>
+
+    <section id="timelinePanel" class="panel timeline-panel">
+      <div class="timeline-header">
+        <div>
+          <h2 class="panel-title" style="margin:0;">公司進度時間軸</h2>
+          <h3 id="timelineCompany" class="timeline-company"></h3>
+          <p class="timeline-note">選擇公司後，這裡會整理該公司的轉板事件脈絡。</p>
+        </div>
+        <div id="timelineCurrent" class="timeline-current"></div>
+      </div>
+      <div id="timelineList" class="timeline-list"></div>
+    </section>
+
     <section class="content-grid" id="events-section">
       <section class="panel">
         <div class="section-head">
@@ -885,6 +1434,8 @@
     let companies = [];
     let activeCategory = "全部";
     let activeSuggestionIndex = -1;
+    let selectedCompany = null;
+    let activeCasesExpanded = false;
 
     function esc(value) {
       return String(value ?? "")
@@ -931,6 +1482,123 @@
       }
 
       return raw;
+    }
+
+
+    function eventDateRank(value) {
+      const raw = String(value ?? "").trim();
+      if (!raw) return 0;
+
+      let m = raw.match(/^(\d{4})(\d{2})(\d{2})$/);
+      if (m) return Number(`${m[1]}${m[2]}${m[3]}`);
+
+      m = raw.match(/^(\d{3})(\d{2})(\d{2})$/);
+      if (m) return Number(`${Number(m[1]) + 1911}${m[2]}${m[3]}`);
+
+      m = raw.match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})$/);
+      if (m) return Number(`${m[1]}${String(m[2]).padStart(2, "0")}${String(m[3]).padStart(2, "0")}`);
+
+      m = raw.match(/^(\d{2,3})[-/.](\d{1,2})[-/.](\d{1,2})$/);
+      if (m) return Number(`${Number(m[1]) + 1911}${String(m[2]).padStart(2, "0")}${String(m[3]).padStart(2, "0")}`);
+
+      return 0;
+    }
+
+    function sortEventsByDateDesc(list) {
+      return [...list].sort((a, b) => {
+        const dateDiff = eventDateRank(b.event_date) - eventDateRank(a.event_date);
+        if (dateDiff !== 0) return dateDiff;
+        return String(b.first_seen_at || "").localeCompare(String(a.first_seen_at || ""));
+      });
+    }
+
+    function sortEventsByDateAsc(list) {
+      return [...list].sort((a, b) => {
+        const dateDiff = eventDateRank(a.event_date) - eventDateRank(b.event_date);
+        if (dateDiff !== 0) return dateDiff;
+        return String(a.first_seen_at || "").localeCompare(String(b.first_seen_at || ""));
+      });
+    }
+
+    function companyDisplay(event) {
+      const name = event.company_name || "公司名稱待解析";
+      const code = event.company_code ? `（${event.company_code}）` : "";
+      return `${name}${code}`;
+    }
+
+    function selectedCompanyEvents() {
+      if (!selectedCompany) return [];
+      const code = String(selectedCompany.code || "").trim();
+      const name = String(selectedCompany.name || "").trim();
+
+      return events.filter(event => {
+        const eventCode = String(event.company_code || "").trim();
+        const eventName = String(event.company_name || "").trim();
+        return (code && eventCode === code) || (name && eventName === name);
+      });
+    }
+
+    function applicationTrackForCompany(companyEvents) {
+      if (companyEvents.some(event => event.event_type === "申請創新板上市")) return "申請創新板上市";
+      if (companyEvents.some(event => event.event_type === "申請上櫃")) return "申請上櫃";
+      if (companyEvents.some(event => event.event_type === "申請上市")) return "申請上市";
+      return "轉板進度";
+    }
+
+    function isTerminalEvent(event) {
+      const title = String(event.title || "");
+      const detail = String(event.detail || "");
+      const text = `${title} ${detail}`;
+      return event.stage === "撤回申請"
+        || text.includes("股票上市買賣日期已更新")
+        || text.includes("股票上櫃買賣日期已更新")
+        || text.includes("開始買賣日期");
+    }
+
+    function buildActiveCases() {
+      const map = new Map();
+
+      events.forEach(event => {
+        const code = String(event.company_code || "").trim();
+        const name = String(event.company_name || "").trim();
+        if (!code && !name) return;
+
+        const key = code || name;
+        if (!map.has(key)) {
+          map.set(key, {
+            key,
+            code,
+            name,
+            events: []
+          });
+        }
+        map.get(key).events.push(event);
+      });
+
+      const cases = [];
+
+      map.forEach(group => {
+        const sorted = sortEventsByDateDesc(group.events);
+        const latest = sorted[0];
+        if (!latest) return;
+
+        const track = applicationTrackForCompany(group.events);
+        if (!["申請上市", "申請上櫃", "申請創新板上市"].includes(track)) return;
+        if (isTerminalEvent(latest)) return;
+
+        cases.push({
+          code: group.code,
+          name: group.name,
+          track,
+          latest
+        });
+      });
+
+      return cases.sort((a, b) => {
+        const dateDiff = eventDateRank(b.latest.event_date) - eventDateRank(a.latest.event_date);
+        if (dateDiff !== 0) return dateDiff;
+        return String(a.name || a.code).localeCompare(String(b.name || b.code), "zh-Hant", { numeric: true });
+      });
     }
 
     function buildCompanyIndex() {
@@ -1039,9 +1707,11 @@
     }
 
     function selectSuggestion(code, name) {
+      selectedCompany = { code: code || "", name: name || "" };
       searchEl.value = code || name || "";
       closeSuggestions();
       renderEvents();
+      renderTimeline();
       searchEl.focus();
     }
 
@@ -1175,6 +1845,116 @@
       }).join("");
     }
 
+
+    function renderLatestEvents() {
+      const latest = sortEventsByDateDesc(events).slice(0, 5);
+      const container = document.getElementById("latestEvents");
+
+      if (!latest.length) {
+        container.innerHTML = '<div class="empty-state">目前尚無事件資料。</div>';
+        return;
+      }
+
+      container.innerHTML = latest.map(event => `
+        <article class="latest-item">
+          <div class="latest-top">
+            <div class="latest-company">${esc(companyDisplay(event))}</div>
+            <div class="latest-date">${esc(formatROCDate(event.event_date || "—"))}</div>
+          </div>
+          <div class="inline-badges">
+            <span class="small-badge type">${esc(event.event_type || "未分類")}</span>
+            <span class="small-badge stage">${esc(event.stage || "未分類")}</span>
+          </div>
+          <div class="latest-title">${esc(event.title || "")}</div>
+        </article>
+      `).join("");
+    }
+
+    function renderActiveCases() {
+      const cases = buildActiveCases();
+      const counts = {
+        "申請上市": 0,
+        "申請上櫃": 0,
+        "申請創新板上市": 0
+      };
+
+      cases.forEach(item => {
+        if (counts[item.track] !== undefined) counts[item.track] += 1;
+      });
+
+      document.getElementById("activeCaseTotal").textContent = cases.length;
+      document.getElementById("activeSummary").innerHTML = Object.entries(counts).map(([label, count]) => `
+        <div class="active-summary-card">
+          <div class="active-summary-label">${esc(label)}</div>
+          <div class="active-summary-value">${esc(count)}</div>
+        </div>
+      `).join("");
+
+      const container = document.getElementById("activeCases");
+      const visibleCases = activeCasesExpanded ? cases : cases.slice(0, 6);
+
+      if (!visibleCases.length) {
+        container.innerHTML = '<div class="empty-state">目前沒有可判定為進行中的案件。</div>';
+        document.getElementById("toggleActiveCases").style.display = "none";
+        return;
+      }
+
+      container.innerHTML = visibleCases.map(item => {
+        const company = `${item.name || "公司名稱待解析"}${item.code ? `（${item.code}）` : ""}`;
+        return `
+          <article class="active-item">
+            <div class="active-top">
+              <div class="active-company">${esc(company)}</div>
+              <div class="active-date">${esc(formatROCDate(item.latest.event_date || "—"))}</div>
+            </div>
+            <div class="inline-badges">
+              <span class="small-badge type">${esc(item.track)}</span>
+              <span class="small-badge stage">${esc(item.latest.stage || "最新進度")}</span>
+            </div>
+            <div class="active-stage">${esc(item.latest.title || "")}</div>
+          </article>
+        `;
+      }).join("");
+
+      const toggle = document.getElementById("toggleActiveCases");
+      toggle.style.display = cases.length > 6 ? "inline-flex" : "none";
+      toggle.textContent = activeCasesExpanded ? "收合" : "展開全部";
+    }
+
+    function renderTimeline() {
+      const panel = document.getElementById("timelinePanel");
+      const timelineCompany = document.getElementById("timelineCompany");
+      const timelineCurrent = document.getElementById("timelineCurrent");
+      const timelineList = document.getElementById("timelineList");
+      const companyEvents = sortEventsByDateAsc(selectedCompanyEvents());
+
+      if (!selectedCompany || !companyEvents.length) {
+        panel.classList.remove("show");
+        timelineCompany.textContent = "";
+        timelineCurrent.textContent = "";
+        timelineList.innerHTML = "";
+        return;
+      }
+
+      const latest = sortEventsByDateDesc(companyEvents)[0];
+      const companyName = `${selectedCompany.name || latest.company_name || "公司名稱待解析"}${selectedCompany.code ? `（${selectedCompany.code}）` : latest.company_code ? `（${latest.company_code}）` : ""}`;
+
+      timelineCompany.textContent = companyName;
+      timelineCurrent.textContent = `最新已知進度：${latest.stage || latest.event_type || "未分類"}｜${formatROCDate(latest.event_date || "—")}`;
+
+      timelineList.innerHTML = companyEvents.map(event => `
+        <article class="timeline-item">
+          <div class="timeline-item-top">
+            <div class="timeline-stage">${esc(event.event_type || "未分類")}｜${esc(event.stage || "未分類")}</div>
+            <div class="timeline-date">${esc(formatROCDate(event.event_date || "—"))}</div>
+          </div>
+          <div class="timeline-title">${esc(event.title || "")}</div>
+        </article>
+      `).join("");
+
+      panel.classList.add("show");
+    }
+
     function renderTypeSummary() {
       const typeCounts = status.summary?.type_counts || {};
       const stageCounts = status.summary?.stage_counts || {};
@@ -1228,6 +2008,8 @@
         renderRunStatus();
         renderChips();
         renderSourceOptions();
+        renderLatestEvents();
+        renderActiveCases();
         renderEvents();
         renderTypeSummary();
         renderSourceSummary();
@@ -1239,7 +2021,9 @@
     }
 
     searchEl.addEventListener("input", () => {
+      selectedCompany = null;
       renderEvents();
+      renderTimeline();
       updateSuggestions();
     });
 
@@ -1271,9 +2055,16 @@
       searchEl.value = "";
       sourceEl.value = "";
       activeCategory = "全部";
+      selectedCompany = null;
       closeSuggestions();
       renderChips();
       renderEvents();
+      renderTimeline();
+    });
+
+    document.getElementById("toggleActiveCases").addEventListener("click", () => {
+      activeCasesExpanded = !activeCasesExpanded;
+      renderActiveCases();
     });
 
     init();
