@@ -1,7 +1,7 @@
 {
-  "last_checked_at": "2026-05-15T15:23:33+08:00",
+  "last_checked_at": "2026-05-15T15:36:48+08:00",
   "last_run_ok": true,
-  "schema_version": 8,
+  "schema_version": 9,
   "message": "完成但有部分來源暫時抓取失敗：tpex_apply。網站資料共 745 筆事件，本輪新增 0 筆，Telegram 推播 0 筆；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
@@ -18,7 +18,7 @@
       "label": "TPEx 申請上櫃公司",
       "fetched": 0,
       "ok": false,
-      "error": "TPEx 申請上櫃來源解析後為 0 筆，暫不覆寫既有資料。"
+      "error": "TPEx 申請上櫃來源分年 CSV、ALL CSV 與 HTML 備援皆解析為 0 筆，暫不覆寫既有資料。"
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
@@ -33,6 +33,33 @@
   "data_window_start": "2023-05-15",
   "data_window_end": "2026-05-15",
   "data_window_label": "近 3 年資料",
+  "debug": {
+    "tpex_apply_by_year": {
+      "115": {
+        "parsed": 22,
+        "retained": 0
+      },
+      "114": {
+        "parsed": 248,
+        "retained": 0
+      },
+      "113": {
+        "parsed": 226,
+        "retained": 0
+      },
+      "112": {
+        "parsed": 146,
+        "retained": 0
+      }
+    },
+    "tpex_apply_all_csv": {
+      "parsed": 4277,
+      "retained": 0
+    },
+    "tpex_apply_html_fallback": {
+      "retained": 0
+    }
+  },
   "summary": {
     "stage_counts": {
       "轉板進度重大更新": 332,
