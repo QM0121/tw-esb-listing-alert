@@ -48,6 +48,53 @@
     }
     .stat .label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 8px; }
     .stat .value { font-size: 24px; font-weight: 800; }
+
+    .update-info {
+      margin: 20px 0;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: 22px;
+      display: grid;
+      grid-template-columns: .7fr 1.3fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+    .update-box {
+      background: var(--soft2);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .update-box .title {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+    .update-box .main {
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+    .schedule-times {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .schedule-time {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: white;
+      border: 1px solid var(--line);
+      font-weight: 800;
+      font-size: 14px;
+    }
+
     .filters {
       margin: 20px 0;
       padding: 18px;
@@ -236,7 +283,7 @@
     @media (max-width: 620px) {
       .wrap { padding: 16px 12px 42px; }
       .hero { padding: 20px; }
-      .stats, .mini-grid { grid-template-columns: 1fr; }
+      .stats, .mini-grid, .update-info { grid-template-columns: 1fr; }
       .meta { text-align: left; }
       input, select, button { width: 100%; }
       .suggestion-code { min-width: 54px; }
@@ -256,10 +303,31 @@
         「受理」欄位以公司新出現在官方申請公司清單作為追蹤訊號，實際程序仍以官方原文為準。
       </p>
       <div class="stats">
-        <div class="stat"><span class="label">最近更新</span><span class="value" id="lastChecked">—</span></div>
+        <div class="stat"><span class="label">上次更新時間</span><span class="value" id="lastChecked">—</span></div>
         <div class="stat"><span class="label">網站事件總數</span><span class="value" id="totalEvents">—</span></div>
         <div class="stat"><span class="label">本輪新增事件</span><span class="value" id="newEvents">—</span></div>
         <div class="stat"><span class="label">本輪 Telegram 推播</span><span class="value" id="telegramSent">—</span></div>
+      </div>
+    </section>
+
+    <section class="update-info" aria-label="網站更新時間資訊">
+      <div class="update-box">
+        <p class="title">每日自動更新次數</p>
+        <div class="main">9 次</div>
+      </div>
+      <div class="update-box">
+        <p class="title">每日預計更新時間（台灣時間）</p>
+        <div class="schedule-times">
+          <span class="schedule-time">08:00</span>
+          <span class="schedule-time">09:00</span>
+          <span class="schedule-time">10:00</span>
+          <span class="schedule-time">11:00</span>
+          <span class="schedule-time">12:00</span>
+          <span class="schedule-time">13:00</span>
+          <span class="schedule-time">17:00</span>
+          <span class="schedule-time">19:00</span>
+          <span class="schedule-time">20:00</span>
+        </div>
       </div>
     </section>
 
