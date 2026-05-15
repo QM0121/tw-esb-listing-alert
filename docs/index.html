@@ -14,6 +14,7 @@
       --accent: #182338;
       --soft: #eef3ff;
       --soft2: #f6f8fc;
+      --danger-soft: #fff5f5;
     }
     * { box-sizing: border-box; }
     body {
@@ -56,7 +57,12 @@
       display: grid;
       gap: 14px;
     }
-    .filter-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .filter-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; }
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 260px;
+    }
     input, select, button {
       border: 1px solid var(--line);
       border-radius: 14px;
@@ -64,7 +70,10 @@
       padding: 12px 14px;
       font-size: 15px;
     }
-    input { flex: 1; min-width: 260px; }
+    input {
+      width: 100%;
+      min-width: 260px;
+    }
     select { min-width: 190px; }
     button {
       cursor: pointer;
@@ -72,6 +81,71 @@
       background: var(--accent);
       color: white;
       border-color: var(--accent);
+    }
+    .suggestions {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      z-index: 30;
+      display: none;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 18px 40px rgba(20, 31, 54, .12);
+    }
+    .suggestions.show { display: block; }
+    .suggestion-head {
+      padding: 11px 14px 8px;
+      background: var(--soft2);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      border-bottom: 1px solid var(--line);
+    }
+    .suggestion-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+      background: white;
+      color: var(--text);
+      text-align: left;
+      padding: 12px 14px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .suggestion-item:last-child { border-bottom: 0; }
+    .suggestion-item:hover,
+    .suggestion-item.active {
+      background: var(--soft);
+    }
+    .suggestion-code {
+      min-width: 60px;
+      font-weight: 900;
+      color: #d92d20;
+      letter-spacing: .02em;
+    }
+    .suggestion-name {
+      flex: 1;
+      line-height: 1.55;
+    }
+    .suggestion-empty {
+      padding: 14px;
+      color: var(--muted);
+      background: white;
+      font-size: 14px;
+    }
+    .search-hint {
+      margin-top: 8px;
+      padding-left: 4px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
     }
     .chips { display: flex; flex-wrap: wrap; gap: 8px; }
     .chip {
@@ -152,6 +226,7 @@
       border-radius: 20px;
       padding: 26px;
       color: var(--muted);
+      line-height: 1.8;
     }
     .footer { margin-top: 24px; color: var(--muted); line-height: 1.8; font-size: 13px; }
     @media (max-width: 920px) {
@@ -164,6 +239,7 @@
       .stats, .mini-grid { grid-template-columns: 1fr; }
       .meta { text-align: left; }
       input, select, button { width: 100%; }
+      .suggestion-code { min-width: 54px; }
     }
   </style>
 </head>
@@ -189,7 +265,19 @@
 
     <section class="filters">
       <div class="filter-row">
-        <input id="search" type="search" placeholder="搜尋公司名稱、代號、公告標題或進度內容" />
+        <div class="search-wrap" id="searchWrap">
+          <input
+            id="search"
+            type="search"
+            autocomplete="off"
+            placeholder="輸入公司代號、公司名稱、公告標題或進度內容"
+            aria-autocomplete="list"
+            aria-controls="companySuggestions"
+            aria-expanded="false"
+          />
+          <div id="companySuggestions" class="suggestions" role="listbox"></div>
+          <div class="search-hint">輸入公司代號或名稱時，會自動顯示目前網站資料中的公司建議。</div>
+        </div>
         <select id="sourceSelect">
           <option value="">全部來源</option>
         </select>
@@ -232,6 +320,8 @@
     ];
 
     const searchEl = document.getElementById("search");
+    const searchWrapEl = document.getElementById("searchWrap");
+    const suggestionsEl = document.getElementById("companySuggestions");
     const sourceEl = document.getElementById("sourceSelect");
     const resetEl = document.getElementById("reset");
     const chipsEl = document.getElementById("chips");
@@ -242,6 +332,8 @@
     let events = [];
     let status = {};
     let activeCategory = "全部";
+    let companies = [];
+    let activeSuggestionIndex = -1;
 
     function esc(value) {
       return String(value ?? "")
@@ -250,6 +342,149 @@
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
+    }
+
+    function normalize(value) {
+      return String(value ?? "").trim().toLowerCase();
+    }
+
+    function buildCompanyIndex() {
+      const map = new Map();
+
+      events.forEach(event => {
+        const code = String(event.company_code || "").trim();
+        const name = String(event.company_name || "").trim();
+
+        if (!code && !name) return;
+
+        const key = `${code}|${name}`;
+        if (!map.has(key)) {
+          map.set(key, { code, name });
+        }
+      });
+
+      companies = [...map.values()].sort((a, b) => {
+        const aCode = a.code || "999999";
+        const bCode = b.code || "999999";
+        return aCode.localeCompare(bCode, "zh-Hant", { numeric: true });
+      });
+    }
+
+    function matchedCompanies(keyword) {
+      const q = normalize(keyword);
+      if (!q) return [];
+
+      return companies
+        .filter(company => {
+          const code = normalize(company.code);
+          const name = normalize(company.name);
+          return code.includes(q) || name.includes(q);
+        })
+        .sort((a, b) => {
+          const aCode = normalize(a.code);
+          const bCode = normalize(b.code);
+          const aName = normalize(a.name);
+          const bName = normalize(b.name);
+
+          const aExactCode = aCode === q ? 0 : 1;
+          const bExactCode = bCode === q ? 0 : 1;
+          if (aExactCode !== bExactCode) return aExactCode - bExactCode;
+
+          const aPrefixCode = aCode.startsWith(q) ? 0 : 1;
+          const bPrefixCode = bCode.startsWith(q) ? 0 : 1;
+          if (aPrefixCode !== bPrefixCode) return aPrefixCode - bPrefixCode;
+
+          const aPrefixName = aName.startsWith(q) ? 0 : 1;
+          const bPrefixName = bName.startsWith(q) ? 0 : 1;
+          if (aPrefixName !== bPrefixName) return aPrefixName - bPrefixName;
+
+          return (a.code || a.name).localeCompare(b.code || b.name, "zh-Hant", { numeric: true });
+        })
+        .slice(0, 8);
+    }
+
+    function closeSuggestions() {
+      suggestionsEl.classList.remove("show");
+      suggestionsEl.innerHTML = "";
+      activeSuggestionIndex = -1;
+      searchEl.setAttribute("aria-expanded", "false");
+    }
+
+    function openSuggestions(items, keyword) {
+      if (!keyword.trim()) {
+        closeSuggestions();
+        return;
+      }
+
+      searchEl.setAttribute("aria-expanded", "true");
+      suggestionsEl.classList.add("show");
+      activeSuggestionIndex = -1;
+
+      if (!items.length) {
+        suggestionsEl.innerHTML = `
+          <div class="suggestion-head">公司建議</div>
+          <div class="suggestion-empty">找不到符合「${esc(keyword)}」的公司建議，但仍可用此文字搜尋公告內容。</div>
+        `;
+        return;
+      }
+
+      suggestionsEl.innerHTML = `
+        <div class="suggestion-head">公司建議</div>
+        ${items.map((company, index) => `
+          <button
+            class="suggestion-item"
+            type="button"
+            data-index="${index}"
+            data-code="${esc(company.code)}"
+            data-name="${esc(company.name)}"
+            role="option"
+          >
+            <span class="suggestion-code">${esc(company.code || "—")}</span>
+            <span class="suggestion-name">${esc(company.name || "公司名稱待解析")}</span>
+          </button>
+        `).join("")}
+      `;
+
+      suggestionsEl.querySelectorAll(".suggestion-item").forEach(item => {
+        item.addEventListener("click", () => {
+          selectSuggestion(item.dataset.code, item.dataset.name);
+        });
+      });
+    }
+
+    function updateSuggestions() {
+      const keyword = searchEl.value.trim();
+      const items = matchedCompanies(keyword);
+      openSuggestions(items, keyword);
+    }
+
+    function selectSuggestion(code, name) {
+      searchEl.value = code || name || "";
+      closeSuggestions();
+      renderEvents();
+      searchEl.focus();
+    }
+
+    function moveSuggestion(direction) {
+      const items = [...suggestionsEl.querySelectorAll(".suggestion-item")];
+      if (!items.length) return;
+
+      activeSuggestionIndex += direction;
+      if (activeSuggestionIndex < 0) activeSuggestionIndex = items.length - 1;
+      if (activeSuggestionIndex >= items.length) activeSuggestionIndex = 0;
+
+      items.forEach((item, index) => {
+        item.classList.toggle("active", index === activeSuggestionIndex);
+      });
+    }
+
+    function confirmActiveSuggestion() {
+      const items = [...suggestionsEl.querySelectorAll(".suggestion-item")];
+      if (!items.length || activeSuggestionIndex < 0) return false;
+
+      const item = items[activeSuggestionIndex];
+      selectSuggestion(item.dataset.code, item.dataset.name);
+      return true;
     }
 
     function renderChips() {
@@ -302,7 +537,7 @@
     }
 
     function renderEvents() {
-      const keyword = searchEl.value.trim().toLowerCase();
+      const keyword = normalize(searchEl.value);
       const source = sourceEl.value;
 
       const filtered = events.filter(event => {
@@ -322,7 +557,14 @@
       });
 
       if (!filtered.length) {
-        eventsEl.innerHTML = '<div class="empty">目前沒有符合篩選條件的事件。</div>';
+        const queryText = searchEl.value.trim();
+        eventsEl.innerHTML = `
+          <div class="empty">
+            ${queryText
+              ? `目前找不到符合「${esc(queryText)}」的轉板監測事件。`
+              : "目前沒有符合篩選條件的事件。"}
+          </div>
+        `;
         return;
       }
 
@@ -361,6 +603,7 @@
         ]);
         events = eventsRes.ok ? await eventsRes.json() : [];
         status = statusRes.ok ? await statusRes.json() : {};
+        buildCompanyIndex();
         renderChips();
         renderSourceOptions();
         renderStatus();
@@ -370,12 +613,44 @@
       }
     }
 
-    searchEl.addEventListener("input", renderEvents);
+    searchEl.addEventListener("input", () => {
+      renderEvents();
+      updateSuggestions();
+    });
+
+    searchEl.addEventListener("focus", updateSuggestions);
+
+    searchEl.addEventListener("keydown", event => {
+      if (!suggestionsEl.classList.contains("show")) return;
+
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        moveSuggestion(1);
+      } else if (event.key === "ArrowUp") {
+        event.preventDefault();
+        moveSuggestion(-1);
+      } else if (event.key === "Enter") {
+        if (confirmActiveSuggestion()) {
+          event.preventDefault();
+        }
+      } else if (event.key === "Escape") {
+        closeSuggestions();
+      }
+    });
+
+    document.addEventListener("click", event => {
+      if (!searchWrapEl.contains(event.target)) {
+        closeSuggestions();
+      }
+    });
+
     sourceEl.addEventListener("change", renderEvents);
+
     resetEl.addEventListener("click", () => {
       searchEl.value = "";
       sourceEl.value = "";
       activeCategory = "全部";
+      closeSuggestions();
       renderChips();
       renderEvents();
     });
