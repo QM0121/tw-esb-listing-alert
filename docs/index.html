@@ -567,6 +567,7 @@
     .timeline-panel {
       margin-bottom: 16px;
       display: none;
+      border-left: 5px solid var(--navy);
     }
 
     .timeline-panel.show {
@@ -1218,6 +1219,7 @@
     .timeline-panel {
       margin-bottom: 16px;
       display: none;
+      border-left: 5px solid var(--navy);
     }
 
     .timeline-panel.show {
@@ -1477,6 +1479,18 @@
       <div class="chips" id="chips"></div>
     </section>
 
+    <section id="timelinePanel" class="panel timeline-panel">
+      <div class="timeline-header">
+        <div>
+          <h2 class="panel-title" style="margin:0;">公司進度時間軸</h2>
+          <h3 id="timelineCompany" class="timeline-company"></h3>
+          <p class="timeline-note">選擇公司後，這裡會整理該公司的轉板事件脈絡。</p>
+        </div>
+        <div id="timelineCurrent" class="timeline-current"></div>
+      </div>
+      <div id="timelineList" class="timeline-list"></div>
+    </section>
+
     <section class="insight-grid">
       <section class="panel latest-panel">
         <div class="section-head">
@@ -1495,18 +1509,6 @@
         <div id="activeCases" class="mini-list"></div>
         <a class="active-open-all" href="./active-cases.html" target="_blank" rel="noopener noreferrer">在新分頁查看全部</a>
       </section>
-    </section>
-
-    <section id="timelinePanel" class="panel timeline-panel">
-      <div class="timeline-header">
-        <div>
-          <h2 class="panel-title" style="margin:0;">公司進度時間軸</h2>
-          <h3 id="timelineCompany" class="timeline-company"></h3>
-          <p class="timeline-note">選擇公司後，這裡會整理該公司的轉板事件脈絡。</p>
-        </div>
-        <div id="timelineCurrent" class="timeline-current"></div>
-      </div>
-      <div id="timelineList" class="timeline-list"></div>
     </section>
 
     <section class="content-grid" id="events-section">
