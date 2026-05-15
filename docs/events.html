@@ -408,35 +408,6 @@
         flex: 0 0 auto;
       }
 
-      .event-card {
-        gap: 12px;
-        padding: 14px;
-      }
-
-      .date-box {
-        min-height: auto;
-        padding: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        flex-wrap: wrap;
-        text-align: left;
-      }
-
-      .date-label {
-        margin-bottom: 0;
-      }
-
-      .date-value {
-        font-size: 20px;
-      }
-
-      .first-seen {
-        width: 100%;
-        margin-top: 0;
-      }
-
       .event-action {
         justify-content: stretch;
       }
@@ -454,12 +425,12 @@
       }
 
       .page {
-        padding-top: 14px;
+        padding-top: 12px;
         padding-bottom: 24px;
       }
 
       .brand-title {
-        font-size: 23px;
+        font-size: 22px;
       }
 
       .brand-subtitle {
@@ -468,17 +439,17 @@
 
       .hero,
       .panel {
-        padding: 16px;
-        border-radius: 18px;
+        padding: 14px;
+        border-radius: 16px;
       }
 
       .hero-title {
-        font-size: 28px;
+        font-size: 25px;
       }
 
       .hero-desc {
         font-size: 13px;
-        line-height: 1.7;
+        line-height: 1.65;
       }
 
       .panel-title {
@@ -490,14 +461,51 @@
         align-items: flex-start;
       }
 
+      .event-card {
+        display: block;
+        padding: 12px;
+      }
+
+      .date-box {
+        width: fit-content;
+        max-width: 100%;
+        min-height: auto;
+        padding: 7px 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+        text-align: left;
+        border-radius: 999px;
+        margin-bottom: 10px;
+      }
+
+      .date-label {
+        margin-bottom: 0;
+        font-size: 11px;
+      }
+
+      .date-value {
+        font-size: 15px;
+      }
+
+      .first-seen {
+        display: none;
+      }
+
       .company-name,
       .event-company-line {
-        font-size: 20px;
+        font-size: 19px;
       }
 
       .event-title {
-        font-size: 18px;
-        line-height: 1.6;
+        font-size: 17px;
+        line-height: 1.55;
+      }
+
+      .badge {
+        font-size: 12px;
+        padding: 6px 9px;
       }
 
     }
