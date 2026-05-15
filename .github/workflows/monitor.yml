@@ -3,7 +3,7 @@ name: Monitor ESB Listing Alerts
 on:
   workflow_dispatch:
   schedule:
-  - cron: "0 * * * *"
+  - ccron: "30 * * * *"
     timezone: "Asia/Taipei"
 
 permissions:
