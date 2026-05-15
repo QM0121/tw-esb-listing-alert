@@ -49,6 +49,47 @@
     .stat .label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 8px; }
     .stat .value { font-size: 24px; font-weight: 800; }
 
+
+    .run-status {
+      margin: 18px 0 20px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .run-status.good {
+      background: #f3faf7;
+      border-color: #cce9d8;
+    }
+    .run-status.neutral {
+      background: #fffaf0;
+      border-color: #f2dfb5;
+    }
+    .run-status .run-title {
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1.4;
+    }
+    .run-status .run-desc {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .run-status .run-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: white;
+      border: 1px solid var(--line);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
     .update-info {
       margin: 20px 0;
       padding: 18px;
@@ -242,9 +283,40 @@
       padding: 20px;
       box-shadow: 0 10px 30px rgba(20, 31, 54, .045);
     }
-    .card-top { display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
-    .company { margin: 0 0 8px; font-size: 21px; font-weight: 900; }
-    .meta { color: var(--muted); font-size: 14px; line-height: 1.7; text-align: right; }
+    .card-top {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+    .date-focus {
+      border: 1px solid var(--line);
+      background: var(--soft2);
+      border-radius: 18px;
+      padding: 16px 14px;
+    }
+    .date-focus .date-label {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: .03em;
+    }
+    .date-focus .date-value {
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1.1;
+      word-break: break-word;
+    }
+    .date-focus .first-seen {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    .company { margin: 0 0 8px; font-size: 24px; font-weight: 900; line-height: 1.3; }
+    .meta { color: var(--muted); font-size: 13px; line-height: 1.7; text-align: left; }
     .badges { display: flex; gap: 8px; flex-wrap: wrap; }
     .badge {
       display: inline-flex;
@@ -279,6 +351,7 @@
     @media (max-width: 920px) {
       .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .board { grid-template-columns: 1fr; }
+      .card-top { grid-template-columns: 1fr; }
     }
     @media (max-width: 620px) {
       .wrap { padding: 16px 12px 42px; }
@@ -328,6 +401,14 @@
           <span class="schedule-time">19:00</span>
           <span class="schedule-time">20:00</span>
         </div>
+      </div>
+    </section>
+
+    <section id="runStatus" class="run-status neutral" aria-live="polite">
+      <span class="run-tag">檢查狀態</span>
+      <div>
+        <div class="run-title">載入中…</div>
+        <div class="run-desc">正在讀取本輪檢查結果。</div>
       </div>
     </section>
 
@@ -574,6 +655,33 @@
       document.getElementById("newEvents").textContent = status.new_event_count ?? "—";
       document.getElementById("telegramSent").textContent = status.telegram_sent_count ?? "—";
 
+      const runStatusEl = document.getElementById("runStatus");
+      const newCount = Number(status.new_event_count ?? 0);
+
+      if (newCount > 0) {
+        runStatusEl.className = "run-status good";
+        runStatusEl.innerHTML = `
+          <span class="run-tag">本輪檢查結果</span>
+          <div>
+            <div class="run-title">本輪新增 ${esc(newCount)} 筆新事件</div>
+            <div class="run-desc">
+              系統已於 ${esc(status.last_checked_at || "—")} 完成檢查並更新網站資料。
+            </div>
+          </div>
+        `;
+      } else {
+        runStatusEl.className = "run-status neutral";
+        runStatusEl.innerHTML = `
+          <span class="run-tag">本輪檢查結果</span>
+          <div>
+            <div class="run-title">本輪無新事件</div>
+            <div class="run-desc">
+              系統已於 ${esc(status.last_checked_at || "—")} 完成例行檢查，公開來源沒有新增符合條件的事件。
+            </div>
+          </div>
+        `;
+      }
+
       const typeCounts = status.summary?.type_counts || {};
       const displayTypes = ["申請上市", "申請上櫃", "申請創新板上市", "轉板進度重大更新"];
       typeSummaryEl.innerHTML = displayTypes.map(type => `
@@ -642,6 +750,13 @@
         return `
           <article class="card">
             <div class="card-top">
+              <div class="date-focus">
+                <span class="date-label">事件日期</span>
+                <div class="date-value">${esc(event.event_date || "—")}</div>
+                <div class="first-seen">
+                  系統收錄時間：${esc(event.first_seen_at || "—")}
+                </div>
+              </div>
               <div>
                 <h2 class="company">${esc(company)}${esc(code)}</h2>
                 <div class="badges">
@@ -649,15 +764,12 @@
                   <span class="badge">${esc(event.stage)}</span>
                   <span class="badge">${esc(event.source_label)}</span>
                 </div>
-              </div>
-              <div class="meta">
-                事件日期：${esc(event.event_date || "—")}<br />
-                系統首次偵測：${esc(event.first_seen_at || "—")}
+                <p class="title">${esc(event.title)}</p>
+                <p class="detail">${esc(event.detail || "")}</p>
+                <div class="meta">重點以官方「事件日期」為主；系統收錄時間僅供追蹤資料更新用。</div>
+                <a class="link" href="${esc(event.url)}" target="_blank" rel="noopener noreferrer">查看官方來源</a>
               </div>
             </div>
-            <p class="title">${esc(event.title)}</p>
-            <p class="detail">${esc(event.detail || "")}</p>
-            <a class="link" href="${esc(event.url)}" target="_blank" rel="noopener noreferrer">查看官方來源</a>
           </article>
         `;
       }).join("");
