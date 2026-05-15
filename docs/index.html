@@ -1413,6 +1413,98 @@
         padding-bottom: 14px;
       }
 
+      .filter-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .event-card {
+        grid-template-columns: 1fr;
+      }
+
+      .event-action {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .kpi-grid,
+      .sidebar,
+      .active-summary,
+      .monitor-note-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .latest-item,
+      .active-item {
+        grid-template-columns: 1fr;
+      }
+
+      .brand-title {
+        font-size: 26px;
+      }
+
+      .hero-title {
+        font-size: 28px;
+      }
+
+      .company-name {
+        font-size: 20px;
+      }
+    }
+  
+    /* v16.13：移除「最新事件 / 進行中案件」雙欄包裝，避免手機出現左窄右空 */
+    .home-stack-panel {
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: 16px;
+    }
+
+    .latest-panel,
+    .active-panel {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    @media (max-width: 820px) {
+      html,
+      body {
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+
+      .shell {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .page {
+        padding-top: 14px;
+        padding-bottom: 24px;
+      }
+
+      .header-inner {
+        min-height: auto;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 14px;
+        padding-bottom: 14px;
+      }
+
+      .brand-title {
+        font-size: 24px;
+        line-height: 1.25;
+      }
+
+      .brand-subtitle {
+        font-size: 13px;
+        line-height: 1.65;
+      }
+
       .nav {
         width: 100%;
         flex-wrap: nowrap;
@@ -1428,129 +1520,39 @@
         display: none;
       }
 
-      .nav a {
-        flex: 0 0 auto;
-      }
-
-      .filter-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .reset-btn,
-      .search-box,
-      .source-select {
-        width: 100%;
-      }
-
-      .chips {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        padding-bottom: 6px;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-      }
-
+      .nav a,
       .chip {
         flex: 0 0 auto;
       }
 
-      .timeline-header {
-        flex-direction: column;
-        align-items: stretch;
+      .nav a {
+        padding: 9px 12px;
+        font-size: 13px;
       }
 
-      .timeline-current {
-        width: 100%;
+      .hero-main {
+        padding: 18px 16px 18px 20px;
+        border-radius: 18px;
       }
 
-      .content-grid {
-        grid-template-columns: 1fr;
+      .hero-main::before {
+        width: 5px;
       }
 
-      .sidebar {
-        grid-template-columns: 1fr;
+      .hero-title {
+        font-size: 28px;
+        line-height: 1.25;
       }
 
-      .event-card {
-        grid-template-columns: 1fr;
-        gap: 12px;
-        padding: 14px;
-      }
-
-      .date-box {
-        min-height: auto;
-        padding: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        flex-wrap: wrap;
-        text-align: left;
-      }
-
-      .date-label {
-        margin-bottom: 0;
-      }
-
-      .date-value {
-        font-size: 20px;
-      }
-
-      .first-seen {
-        width: 100%;
-        margin-top: 0;
-      }
-
-      .event-action {
-        justify-content: stretch;
-      }
-
-      .official-link {
-        width: 100%;
-      }
-
-    }
-
-    @media (max-width: 720px) {
-      .shell {
-        padding-left: 12px;
-        padding-right: 12px;
-      }
-
-      .page {
-        padding-top: 12px;
-        padding-bottom: 24px;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-      }
-
-      .hero {
-        order: 1;
-        margin-bottom: 0;
-      }
-
-      .filter-panel {
-        order: 2;
-        margin-bottom: 0;
-      }
-
-      .timeline-panel {
-        order: 3;
-        margin-bottom: 0;
-      }
-
-      .insight-grid {
-        order: 4;
-        margin-bottom: 0;
+      .hero-desc {
+        font-size: 13px;
+        line-height: 1.7;
       }
 
       .kpi-grid {
-        order: 5;
         display: flex;
         overflow-x: auto;
         gap: 10px;
-        margin-bottom: 0;
         padding-bottom: 4px;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
@@ -1561,67 +1563,30 @@
       }
 
       .kpi-card {
-        min-width: 235px;
         flex: 0 0 235px;
+        min-width: 235px;
       }
 
-      .content-grid {
-        order: 6;
+      .filter-grid,
+      .content-grid,
+      .sidebar,
+      .monitor-note-grid,
+      .active-summary {
+        grid-template-columns: 1fr;
       }
 
-      .monitor-note-panel {
-        order: 7;
-      }
-
-      .brand-title {
-        font-size: 22px;
-      }
-
-      .brand-subtitle {
-        font-size: 13px;
-      }
-
-      .nav a {
-        padding: 9px 12px;
-        font-size: 13px;
-      }
-
-      .hero-main {
-        padding: 16px 14px 16px 18px;
-        border-radius: 18px;
-      }
-
-      .hero-main::before {
-        width: 5px;
-      }
-
-      .hero-eyebrow {
-        font-size: 10px;
-        margin-bottom: 6px;
-      }
-
-      .hero-title {
-        font-size: 25px;
-        line-height: 1.2;
-      }
-
-      .hero-desc {
-        font-size: 13px;
-        line-height: 1.65;
-        margin-top: 8px;
+      .search-box,
+      .source-select,
+      .reset-btn {
+        width: 100%;
       }
 
       .panel,
+      .home-stack-panel,
       .timeline-panel,
-      .latest-panel,
-      .active-panel,
       .monitor-note-panel {
         padding: 14px;
         border-radius: 16px;
-      }
-
-      .panel-title {
-        font-size: 17px;
       }
 
       .section-head,
@@ -1640,89 +1605,17 @@
         font-size: 12px;
       }
 
-      .events-open-all,
-      .active-open-all {
-        width: 100%;
-      }
-
-      .insight-grid {
-        gap: 12px;
-      }
-
       .latest-item,
-      .active-item {
-        display: block;
-        padding: 12px;
-      }
-
-      .mini-date-box {
-        min-height: auto;
-        width: fit-content;
-        max-width: 100%;
-        padding: 7px 10px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 8px;
-        text-align: left;
-        margin-bottom: 10px;
-        border-radius: 999px;
-      }
-
-      .mini-date-label {
-        margin-bottom: 0;
-        font-size: 11px;
-      }
-
-      .mini-date-value {
-        font-size: 15px;
-      }
-
-      .mini-company-line,
-      .event-company-line {
-        font-size: 19px;
-        line-height: 1.45;
-      }
-
-      .latest-title,
-      .active-stage,
-      .event-title {
-        font-size: 17px;
-        line-height: 1.55;
-      }
-
-      .inline-badges,
-      .badges {
-        gap: 6px;
-      }
-
-      .small-badge,
-      .badge {
-        font-size: 12px;
-        padding: 6px 9px;
-      }
-
-      .timeline-company {
-        font-size: 18px;
-      }
-
-      .timeline-list {
-        padding-left: 14px;
-      }
-
-      .timeline-list::before {
-        left: 5px;
-      }
-
-      .timeline-item::before {
-        left: -15px;
-      }
-
+      .active-item,
       .event-card {
         display: block;
+        width: 100%;
+        max-width: 100%;
         padding: 12px;
+        border-radius: 14px;
       }
 
+      .mini-date-box,
       .date-box {
         width: fit-content;
         max-width: 100%;
@@ -1737,13 +1630,48 @@
         margin-bottom: 10px;
       }
 
+      .mini-date-label,
       .date-label {
         margin-bottom: 0;
         font-size: 11px;
       }
 
+      .mini-date-value,
       .date-value {
         font-size: 15px;
+        white-space: nowrap;
+      }
+
+      .mini-company-line,
+      .event-company-line {
+        font-size: 20px;
+        line-height: 1.45;
+      }
+
+      .latest-title,
+      .active-stage,
+      .event-title {
+        font-size: 18px;
+        line-height: 1.6;
+      }
+
+      .inline-badges,
+      .badges {
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+
+      .small-badge,
+      .badge {
+        font-size: 12px;
+        padding: 6px 9px;
+      }
+
+      .events-open-all,
+      .active-open-all,
+      .official-link {
+        width: 100%;
+        min-height: 44px;
       }
 
       .first-seen {
@@ -1752,36 +1680,10 @@
 
       .event-action {
         margin-top: 10px;
+        justify-content: stretch;
       }
-
-      .summary-row,
-      .source-row {
-        padding: 11px 12px;
-      }
-
-      .source-row {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .source-meta {
-        width: 100%;
-        justify-content: space-between;
-      }
-
-      .monitor-note-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .monitor-note-value {
-        font-size: 14px;
-      }
-
-      .footer-inner {
-        font-size: 12px;
-      }
-
     }
+
   </style>
 </head>
 <body>
@@ -1874,27 +1776,25 @@
       <div id="timelineList" class="timeline-list"></div>
     </section>
 
-    <section class="insight-grid">
-      <section class="panel latest-panel">
-        <div class="section-head">
-          <h2 class="panel-title" style="margin:0;">最新事件</h2>
-          <div class="result-count">顯示最新 10 筆</div>
-        </div>
-        <div id="latestEvents" class="mini-list"></div>
-      </section>
+    <section class="panel latest-panel home-stack-panel">
+      <div class="section-head">
+        <h2 class="panel-title" style="margin:0;">最新事件</h2>
+        <div class="result-count">顯示最新 10 筆</div>
+      </div>
+      <div id="latestEvents" class="mini-list"></div>
+    </section>
 
-      <section class="panel active-panel">
-        <div class="section-head">
-          <h2 class="panel-title" style="margin:0;">目前進行中案件</h2>
-          <div class="result-count"><span id="activeCaseTotal">—</span> 件</div>
-        </div>
-        <div class="helper-text" style="margin-top:-2px; margin-bottom:12px;">
-          依目前可取得之公開事件推估；若案件已撤回或已掛牌，將不列入進行中案件。
-        </div>
-        <div id="activeSummary" class="active-summary"></div>
-        <div id="activeCases" class="mini-list"></div>
-        <a class="active-open-all" href="./active-cases.html" target="_blank" rel="noopener noreferrer">在新分頁查看全部</a>
-      </section>
+    <section class="panel active-panel home-stack-panel">
+      <div class="section-head">
+        <h2 class="panel-title" style="margin:0;">目前進行中案件</h2>
+        <div class="result-count"><span id="activeCaseTotal">—</span> 件</div>
+      </div>
+      <div class="helper-text" style="margin-top:-2px; margin-bottom:12px;">
+        依目前可取得之公開事件推估；若案件已撤回或已掛牌，將不列入進行中案件。
+      </div>
+      <div id="activeSummary" class="active-summary"></div>
+      <div id="activeCases" class="mini-list"></div>
+      <a class="active-open-all" href="./active-cases.html" target="_blank" rel="noopener noreferrer">在新分頁查看全部</a>
     </section>
 
     <section class="content-grid" id="events-section">
