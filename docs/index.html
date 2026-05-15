@@ -90,6 +90,59 @@
       font-weight: 800;
     }
 
+    .data-range {
+      margin: 0 0 20px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: 22px;
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+    .data-range-card {
+      border: 1px solid var(--line);
+      background: var(--soft2);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .data-range-card .eyebrow {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+    .data-range-card .big {
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+    .data-range-card .desc {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+    .date-window {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1.5;
+    }
+    .date-window span {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 999px;
+      padding: 7px 12px;
+    }
+
     .update-info {
       margin: 20px 0;
       padding: 18px;
@@ -356,7 +409,7 @@
     @media (max-width: 620px) {
       .wrap { padding: 16px 12px 42px; }
       .hero { padding: 20px; }
-      .stats, .mini-grid, .update-info { grid-template-columns: 1fr; }
+      .stats, .mini-grid, .update-info, .data-range { grid-template-columns: 1fr; }
       .meta { text-align: left; }
       input, select, button { width: 100%; }
       .suggestion-code { min-width: 54px; }
@@ -401,6 +454,23 @@
           <span class="schedule-time">19:00</span>
           <span class="schedule-time">20:00</span>
         </div>
+      </div>
+    </section>
+
+    <section class="data-range" aria-label="資料索取範圍">
+      <div class="data-range-card">
+        <p class="eyebrow">資料索取範圍</p>
+        <div class="big" id="dataWindowLabel">近 3 年資料</div>
+        <div class="desc">網站僅保留近三年轉板監測事件，超出期間的舊資料會在每次更新時自動汰除。</div>
+      </div>
+      <div class="data-range-card">
+        <p class="eyebrow">目前保留期間</p>
+        <div class="date-window">
+          <span id="dataWindowStart">—</span>
+          <strong>～</strong>
+          <span id="dataWindowEnd">—</span>
+        </div>
+        <div class="desc">實際起訖日期會隨每日更新自動往前滾動。</div>
       </div>
     </section>
 
@@ -654,6 +724,9 @@
       document.getElementById("totalEvents").textContent = status.total_event_count ?? events.length ?? "—";
       document.getElementById("newEvents").textContent = status.new_event_count ?? "—";
       document.getElementById("telegramSent").textContent = status.telegram_sent_count ?? "—";
+      document.getElementById("dataWindowLabel").textContent = status.data_window_label || "近 3 年資料";
+      document.getElementById("dataWindowStart").textContent = status.data_window_start || "—";
+      document.getElementById("dataWindowEnd").textContent = status.data_window_end || "—";
 
       const runStatusEl = document.getElementById("runStatus");
       const newCount = Number(status.new_event_count ?? 0);
