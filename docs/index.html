@@ -117,9 +117,6 @@
     }
 
     .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.5fr) 300px;
-      gap: 16px;
       margin-bottom: 16px;
     }
 
@@ -174,29 +171,6 @@
       line-height: 1.85;
       font-weight: 600;
       max-width: 860px;
-    }
-
-    .hero-side {
-      border-radius: var(--radius-xl);
-      padding: 18px 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .hero-side-label {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-
-    .hero-side-value {
-      color: var(--navy);
-      font-size: 19px;
-      line-height: 1.55;
-      font-weight: 900;
-      word-break: break-word;
     }
 
     .kpi-grid {
@@ -694,10 +668,6 @@
     }
 
     @media (max-width: 1180px) {
-      .hero {
-        grid-template-columns: 1fr;
-      }
-
       .kpi-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -778,10 +748,6 @@
         <div class="hero-eyebrow">LISTING MONITOR</div>
         <h2 class="hero-title" id="runStatusTitle">載入本輪檢查結果中…</h2>
         <p class="hero-desc" id="runStatusDesc">系統正在讀取最新監測狀態。</p>
-      </div>
-      <div class="hero-side">
-        <div class="hero-side-label">上次檢查時間</div>
-        <div class="hero-side-value" id="lastCheckedCompact">—</div>
       </div>
     </section>
 
@@ -1103,7 +1069,6 @@
       const newCount = Number(status.new_event_count ?? 0);
 
       document.getElementById("lastChecked").textContent = compactDateTime(status.last_checked_at);
-      document.getElementById("lastCheckedCompact").textContent = compactDateTime(status.last_checked_at);
       document.getElementById("dataWindowLabel").textContent = status.data_window_label || "近 3 年資料";
       document.getElementById("dataWindowStart").textContent = formatROCDate(status.data_window_start);
       document.getElementById("dataWindowEnd").textContent = formatROCDate(status.data_window_end);
