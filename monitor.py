@@ -41,7 +41,7 @@ MOPS_REALTIME_URL = "https://mopsov.twse.com.tw/mops/web/t05sr01_1"
 # 第一階段合規強化：
 # - 申請上市公司：改用 TWSE 官方 OpenAPI
 # - 證交所新聞：改用 TWSE 官方 OpenAPI，再以創新板關鍵字過濾
-TWSE_APPLY_LISTING_API_URL = "https://openapi.twse.com.tw/v1/company/applylistingLocal"
+TWSE_APPLY_LISTING_API_URL = "https://openapi.twse.com.tw/v1/opendata/t187ap04_L"
 TWSE_APPLY_LISTING_PUBLIC_URL = "https://www.twse.com.tw/zh/listed/listed/apply-listing.html"
 TWSE_NEWS_API_URL = "https://openapi.twse.com.tw/v1/news/newsList"
 TIB_NEWS_PUBLIC_URL = "https://www.twse.com.tw/TIB/zh/news.html"
@@ -51,7 +51,7 @@ TIB_NEWS_PUBLIC_URL = "https://www.twse.com.tw/TIB/zh/news.html"
 TPEX_APPLY_OTC_URL = "https://www.tpex.org.tw/zh-tw/mainboard/applying/status/company.html"
 TPEX_APPLY_OTC_CSV_URL_TEMPLATE = "https://www.tpex.org.tw/web/regular_emerging/apply_schedule/applicant/applicant_companies_download_UTF-8.php?l=zh-tw&y={year}"
 
-SCHEMA_VERSION = 12
+SCHEMA_VERSION = 13
 MAX_EVENTS_TO_KEEP = 5000
 MAX_SEEN_TO_KEEP = 30000
 
@@ -998,6 +998,33 @@ def main() -> None:
                 "error": error_message,
             }
 
+        def fetch_twse_apply_events() -> list[dict[str, str]]:
+            """
+            申請上市資料改回 TWSE 官方 OpenAPI：/opendata/t187ap04_L。
+            另外寫入精簡 debug，若解析仍為 0，可直接從 status.json 看出 API 回傳欄位型態，
+            避免再次憑猜測調整 parser。
+            """
+            payload = get_json(TWSE_APPLY_LISTING_API_URL)
+            rows = normalize_api_rows(payload)
+
+            debug_payload: dict[str, Any] = {
+                "payload_type": type(payload).__name__,
+                "row_count": len(rows),
+            }
+            if isinstance(payload, dict):
+                debug_payload["top_level_keys"] = list(payload.keys())[:20]
+            if rows:
+                first_row = rows[0]
+                debug_payload["first_row_keys"] = list(first_row.keys())[:30]
+                # 只留下前幾個欄位的簡短字串，避免 status.json 過大。
+                debug_payload["first_row_preview"] = {
+                    str(key): normalize_text(value)[:120]
+                    for key, value in list(first_row.items())[:12]
+                }
+            status.setdefault("debug", {})["twse_apply_openapi"] = debug_payload
+
+            return parse_twse_apply_api(payload)
+
         def fetch_tpex_apply_events() -> list[dict[str, str]]:
             """
             申請上櫃資料優先改成「依民國年度分批抓 CSV」：
@@ -1045,7 +1072,7 @@ def main() -> None:
             return html_events
 
         fetchers = {
-            "twse_apply": lambda: parse_twse_apply_api(get_json(TWSE_APPLY_LISTING_API_URL)),
+            "twse_apply": fetch_twse_apply_events,
             "tpex_apply": fetch_tpex_apply_events,
             "tib_news": lambda: parse_tib_news_api(get_json(TWSE_NEWS_API_URL)),
         }
@@ -1061,7 +1088,7 @@ def main() -> None:
                 source_events[source] = filter_events_within_retention_window(fetched_events, retention_start)
 
                 if source == "twse_apply" and len(source_events[source]) == 0:
-                    raise RuntimeError("TWSE 申請上市公司 OpenAPI 解析為 0 筆，暫不覆寫既有資料。")
+                    raise RuntimeError("TWSE 申請上市公司 OpenAPI 解析為 0 筆；已寫入 status.debug.twse_apply_openapi，暫不覆寫既有資料。")
 
                 if source == "tpex_apply" and len(source_events[source]) == 0:
                     raise RuntimeError("TPEx 申請上櫃來源分年 CSV、ALL CSV 與 HTML 備援皆解析為 0 筆，暫不覆寫既有資料。")
