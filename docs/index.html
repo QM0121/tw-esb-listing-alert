@@ -1013,6 +1013,11 @@
       color: var(--red);
     }
 
+    .source-status.disabled {
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+
     .summary-total {
       margin-top: 14px;
       border: 1px solid var(--line);
@@ -1991,8 +1996,9 @@
         <div class="source-disclosure-item">
           <div class="source-disclosure-label">重大訊息與公告參考</div>
           <div class="source-disclosure-value">
-            資料來源：公開資訊觀測站及其他官方公開公告；
-            本站僅整理事件摘要、日期與來源連結，原始公告內容及其權利仍歸原提供機關或權利人所有。
+            資料來源：公開資訊觀測站及其他官方公開公告。
+            為降低一般網站自動化擷取之使用條款疑慮，公開版目前將「MOPS 即時重大訊息」自動監測標示為停用；
+            本站仍保留該來源項目，待有明確合規替代方案後再評估接回。
           </div>
         </div>
       </div>
@@ -2653,11 +2659,16 @@
       const rows = Object.values(sources).map(item => {
         const fetched = Number(item.fetched || 0);
         total += fetched;
+
+        const isDisabled = item.status === "disabled" || item.display_status === "停用";
+        const statusClass = isDisabled ? "disabled" : item.ok === false ? "fail" : "ok";
+        const statusText = isDisabled ? "停用" : item.ok === false ? "異常" : "正常";
+
         return `
           <div class="source-row">
             <div class="source-name">${esc(item.label || "未知來源")}</div>
             <div class="source-meta">
-              <span class="source-status ${item.ok === false ? "fail" : "ok"}">${item.ok === false ? "異常" : "正常"}</span>
+              <span class="source-status ${statusClass}">${statusText}</span>
               <span class="source-count">${esc(fetched)}</span>
             </div>
           </div>
