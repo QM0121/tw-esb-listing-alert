@@ -1742,6 +1742,18 @@
         <div class="kpi-note">依每日更新自動往前滾動</div>
       </article>
 
+      <article class="kpi-card">
+        <div class="kpi-label">今日瀏覽次數</div>
+        <div class="kpi-value" id="todayPageviews">—</div>
+        <div class="kpi-note">依 GoatCounter 公開統計顯示</div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-label">累計總瀏覽次數</div>
+        <div class="kpi-value" id="totalPageviews">—</div>
+        <div class="kpi-note">全站累計瀏覽統計</div>
+      </article>
+
     </section>
 
     <section class="panel filter-panel">
@@ -2525,6 +2537,47 @@
       document.getElementById("sourceTotal").textContent = total;
     }
 
+    function taiwanDateString() {
+      const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: "Asia/Taipei",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      }).formatToParts(new Date());
+
+      const values = Object.fromEntries(parts.map(part => [part.type, part.value]));
+      return `${values.year}-${values.month}-${values.day}`;
+    }
+
+    async function renderVisitCounters() {
+      const todayEl = document.getElementById("todayPageviews");
+      const totalEl = document.getElementById("totalPageviews");
+      const today = taiwanDateString();
+
+      const totalUrl = "https://qm0121.goatcounter.com/counter/TOTAL.json";
+      const todayUrl = `https://qm0121.goatcounter.com/counter/TOTAL.json?start=${today}&end=${today}`;
+
+      try {
+        const [todayRes, totalRes] = await Promise.all([
+          fetch(todayUrl, { cache: "no-store" }),
+          fetch(totalUrl, { cache: "no-store" })
+        ]);
+
+        if (!todayRes.ok || !totalRes.ok) throw new Error("GoatCounter counter request failed");
+
+        const [todayData, totalData] = await Promise.all([
+          todayRes.json(),
+          totalRes.json()
+        ]);
+
+        todayEl.textContent = todayData.count || "0";
+        totalEl.textContent = totalData.count || "0";
+      } catch (error) {
+        todayEl.textContent = "—";
+        totalEl.textContent = "—";
+      }
+    }
+
     async function init() {
       try {
         const [eventsRes, statusRes] = await Promise.all([
@@ -2544,10 +2597,12 @@
         renderEvents();
         renderTypeSummary();
         renderSourceSummary();
+        renderVisitCounters();
       } catch (error) {
         document.getElementById("runStatusTitle").textContent = "資料載入失敗";
         document.getElementById("runStatusDesc").textContent = "網站暫時無法讀取最新資料，請稍後重新整理。";
         eventsEl.innerHTML = '<div class="empty-state">資料讀取失敗，請稍後重新整理。</div>';
+        renderVisitCounters();
       }
     }
 
@@ -2595,5 +2650,7 @@
 
     init();
   </script>
+  <script data-goatcounter="https://qm0121.goatcounter.com/count"
+          async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
