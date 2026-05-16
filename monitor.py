@@ -891,62 +891,6 @@ def send_email_notification(events: list[dict[str, str]]) -> int:
     return len(recipients)
 
 
-def format_test_email_subject(events: list[dict[str, str]]) -> str:
-    return f"【測試版】{format_email_subject(events)}"
-
-
-def format_test_email_body(events: list[dict[str, str]]) -> str:
-    formal_body = format_email_body(events)
-    lines = [
-        "【測試版通知】",
-        "此信件用於確認興櫃轉板監測系統之 Email 通知功能是否正常。",
-        "正式通知信的格式與內容將維持下列樣式。",
-        "",
-        formal_body,
-    ]
-    return "\n".join(lines)
-
-
-def send_test_email_notification() -> int:
-    recipients = parse_email_recipients(EMAIL_RECIPIENTS_RAW)
-    if not EMAIL_SENDER:
-        raise RuntimeError("缺少 EMAIL_SENDER。")
-    if not EMAIL_APP_PASSWORD:
-        raise RuntimeError("缺少 EMAIL_APP_PASSWORD。")
-    if not recipients:
-        raise RuntimeError("缺少 EMAIL_RECIPIENTS。")
-
-    test_event = {
-        "event_type": "申請上市",
-        "stage": "送件",
-        "event_date": taipei_now().strftime("%Y-%m-%d %H:%M:%S"),
-        "company_code": "TEST",
-        "company_name": "測試公司",
-        "source_label": "系統 Email 通知測試",
-        "title": "此為興櫃轉板監測系統之 Email 通知測試信，非實際市場事件。",
-        "url": "https://qm0121.github.io/tw-esb-listing-alert/",
-    }
-
-    events = [test_event]
-
-    message = EmailMessage()
-    message["Subject"] = format_test_email_subject(events)
-    message["From"] = EMAIL_SENDER
-    message["To"] = ", ".join(recipients)
-    message.set_content(format_test_email_body(events))
-
-    with smtplib.SMTP_SSL(EMAIL_SMTP_HOST, EMAIL_SMTP_PORT, timeout=40) as smtp:
-        smtp.login(EMAIL_SENDER, EMAIL_APP_PASSWORD)
-        smtp.send_message(message)
-
-    return len(recipients)
-
-
-def run_test_email_only() -> None:
-    recipient_count = send_test_email_notification()
-    print(f"測試信寄送完成：已寄送給 {recipient_count} 位收件人。")
-
-
 def summarize(events: list[dict[str, str]]) -> dict[str, Any]:
     stage_counts: dict[str, int] = {}
     type_counts: dict[str, int] = {}
@@ -1177,4 +1121,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    run_test_email_only()
+    main()
