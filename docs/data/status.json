@@ -1,14 +1,16 @@
 {
-  "last_checked_at": "2026-05-16T17:55:17+08:00",
+  "last_checked_at": "2026-05-16T18:16:14+08:00",
   "last_run_ok": true,
-  "schema_version": 14,
-  "message": "完成但有部分來源暫時抓取失敗：mops, tib_news。網站資料共 1043 筆事件，本輪新增 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "schema_version": 15,
+  "message": "完成：網站重建 1043 筆事件，本輪新增事件 6 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
       "fetched": 0,
-      "ok": false,
-      "error": "抓取來源失敗：https://mopsov.twse.com.tw/mops/web/t05sr01_1；HTTPSConnectionPool(host='mopsov.twse.com.tw', port=443): Max retries exceeded with url: /mops/web/t05sr01_1 (Caused by NameResolutionError(\"HTTPSConnection(host='mopsov.twse.com.tw', port=443): Failed to resolve 'mopsov.twse.com.tw' ([Errno -5] No address associated with hostname)\"))"
+      "ok": true,
+      "status": "disabled",
+      "display_status": "停用",
+      "note": "公開版暫停自動監測；保留來源列供後續合規替代方案接回。"
     },
     "twse_apply": {
       "label": "TWSE 申請上市公司",
@@ -22,12 +24,11 @@
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
-      "fetched": 0,
-      "ok": false,
-      "error": "抓取 JSON 來源失敗：https://openapi.twse.com.tw/v1/news/newsList；HTTPSConnectionPool(host='openapi.twse.com.tw', port=443): Max retries exceeded with url: /v1/news/newsList (Caused by NameResolutionError(\"HTTPSConnection(host='openapi.twse.com.tw', port=443): Failed to resolve 'openapi.twse.com.tw' ([Errno -5] No address associated with hostname)\"))"
+      "fetched": 6,
+      "ok": true
     }
   },
-  "new_event_count": 0,
+  "new_event_count": 6,
   "email_recipient_count": 0,
   "total_event_count": 1043,
   "data_retention_years": 3,
@@ -57,6 +58,11 @@
         "parsed": 146,
         "retained": 135
       }
+    },
+    "tib_news_csv": {
+      "parsed": 6,
+      "retained": 6,
+      "first_200_chars": "標題,連結,日期 \"本國及第一上市公司(不含金融控股公司)除永冠-KY外，均已申報115年第1季財務報告\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69dbea9fd019e2b544e550227\",\"1150515\" \"115年第2季得為上市認購（售）權證（含牛熊證）之標的證券\",\"https://ww"
     }
   },
   "summary": {
