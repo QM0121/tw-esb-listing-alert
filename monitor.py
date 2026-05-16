@@ -5,8 +5,10 @@ import hashlib
 import json
 import os
 import re
+import smtplib
 import time
 from datetime import datetime, timedelta, timezone
+from email.message import EmailMessage
 from pathlib import Path
 from typing import Any
 
@@ -18,8 +20,11 @@ SEEN_PATH = ROOT / "data" / "seen.json"
 ALERTS_PATH = ROOT / "docs" / "data" / "alerts.json"
 STATUS_PATH = ROOT / "docs" / "data" / "status.json"
 
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "").strip()
-TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "").strip()
+EMAIL_SMTP_HOST = os.getenv("EMAIL_SMTP_HOST", "smtp.gmail.com").strip() or "smtp.gmail.com"
+EMAIL_SMTP_PORT = int(os.getenv("EMAIL_SMTP_PORT", "465").strip() or "465")
+EMAIL_SENDER = os.getenv("EMAIL_SENDER", "").strip()
+EMAIL_APP_PASSWORD = os.getenv("EMAIL_APP_PASSWORD", "").replace(" ", "").strip()
+EMAIL_RECIPIENTS_RAW = os.getenv("EMAIL_RECIPIENTS", "").strip()
 
 HEADERS = {
     "User-Agent": (
@@ -814,34 +819,76 @@ def event_sort_key(event: dict[str, str]) -> tuple[datetime, str, str]:
     )
 
 
-def format_telegram(event: dict[str, str]) -> str:
-    company = event.get("company_name") or "未解析公司名稱"
-    code = event.get("company_code")
-    company_line = f"{company}（{code}）" if code else company
-    return (
-        "【興櫃轉板網站監測通知】\n\n"
-        f"事件：{event.get('event_type', '')}｜{event.get('stage', '')}\n"
-        f"公司：{company_line}\n"
-        f"日期：{event.get('event_date', '')}\n"
-        f"來源：{event.get('source_label', '')}\n\n"
-        f"{event.get('title', '')}\n\n"
-        f"{event.get('url', '')}"
-    )
+def parse_email_recipients(raw: str) -> list[str]:
+    recipients = [
+        item.strip()
+        for item in re.split(r"[,;\n]+", raw or "")
+        if item.strip()
+    ]
+    return recipients
 
 
-def send_telegram(text: str) -> None:
-    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
-        raise RuntimeError("缺少 TELEGRAM_BOT_TOKEN 或 TELEGRAM_CHAT_ID。")
-    endpoint = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-    response = requests.post(
-        endpoint,
-        json={"chat_id": TELEGRAM_CHAT_ID, "text": text, "disable_web_page_preview": False},
-        timeout=40,
-    )
-    response.raise_for_status()
-    payload = response.json()
-    if not payload.get("ok"):
-        raise RuntimeError(f"Telegram API 回傳失敗：{payload}")
+def format_email_subject(events: list[dict[str, str]]) -> str:
+    if len(events) == 1:
+        event = events[0]
+        company = event.get("company_name") or event.get("company_code") or "未解析公司"
+        stage = event.get("stage") or "新事件"
+        return f"【興櫃轉板監測】{company}｜{stage}"
+    return f"【興櫃轉板監測】偵測到 {len(events)} 筆新事件"
+
+
+def format_email_body(events: list[dict[str, str]]) -> str:
+    lines = [
+        "您好，",
+        "",
+        "興櫃轉板監測網站偵測到新的事件如下：",
+        "",
+    ]
+
+    for index, event in enumerate(events, start=1):
+        company = event.get("company_name") or "未解析公司名稱"
+        code = event.get("company_code")
+        company_line = f"{company}（{code}）" if code else company
+        lines.extend([
+            f"{index}. {event.get('event_type', '')}｜{event.get('stage', '')}",
+            f"   公司：{company_line}",
+            f"   日期：{event.get('event_date', '')}",
+            f"   來源：{event.get('source_label', '')}",
+            f"   標題：{event.get('title', '')}",
+            f"   連結：{event.get('url', '')}",
+            "",
+        ])
+
+    lines.extend([
+        "此信件由興櫃轉板網站監測程式自動寄出。",
+        "若本輪沒有新事件，系統不會寄信。",
+    ])
+    return "\n".join(lines)
+
+
+def send_email_notification(events: list[dict[str, str]]) -> int:
+    if not events:
+        return 0
+
+    recipients = parse_email_recipients(EMAIL_RECIPIENTS_RAW)
+    if not EMAIL_SENDER:
+        raise RuntimeError("缺少 EMAIL_SENDER。")
+    if not EMAIL_APP_PASSWORD:
+        raise RuntimeError("缺少 EMAIL_APP_PASSWORD。")
+    if not recipients:
+        raise RuntimeError("缺少 EMAIL_RECIPIENTS。")
+
+    message = EmailMessage()
+    message["Subject"] = format_email_subject(events)
+    message["From"] = EMAIL_SENDER
+    message["To"] = ", ".join(recipients)
+    message.set_content(format_email_body(events))
+
+    with smtplib.SMTP_SSL(EMAIL_SMTP_HOST, EMAIL_SMTP_PORT, timeout=40) as smtp:
+        smtp.login(EMAIL_SENDER, EMAIL_APP_PASSWORD)
+        smtp.send_message(message)
+
+    return len(recipients)
 
 
 def summarize(events: list[dict[str, str]]) -> dict[str, Any]:
@@ -872,7 +919,7 @@ def main() -> None:
         "message": "",
         "sources": {},
         "new_event_count": 0,
-        "telegram_sent_count": 0,
+        "email_recipient_count": 0,
         "total_event_count": 0,
         "data_retention_years": DATA_RETENTION_YEARS,
         "data_window_start": retention_start.strftime("%Y-%m-%d"),
@@ -1028,7 +1075,7 @@ def main() -> None:
             seen_ids.update(event["id"] for event in source_new)
 
             # v3 首次修復執行時，官方清單來源先做靜默基線，
-            # 避免舊資料重新整理後一次洗 Telegram。
+            # 避免舊資料重新整理後一次寄出大量 Email。
             if is_v3_migration and source in {"twse_apply", "tpex_apply", "tib_news"}:
                 initialized_sources.add(source)
                 continue
@@ -1038,13 +1085,10 @@ def main() -> None:
             else:
                 initialized_sources.add(source)
 
-        telegram_sent_count = 0
-        for event in sendable_events:
-            send_telegram(format_telegram(event))
-            telegram_sent_count += 1
+        email_recipient_count = send_email_notification(sendable_events)
 
         status["new_event_count"] = len(new_events)
-        status["telegram_sent_count"] = telegram_sent_count
+        status["email_recipient_count"] = email_recipient_count
         status["total_event_count"] = len(website_events)
         status["summary"] = summarize(website_events)
         status["last_run_ok"] = True
@@ -1052,12 +1096,12 @@ def main() -> None:
             status["message"] = (
                 f"完成但有部分來源暫時抓取失敗：{', '.join(source_errors.keys())}。"
                 f"網站資料共 {len(website_events)} 筆事件，本輪新增 {len(new_events)} 筆，"
-                f"Telegram 推播 {telegram_sent_count} 筆；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。"
+                f"Email 通知收件人數 {email_recipient_count} 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。"
             )
         else:
             status["message"] = (
                 f"完成：網站重建 {len(website_events)} 筆事件，"
-                f"本輪新增事件 {len(new_events)} 筆，Telegram 推播 {telegram_sent_count} 筆；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。"
+                f"本輪新增事件 {len(new_events)} 筆，Email 通知收件人數 {email_recipient_count} 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。"
             )
 
         write_json(SEEN_PATH, {
