@@ -37,12 +37,21 @@ HEADERS = {
 # 官方來源
 TPEX_ESB_COMPANIES_URL = "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap04_O"
 MOPS_REALTIME_URL = "https://mopsov.twse.com.tw/mops/web/t05sr01_1"
-TWSE_APPLY_LISTING_URL = "https://www.twse.com.tw/rwd/zh/company/applylisting?response=html"
+
+# 第一階段合規強化：
+# - 申請上市公司：改用 TWSE 官方 OpenAPI
+# - 證交所新聞：改用 TWSE 官方 OpenAPI，再以創新板關鍵字過濾
+TWSE_APPLY_LISTING_API_URL = "https://openapi.twse.com.tw/v1/opendata/t187ap04_L"
+TWSE_APPLY_LISTING_PUBLIC_URL = "https://www.twse.com.tw/zh/listed/listed/apply-listing.html"
+TWSE_NEWS_API_URL = "https://openapi.twse.com.tw/v1/news/newsList"
+TIB_NEWS_PUBLIC_URL = "https://www.twse.com.tw/TIB/zh/news.html"
+
+# TPEx 申請上櫃資料本輪先維持原本 CSV 路徑；
+# 待確認可完全等價替代的官方 API 後，再進一步改寫。
 TPEX_APPLY_OTC_URL = "https://www.tpex.org.tw/zh-tw/mainboard/applying/status/company.html"
 TPEX_APPLY_OTC_CSV_URL_TEMPLATE = "https://www.tpex.org.tw/web/regular_emerging/apply_schedule/applicant/applicant_companies_download_UTF-8.php?l=zh-tw&y={year}"
-TIB_NEWS_URL = "https://www.twse.com.tw/TIB/zh/news.html"
 
-SCHEMA_VERSION = 10
+SCHEMA_VERSION = 11
 MAX_EVENTS_TO_KEEP = 5000
 MAX_SEEN_TO_KEEP = 30000
 
@@ -169,6 +178,26 @@ def get_json(url: str, retries: int = 3) -> Any:
                 continue
             break
     raise RuntimeError(f"抓取 JSON 來源失敗：{url}；{last_exc}")
+
+
+def normalize_api_rows(payload: Any) -> list[dict[str, Any]]:
+    """
+    官方 OpenAPI 回傳格式可能是：
+    - 直接 list[dict]
+    - {"data": list[dict]}
+    - {"Data": list[dict]}
+    這裡統一轉成 list[dict]，讓後續 parser 更耐格式差異。
+    """
+    if isinstance(payload, list):
+        return [row for row in payload if isinstance(row, dict)]
+
+    if isinstance(payload, dict):
+        for key in ("data", "Data", "result", "Result"):
+            value = payload.get(key)
+            if isinstance(value, list):
+                return [row for row in value if isinstance(row, dict)]
+
+    return []
 
 
 def find_value(row: dict[str, Any], keywords: list[str]) -> str:
@@ -323,38 +352,40 @@ def ensure_reasonable_row_count(source: str, rows: list[list[str]], max_rows: in
 
 
 # ----------------------------------------
-# 2) TWSE 申請上市公司
-# 欄位順序：
-# 0索引 1公司代號 2公司簡稱 3申請日期 4董事長 5股本
-# 6上市審議日期 7董事會通過 8契約備查/核准 9上市買賣日期 10承銷商 11承銷價 12備註
+# 2) TWSE 申請上市公司（官方 OpenAPI）
+# OpenAPI：/opendata/t187ap04_L
 # ----------------------------------------
-def parse_twse_apply(html: str) -> list[dict[str, str]]:
-    soup = BeautifulSoup(html, "html.parser")
-    table = find_table_by_headers(soup, ["公司代號", "公司簡稱", "申請日期"])
-    rows = table_rows(table)
-    ensure_reasonable_row_count("TWSE 申請上市公司", rows)
+def parse_twse_apply_api(payload: Any) -> list[dict[str, str]]:
+    rows = normalize_api_rows(payload)
+    if len(rows) > 5000:
+        raise RuntimeError(f"TWSE 申請上市公司 OpenAPI 回傳列數異常：{len(rows)}，停止寫入避免污染資料。")
 
     events: list[dict[str, str]] = []
-    for cells in rows:
-        if len(cells) < 10:
-            continue
+    for row in rows:
+        code = clean_stock_code(find_value(row, ["公司代號", "公司代碼", "證券代號", "股票代號", "Code"]))
+        name = find_value(row, ["公司簡稱", "公司名稱", "證券名稱", "Name"])
+        app_date = find_value(row, ["申請日期", "申請日", "ApplicationDate"])
+        review_date = find_value(row, ["上市審議委員會審議日期", "上市審議日期", "審議日期", "ReviewDate"])
+        board_date = find_value(row, ["交易所董事會通過上市日期", "董事會通過上市日期", "董事會通過日期", "BoardDate"])
+        contract_date = find_value(row, [
+            "上市契約報請主管機關備查(主管機關核准)日期",
+            "上市契約報請主管機關備查日期",
+            "主管機關核准日期",
+            "上市契約備查日期",
+            "ContractDate",
+        ])
+        listing_date = find_value(row, ["股票上市買賣日期", "上市買賣日期", "掛牌日期", "ListingDate"])
+        remarks = find_value(row, ["備註", "備考", "Remarks"])
 
-        code = clean_stock_code(cells[1] if len(cells) > 1 else "")
-        name = cells[2] if len(cells) > 2 else ""
-        app_date = cells[3] if len(cells) > 3 else ""
-        review_date = cells[6] if len(cells) > 6 else ""
-        board_date = cells[7] if len(cells) > 7 else ""
-        contract_date = cells[8] if len(cells) > 8 else ""
-        listing_date = cells[9] if len(cells) > 9 else ""
-        remarks = cells[12] if len(cells) > 12 else ""
-        row_text = " ".join(cells)
+        row_text = " ".join(normalize_text(value) for value in row.values())
         is_tib = "創新板" in row_text or "創" in name
         event_type = "申請創新板上市" if is_tib else "申請上市"
-        url = TWSE_APPLY_LISTING_URL
+        url = TWSE_APPLY_LISTING_PUBLIC_URL
 
         if not code or not name or not app_date:
             continue
 
+        # 事件 title / detail 盡量維持舊版一致，降低切換來源造成事件 ID 大量改變的機率。
         events.append(make_event(
             source="twse_apply",
             event_type=event_type,
@@ -681,27 +712,27 @@ def extract_company_name_from_news(text: str) -> str:
     return ""
 
 
-def parse_tib_news(html: str) -> list[dict[str, str]]:
-    soup = BeautifulSoup(html, "html.parser")
+def parse_tib_news_api(payload: Any) -> list[dict[str, str]]:
+    rows = normalize_api_rows(payload)
+    if len(rows) > 10000:
+        raise RuntimeError(f"TWSE 新聞 OpenAPI 回傳列數異常：{len(rows)}，停止寫入避免污染資料。")
+
     events: list[dict[str, str]] = []
     seen_text: set[str] = set()
 
-    for link in soup.find_all("a"):
-        title = normalize_text(link.get_text(" ", strip=True))
+    for row in rows:
+        title = find_value(row, ["title", "Title", "標題", "新聞標題", "主旨"])
         if not title or title in seen_text:
             continue
         seen_text.add(title)
 
-        date = extract_news_date(title)
+        date = find_value(row, ["date", "Date", "日期", "發佈日期", "發布日期", "發布時間", "publishDate"])
+        if not date:
+            date = extract_news_date(title)
+
         code = extract_company_code(title)
         name = extract_company_name_from_news(title)
-        href = link.get("href") or ""
-        if href.startswith("http"):
-            url = href
-        elif href.startswith("/"):
-            url = "https://www.twse.com.tw" + href
-        else:
-            url = TIB_NEWS_URL
+        url = find_value(row, ["link", "Link", "url", "Url", "網址", "連結"]) or TIB_NEWS_PUBLIC_URL
 
         for event_type, stage, pattern in TIB_RULES:
             if pattern.search(title):
@@ -942,7 +973,7 @@ def main() -> None:
             existing_events = []
 
         # MOPS 是即時重大訊息，保留歷史累積；
-        # TWSE / TPEx / TIB 官方頁面每次重建，避免舊版錯誤資料殘留。
+        # TWSE OpenAPI / TPEx / TIB OpenAPI 官方來源每次重建，避免舊版錯誤資料殘留。
         preserved_mops_events = filter_events_within_retention_window([
             event for event in existing_events
             if isinstance(event, dict) and event.get("source") == "mops"
@@ -1014,9 +1045,9 @@ def main() -> None:
             return html_events
 
         fetchers = {
-            "twse_apply": lambda: parse_twse_apply(get_text(TWSE_APPLY_LISTING_URL)),
+            "twse_apply": lambda: parse_twse_apply_api(get_json(TWSE_APPLY_LISTING_API_URL)),
             "tpex_apply": fetch_tpex_apply_events,
-            "tib_news": lambda: parse_tib_news(get_text(TIB_NEWS_URL)),
+            "tib_news": lambda: parse_tib_news_api(get_json(TWSE_NEWS_API_URL)),
         }
         if esb_companies:
             fetchers = {
