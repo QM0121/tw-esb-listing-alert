@@ -38,12 +38,13 @@ HEADERS = {
 TPEX_ESB_COMPANIES_URL = "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap04_O"
 MOPS_REALTIME_URL = "https://mopsov.twse.com.tw/mops/web/t05sr01_1"
 
-# 第一階段合規強化：
-# - 申請上市公司：改用 TWSE 官方 OpenAPI
-# - 證交所新聞：改用 TWSE 官方 OpenAPI，再以創新板關鍵字過濾
+# 公開版合規強化：
+# - 申請上市公司：改用政府資料開放平臺所連結之 TWSE CSV
+# - 證交所新聞：改用政府資料開放平臺所連結之 TWSE CSV，再以創新板關鍵字過濾
+# - MOPS 即時重大訊息：公開版暫停自動抓取，保留來源列並顯示「停用」
 TWSE_APPLY_LISTING_CSV_URL = "https://www.twse.com.tw/company/applylistingCsvAndHtml?selectType=Local&type=open_data"
 TWSE_APPLY_LISTING_PUBLIC_URL = "https://www.twse.com.tw/zh/listed/listed/apply-listing.html"
-TWSE_NEWS_API_URL = "https://openapi.twse.com.tw/v1/news/newsList"
+TWSE_NEWS_CSV_URL = "https://www.twse.com.tw/news/newsList?response=open_data"
 TIB_NEWS_PUBLIC_URL = "https://www.twse.com.tw/TIB/zh/news.html"
 
 # TPEx 申請上櫃資料本輪先維持原本 CSV 路徑；
@@ -51,7 +52,7 @@ TIB_NEWS_PUBLIC_URL = "https://www.twse.com.tw/TIB/zh/news.html"
 TPEX_APPLY_OTC_URL = "https://www.tpex.org.tw/zh-tw/mainboard/applying/status/company.html"
 TPEX_APPLY_OTC_CSV_URL_TEMPLATE = "https://www.tpex.org.tw/web/regular_emerging/apply_schedule/applicant/applicant_companies_download_UTF-8.php?l=zh-tw&y={year}"
 
-SCHEMA_VERSION = 14
+SCHEMA_VERSION = 15
 MAX_EVENTS_TO_KEEP = 5000
 MAX_SEEN_TO_KEEP = 30000
 
@@ -773,6 +774,96 @@ def parse_tib_news_api(payload: Any) -> list[dict[str, str]]:
     return dedupe_events(events)
 
 
+def parse_tib_news_csv(csv_text: str) -> list[dict[str, str]]:
+    """
+    解析政府資料開放平臺所連結之「證交所新聞」CSV。
+    主要欄位預期為：標題、連結、日期。
+    """
+    if not csv_text or not csv_text.strip():
+        return []
+
+    rows = list(csv.reader(csv_text.splitlines()))
+    if not rows:
+        return []
+
+    header_index = -1
+    header: list[str] = []
+    for idx, row in enumerate(rows[:20]):
+        normalized = [normalize_text(cell) for cell in row]
+        joined = " ".join(normalized)
+        if "標題" in joined and "連結" in joined and "日期" in joined:
+            header_index = idx
+            header = normalized
+            break
+
+    if header_index == -1:
+        return []
+
+    def col_index(candidates: list[str]) -> int:
+        for candidate in candidates:
+            for idx, name in enumerate(header):
+                if candidate in name:
+                    return idx
+        return -1
+
+    title_idx = col_index(["標題", "新聞標題", "主旨"])
+    link_idx = col_index(["連結", "網址", "URL", "url"])
+    date_idx = col_index(["日期", "發布日期", "發佈日期", "時間"])
+
+    if title_idx == -1:
+        return []
+
+    data_rows = rows[header_index + 1:]
+    if len(data_rows) > 20000:
+        raise RuntimeError(f"TWSE 證交所新聞 CSV 解析列數異常：{len(data_rows)}，停止寫入避免污染資料。")
+
+    events: list[dict[str, str]] = []
+    seen_text: set[str] = set()
+
+    for raw_cells in data_rows:
+        cells = [normalize_text(cell) for cell in raw_cells]
+        if title_idx >= len(cells):
+            continue
+
+        title = cells[title_idx]
+        if not title or title in seen_text:
+            continue
+        seen_text.add(title)
+
+        date = cells[date_idx] if date_idx != -1 and date_idx < len(cells) else ""
+        if not date:
+            date = extract_news_date(title)
+
+        raw_link = cells[link_idx] if link_idx != -1 and link_idx < len(cells) else ""
+        if raw_link.startswith("http"):
+            url = raw_link
+        elif raw_link.startswith("/"):
+            url = "https://www.twse.com.tw" + raw_link
+        else:
+            url = TIB_NEWS_PUBLIC_URL
+
+        code = extract_company_code(title)
+        name = extract_company_name_from_news(title)
+
+        for event_type, stage, pattern in TIB_RULES:
+            if pattern.search(title):
+                events.append(make_event(
+                    source="tib_news",
+                    event_type=event_type,
+                    stage=stage,
+                    event_date=date,
+                    company_code=code,
+                    company_name=name,
+                    title=title,
+                    url=url,
+                    detail="證交所新聞開放資料 CSV",
+                ))
+                break
+
+    return dedupe_events(events)
+
+
+
 def dedupe_events(events: list[dict[str, str]]) -> list[dict[str, str]]:
     seen: set[str] = set()
     out: list[dict[str, str]] = []
@@ -1003,21 +1094,18 @@ def main() -> None:
         source_events: dict[str, list[dict[str, str]]] = {}
         source_errors: dict[str, str] = {}
 
-        # MOPS 需先取得「興櫃公司名單」才能篩選即時重大訊息。
-        # 此來源偶爾會出現 TPEx 520 或 timeout；
-        # 若抓取失敗，本輪僅暫停 MOPS，其他來源仍照常重建，避免整個 workflow 失敗。
-        try:
-            esb_companies = fetch_esb_companies()
-        except Exception as exc:
-            esb_companies = {}
-            error_message = f"興櫃公司名單抓取失敗：{exc}"
-            source_errors["mops"] = error_message
-            status["sources"]["mops"] = {
-                "label": SOURCE_LABELS.get("mops", "mops"),
-                "fetched": 0,
-                "ok": False,
-                "error": error_message,
-            }
+        # MOPS 即時重大訊息：
+        # 公開版先停用自動抓取，避免一般網站自動化擷取之條款疑慮。
+        # 來源列保留於前端，狀態顯示為「停用」而非「異常」。
+        status["sources"]["mops"] = {
+            "label": SOURCE_LABELS.get("mops", "mops"),
+            "fetched": 0,
+            "ok": True,
+            "status": "disabled",
+            "display_status": "停用",
+            "note": "公開版暫停自動監測；保留來源列供後續合規替代方案接回。",
+        }
+        source_events["mops"] = []
 
         def fetch_twse_apply_events() -> list[dict[str, str]]:
             """
@@ -1035,6 +1123,22 @@ def main() -> None:
             }
 
             return filtered_events
+        def fetch_tib_news_events() -> list[dict[str, str]]:
+            """
+            創新板相關新聞改採政府資料開放平臺所連結的 TWSE 證交所新聞 CSV。
+            """
+            csv_text = get_text(TWSE_NEWS_CSV_URL)
+            csv_events = parse_tib_news_csv(csv_text)
+            filtered_events = filter_events_within_retention_window(csv_events, retention_start)
+
+            status.setdefault("debug", {})["tib_news_csv"] = {
+                "parsed": len(csv_events),
+                "retained": len(filtered_events),
+                "first_200_chars": normalize_text(csv_text[:200]),
+            }
+
+            return filtered_events
+
         def fetch_tpex_apply_events() -> list[dict[str, str]]:
             """
             申請上櫃資料優先改成「依民國年度分批抓 CSV」：
@@ -1084,13 +1188,8 @@ def main() -> None:
         fetchers = {
             "twse_apply": fetch_twse_apply_events,
             "tpex_apply": fetch_tpex_apply_events,
-            "tib_news": lambda: parse_tib_news_api(get_json(TWSE_NEWS_API_URL)),
+            "tib_news": fetch_tib_news_events,
         }
-        if esb_companies:
-            fetchers = {
-                "mops": lambda: parse_mops_realtime(get_text(MOPS_REALTIME_URL), esb_companies),
-                **fetchers,
-            }
 
         for source, fetcher in fetchers.items():
             try:
@@ -1102,6 +1201,9 @@ def main() -> None:
 
                 if source == "tpex_apply" and len(source_events[source]) == 0:
                     raise RuntimeError("TPEx 申請上櫃來源分年 CSV、ALL CSV 與 HTML 備援皆解析為 0 筆，暫不覆寫既有資料。")
+
+                if source == "tib_news" and len(source_events[source]) == 0:
+                    raise RuntimeError("TWSE 證交所新聞開放資料 CSV 解析為 0 筆；已寫入 status.debug.tib_news_csv，暫不覆寫既有資料。")
 
                 status["sources"][source] = {
                     "label": SOURCE_LABELS.get(source, source),
