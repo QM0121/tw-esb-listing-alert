@@ -2555,7 +2555,7 @@
       const today = taiwanDateString();
 
       const totalUrl = "https://qm0121.goatcounter.com/counter/TOTAL.json";
-      const todayUrl = `https://qm0121.goatcounter.com/counter/TOTAL.json?start=${today}&end=${today}`;
+      const todayUrl = `https://qm0121.goatcounter.com/counter/TOTAL.json?start=${today}`;
 
       try {
         const [todayRes, totalRes] = await Promise.all([
