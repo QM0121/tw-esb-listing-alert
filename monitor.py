@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 import re
+import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
@@ -43,12 +44,14 @@ MAX_SEEN_TO_KEEP = 30000
 # 網站與通知僅保留「近三年」資料，並於每次執行時自動汰除超出期間的事件。
 DATA_RETENTION_YEARS = 3
 
+
 def subtract_years_safe(dt: datetime, years: int) -> datetime:
     """將日期往前推指定年數；遇到 2/29 時以 2/28 處理。"""
     try:
         return dt.replace(year=dt.year - years)
     except ValueError:
         return dt.replace(year=dt.year - years, month=2, day=28)
+
 
 def current_data_window() -> tuple[datetime, datetime]:
     end_dt = taipei_now()
@@ -65,6 +68,7 @@ def tpex_candidate_roc_years(window_start: datetime, window_end: datetime) -> li
     start_year = roc_year(window_start)
     end_year = roc_year(window_end)
     return list(range(end_year, start_year - 1, -1))
+
 
 SOURCE_LABELS = {
     "mops": "MOPS 即時重大訊息",
@@ -91,18 +95,23 @@ TIB_RULES: list[tuple[str, str, re.Pattern[str]]] = [
     ("轉板進度重大更新", "轉板進度重大更新", re.compile(r"改列上市|開始改列上市買賣")),
 ]
 
+
 def taipei_now() -> datetime:
     return datetime.now(timezone.utc).astimezone(timezone(timedelta(hours=8)))
+
 
 def taipei_now_iso() -> str:
     return taipei_now().isoformat(timespec="seconds")
 
+
 def normalize_text(value: Any) -> str:
     return re.sub(r"\s+", " ", str(value or "")).strip()
+
 
 def sha_id(*parts: str) -> str:
     raw = "|".join(normalize_text(part) for part in parts)
     return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
 
 def read_json(path: Path, default: Any) -> Any:
     if not path.exists():
@@ -112,11 +121,16 @@ def read_json(path: Path, default: Any) -> Any:
     except json.JSONDecodeError:
         return default
 
+
 def write_json(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
+
 def get_text(url: str, retries: int = 3) -> str:
+    """
+    抓取文字型來源，遇到官方網站暫時 5xx 或 timeout 時自動重試。
+    """
     last_exc: Exception | None = None
     for attempt in range(1, retries + 1):
         try:
@@ -126,14 +140,31 @@ def get_text(url: str, retries: int = 3) -> str:
             return response.text
         except requests.RequestException as exc:
             last_exc = exc
-            if attempt == retries:
-                break
+            if attempt < retries:
+                time.sleep(min(2 * attempt, 6))
+                continue
+            break
     raise RuntimeError(f"抓取來源失敗：{url}；{last_exc}")
 
-def get_json(url: str) -> Any:
-    response = requests.get(url, headers=HEADERS, timeout=40)
-    response.raise_for_status()
-    return response.json()
+
+def get_json(url: str, retries: int = 3) -> Any:
+    """
+    抓取 JSON 型來源，遇到官方網站暫時 5xx、timeout 或 JSON 解析異常時自動重試。
+    """
+    last_exc: Exception | None = None
+    for attempt in range(1, retries + 1):
+        try:
+            response = requests.get(url, headers=HEADERS, timeout=40)
+            response.raise_for_status()
+            return response.json()
+        except (requests.RequestException, ValueError) as exc:
+            last_exc = exc
+            if attempt < retries:
+                time.sleep(min(2 * attempt, 6))
+                continue
+            break
+    raise RuntimeError(f"抓取 JSON 來源失敗：{url}；{last_exc}")
+
 
 def find_value(row: dict[str, Any], keywords: list[str]) -> str:
     for keyword in keywords:
@@ -142,8 +173,10 @@ def find_value(row: dict[str, Any], keywords: list[str]) -> str:
                 return normalize_text(value)
     return ""
 
+
 def clean_stock_code(value: str) -> str:
     return re.sub(r"\D", "", value or "")
+
 
 def fetch_esb_companies() -> dict[str, str]:
     payload = get_json(TPEX_ESB_COMPANIES_URL)
@@ -166,6 +199,7 @@ def fetch_esb_companies() -> dict[str, str]:
     if not companies:
         raise RuntimeError("無法解析興櫃公司名單。")
     return companies
+
 
 def make_event(
     *,
@@ -197,6 +231,7 @@ def make_event(
         "first_seen_at": taipei_now_iso(),
     }
 
+
 # --------------------------
 # 1) MOPS 即時重大訊息
 # --------------------------
@@ -218,9 +253,9 @@ def parse_mops_realtime(html: str, esb_companies: dict[str, str]) -> list[dict[s
 
         company_name = esb_companies.get(code) or cells[1]
         date = cells[2]
-        time = cells[3]
+        time_value = cells[3]
         title = cells[4]
-        full_date = normalize_text(f"{date} {time}")
+        full_date = normalize_text(f"{date} {time_value}")
 
         for event_type, stage, pattern in MOPS_RULES:
             if pattern.search(title):
@@ -239,6 +274,7 @@ def parse_mops_realtime(html: str, esb_companies: dict[str, str]) -> list[dict[s
 
     return dedupe_events(events)
 
+
 # ----------------------------------------
 # 通用：找出指定官方表格
 # ----------------------------------------
@@ -252,11 +288,13 @@ def find_table_by_headers(soup: BeautifulSoup, required_headers: list[str]) -> A
             return table
     return None
 
+
 def direct_row_cells(tr: Any) -> list[str]:
     cells = [normalize_text(td.get_text(" ", strip=True)) for td in tr.find_all("td", recursive=False)]
     if cells:
         return cells
     return [normalize_text(td.get_text(" ", strip=True)) for td in tr.find_all("td")]
+
 
 def table_rows(table: Any) -> list[list[str]]:
     if table is None:
@@ -271,11 +309,13 @@ def table_rows(table: Any) -> list[list[str]]:
             rows.append(cells)
     return rows
 
+
 def ensure_reasonable_row_count(source: str, rows: list[list[str]], max_rows: int = 5000) -> None:
     # 官方申請上市 / 上櫃公司表格目前遠低於此數；
     # 若超過，通常代表 HTML 結構誤抓，寧可失敗也不要寫入大量錯誤資料。
     if len(rows) > max_rows:
         raise RuntimeError(f"{source} 解析列數異常：{len(rows)}，停止寫入避免污染資料。")
+
 
 # ----------------------------------------
 # 2) TWSE 申請上市公司
@@ -379,6 +419,7 @@ def parse_twse_apply(html: str) -> list[dict[str, str]]:
             ))
 
     return dedupe_events(events)
+
 
 # ----------------------------------------
 # 3) TPEx 申請上櫃公司
@@ -611,6 +652,7 @@ def parse_tpex_apply_html(html: str) -> list[dict[str, str]]:
 
     return dedupe_events(events)
 
+
 # ----------------------------------------
 # 4) 臺灣創新板新聞稿
 # ----------------------------------------
@@ -618,9 +660,11 @@ def extract_news_date(text: str) -> str:
     match = re.match(r"(\d{3}年\d{1,2}月\d{1,2}日)", text)
     return match.group(1) if match else ""
 
+
 def extract_company_code(text: str) -> str:
     match = re.search(r"(?:代號|證券代號)[:：]?\s*(\d{4,6})", text)
     return match.group(1) if match else ""
+
 
 def extract_company_name_from_news(text: str) -> str:
     cleaned = re.sub(r"^\d{3}年\d{1,2}月\d{1,2}日\s*", "", text)
@@ -630,6 +674,7 @@ def extract_company_name_from_news(text: str) -> str:
             if candidate:
                 return normalize_text(candidate)
     return ""
+
 
 def parse_tib_news(html: str) -> list[dict[str, str]]:
     soup = BeautifulSoup(html, "html.parser")
@@ -670,6 +715,7 @@ def parse_tib_news(html: str) -> list[dict[str, str]]:
 
     return dedupe_events(events)
 
+
 def dedupe_events(events: list[dict[str, str]]) -> list[dict[str, str]]:
     seen: set[str] = set()
     out: list[dict[str, str]] = []
@@ -679,6 +725,7 @@ def dedupe_events(events: list[dict[str, str]]) -> list[dict[str, str]]:
             seen.add(event_id)
             out.append(event)
     return out
+
 
 def parse_roc_or_iso_date(value: str) -> datetime:
     text = normalize_text(value)
@@ -704,10 +751,10 @@ def parse_roc_or_iso_date(value: str) -> datetime:
     # 3) 民國年：115/05/12、115-05-12、115.05.12
     m = re.search(r"(?<!\d)(\d{2,3})[./-](\d{1,2})[./-](\d{1,2})(?!\d)", text)
     if m:
-        roc_year = int(m.group(1))
-        if 1 <= roc_year <= 999:
+        roc_year_value = int(m.group(1))
+        if 1 <= roc_year_value <= 999:
             try:
-                return datetime(roc_year + 1911, int(m.group(2)), int(m.group(3)), tzinfo=tz)
+                return datetime(roc_year_value + 1911, int(m.group(2)), int(m.group(3)), tzinfo=tz)
             except ValueError:
                 pass
 
@@ -758,12 +805,14 @@ def filter_events_within_retention_window(
 ) -> list[dict[str, str]]:
     return [event for event in events if is_event_within_retention_window(event, window_start)]
 
+
 def event_sort_key(event: dict[str, str]) -> tuple[datetime, str, str]:
     return (
         parse_roc_or_iso_date(event.get("event_date", "")),
         event.get("company_code", ""),
         event.get("stage", ""),
     )
+
 
 def format_telegram(event: dict[str, str]) -> str:
     company = event.get("company_name") or "未解析公司名稱"
@@ -779,6 +828,7 @@ def format_telegram(event: dict[str, str]) -> str:
         f"{event.get('url', '')}"
     )
 
+
 def send_telegram(text: str) -> None:
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
         raise RuntimeError("缺少 TELEGRAM_BOT_TOKEN 或 TELEGRAM_CHAT_ID。")
@@ -792,6 +842,7 @@ def send_telegram(text: str) -> None:
     payload = response.json()
     if not payload.get("ok"):
         raise RuntimeError(f"Telegram API 回傳失敗：{payload}")
+
 
 def summarize(events: list[dict[str, str]]) -> dict[str, Any]:
     stage_counts: dict[str, int] = {}
@@ -809,6 +860,7 @@ def summarize(events: list[dict[str, str]]) -> dict[str, Any]:
         "type_counts": type_counts,
         "source_counts": source_counts,
     }
+
 
 def main() -> None:
     checked_at = taipei_now_iso()
@@ -849,10 +901,24 @@ def main() -> None:
             if isinstance(event, dict) and event.get("source") == "mops"
         ], retention_start)
 
-        esb_companies = fetch_esb_companies()
-
         source_events: dict[str, list[dict[str, str]]] = {}
         source_errors: dict[str, str] = {}
+
+        # MOPS 需先取得「興櫃公司名單」才能篩選即時重大訊息。
+        # 此來源偶爾會出現 TPEx 520 或 timeout；
+        # 若抓取失敗，本輪僅暫停 MOPS，其他來源仍照常重建，避免整個 workflow 失敗。
+        try:
+            esb_companies = fetch_esb_companies()
+        except Exception as exc:
+            esb_companies = {}
+            error_message = f"興櫃公司名單抓取失敗：{exc}"
+            source_errors["mops"] = error_message
+            status["sources"]["mops"] = {
+                "label": SOURCE_LABELS.get("mops", "mops"),
+                "fetched": 0,
+                "ok": False,
+                "error": error_message,
+            }
 
         def fetch_tpex_apply_events() -> list[dict[str, str]]:
             """
@@ -901,11 +967,15 @@ def main() -> None:
             return html_events
 
         fetchers = {
-            "mops": lambda: parse_mops_realtime(get_text(MOPS_REALTIME_URL), esb_companies),
             "twse_apply": lambda: parse_twse_apply(get_text(TWSE_APPLY_LISTING_URL)),
             "tpex_apply": fetch_tpex_apply_events,
             "tib_news": lambda: parse_tib_news(get_text(TIB_NEWS_URL)),
         }
+        if esb_companies:
+            fetchers = {
+                "mops": lambda: parse_mops_realtime(get_text(MOPS_REALTIME_URL), esb_companies),
+                **fetchers,
+            }
 
         for source, fetcher in fetchers.items():
             try:
@@ -1004,6 +1074,7 @@ def main() -> None:
         write_json(STATUS_PATH, status)
         print(status["message"])
         raise
+
 
 if __name__ == "__main__":
     main()
