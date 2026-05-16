@@ -41,7 +41,7 @@ MOPS_REALTIME_URL = "https://mopsov.twse.com.tw/mops/web/t05sr01_1"
 # 第一階段合規強化：
 # - 申請上市公司：改用 TWSE 官方 OpenAPI
 # - 證交所新聞：改用 TWSE 官方 OpenAPI，再以創新板關鍵字過濾
-TWSE_APPLY_LISTING_API_URL = "https://openapi.twse.com.tw/v1/opendata/t187ap04_L"
+TWSE_APPLY_LISTING_CSV_URL = "https://www.twse.com.tw/company/applylistingCsvAndHtml?selectType=Local&type=open_data"
 TWSE_APPLY_LISTING_PUBLIC_URL = "https://www.twse.com.tw/zh/listed/listed/apply-listing.html"
 TWSE_NEWS_API_URL = "https://openapi.twse.com.tw/v1/news/newsList"
 TIB_NEWS_PUBLIC_URL = "https://www.twse.com.tw/TIB/zh/news.html"
@@ -51,7 +51,7 @@ TIB_NEWS_PUBLIC_URL = "https://www.twse.com.tw/TIB/zh/news.html"
 TPEX_APPLY_OTC_URL = "https://www.tpex.org.tw/zh-tw/mainboard/applying/status/company.html"
 TPEX_APPLY_OTC_CSV_URL_TEMPLATE = "https://www.tpex.org.tw/web/regular_emerging/apply_schedule/applicant/applicant_companies_download_UTF-8.php?l=zh-tw&y={year}"
 
-SCHEMA_VERSION = 11
+SCHEMA_VERSION = 14
 MAX_EVENTS_TO_KEEP = 5000
 MAX_SEEN_TO_KEEP = 30000
 
@@ -355,37 +355,59 @@ def ensure_reasonable_row_count(source: str, rows: list[list[str]], max_rows: in
 # 2) TWSE 申請上市公司（官方 OpenAPI）
 # OpenAPI：/opendata/t187ap04_L
 # ----------------------------------------
-def parse_twse_apply_api(payload: Any) -> list[dict[str, str]]:
-    rows = normalize_api_rows(payload)
-    if len(rows) > 5000:
-        raise RuntimeError(f"TWSE 申請上市公司 OpenAPI 回傳列數異常：{len(rows)}，停止寫入避免污染資料。")
+def parse_twse_apply_csv(csv_text: str) -> list[dict[str, str]]:
+    """
+    解析政府資料開放平臺所連結之 TWSE「申請上市之本國公司」CSV。
+    來源：
+    https://www.twse.com.tw/company/applylistingCsvAndHtml?selectType=Local&type=open_data
+
+    欄位順序：
+    0索引 1公司代號 2公司簡稱 3申請日期 4董事長 5申請時股本
+    6上市審議委員會審議日期 7交易所董事會通過上市日期
+    8上市契約報請主管機關備查/核准日期 9股票上市買賣日期
+    10承銷商 11承銷價 12備註
+    """
+    if not csv_text or not csv_text.strip():
+        return []
+
+    rows = list(csv.reader(csv_text.splitlines()))
+    if not rows:
+        return []
+
+    header_index = -1
+    for idx, row in enumerate(rows[:20]):
+        joined = " ".join(normalize_text(cell) for cell in row)
+        if "公司代號" in joined and "公司簡稱" in joined and "申請日期" in joined:
+            header_index = idx
+            break
+
+    if header_index < 0:
+        return []
+
+    data_rows = rows[header_index + 1:]
+    ensure_reasonable_row_count("TWSE 申請上市公司 CSV", data_rows, max_rows=5000)
 
     events: list[dict[str, str]] = []
-    for row in rows:
-        code = clean_stock_code(find_value(row, ["公司代號", "公司代碼", "證券代號", "股票代號", "Code"]))
-        name = find_value(row, ["公司簡稱", "公司名稱", "證券名稱", "Name"])
-        app_date = find_value(row, ["申請日期", "申請日", "ApplicationDate"])
-        review_date = find_value(row, ["上市審議委員會審議日期", "上市審議日期", "審議日期", "ReviewDate"])
-        board_date = find_value(row, ["交易所董事會通過上市日期", "董事會通過上市日期", "董事會通過日期", "BoardDate"])
-        contract_date = find_value(row, [
-            "上市契約報請主管機關備查(主管機關核准)日期",
-            "上市契約報請主管機關備查日期",
-            "主管機關核准日期",
-            "上市契約備查日期",
-            "ContractDate",
-        ])
-        listing_date = find_value(row, ["股票上市買賣日期", "上市買賣日期", "掛牌日期", "ListingDate"])
-        remarks = find_value(row, ["備註", "備考", "Remarks"])
+    for cells in data_rows:
+        cells = [normalize_text(cell) for cell in cells]
+        if len(cells) < 10:
+            continue
 
-        row_text = " ".join(normalize_text(value) for value in row.values())
+        code = clean_stock_code(cells[1] if len(cells) > 1 else "")
+        name = cells[2] if len(cells) > 2 else ""
+        app_date = cells[3] if len(cells) > 3 else ""
+        review_date = cells[6] if len(cells) > 6 else ""
+        board_date = cells[7] if len(cells) > 7 else ""
+        contract_date = cells[8] if len(cells) > 8 else ""
+        listing_date = cells[9] if len(cells) > 9 else ""
+        remarks = cells[12] if len(cells) > 12 else ""
+        row_text = " ".join(cells)
         is_tib = "創新板" in row_text or "創" in name
         event_type = "申請創新板上市" if is_tib else "申請上市"
-        url = TWSE_APPLY_LISTING_PUBLIC_URL
 
         if not code or not name or not app_date:
             continue
 
-        # 事件 title / detail 盡量維持舊版一致，降低切換來源造成事件 ID 大量改變的機率。
         events.append(make_event(
             source="twse_apply",
             event_type=event_type,
@@ -394,8 +416,8 @@ def parse_twse_apply_api(payload: Any) -> list[dict[str, str]]:
             company_code=code,
             company_name=name,
             title=f"{name}（{code}）列入證交所申請上市公司名單",
-            url=url,
-            detail="官方申請上市公司表格顯示申請日期",
+            url=TWSE_APPLY_LISTING_PUBLIC_URL,
+            detail="政府開放資料 CSV 顯示申請日期",
         ))
         events.append(make_event(
             source="twse_apply",
@@ -405,8 +427,8 @@ def parse_twse_apply_api(payload: Any) -> list[dict[str, str]]:
             company_code=code,
             company_name=name,
             title=f"{name}（{code}）出現在證交所申請上市公司名單",
-            url=url,
-            detail="以新列入官方申請公司清單作為受理追蹤訊號",
+            url=TWSE_APPLY_LISTING_PUBLIC_URL,
+            detail="以新列入官方開放資料清單作為受理追蹤訊號",
         ))
 
         if review_date:
@@ -418,8 +440,8 @@ def parse_twse_apply_api(payload: Any) -> list[dict[str, str]]:
                 company_code=code,
                 company_name=name,
                 title=f"{name}（{code}）上市審議委員會審議日期已更新",
-                url=url,
-                detail="官方申請上市公司表格已出現上市審議委員會審議日期",
+                url=TWSE_APPLY_LISTING_PUBLIC_URL,
+                detail="政府開放資料 CSV 已出現上市審議委員會審議日期",
             ))
 
         updates = [
@@ -437,7 +459,7 @@ def parse_twse_apply_api(payload: Any) -> list[dict[str, str]]:
                     company_code=code,
                     company_name=name,
                     title=f"{name}（{code}）：{detail}",
-                    url=url,
+                    url=TWSE_APPLY_LISTING_PUBLIC_URL,
                     detail=detail,
                 ))
 
@@ -450,12 +472,11 @@ def parse_twse_apply_api(payload: Any) -> list[dict[str, str]]:
                 company_code=code,
                 company_name=name,
                 title=f"{name}（{code}）申請案備註顯示撤件／撤回",
-                url=url,
+                url=TWSE_APPLY_LISTING_PUBLIC_URL,
                 detail=remarks,
             ))
 
     return dedupe_events(events)
-
 
 # ----------------------------------------
 # 3) TPEx 申請上櫃公司
@@ -998,6 +1019,22 @@ def main() -> None:
                 "error": error_message,
             }
 
+        def fetch_twse_apply_events() -> list[dict[str, str]]:
+            """
+            申請上市資料改採政府資料開放平臺所連結的 TWSE CSV。
+            若 CSV 解析為 0 筆，視為異常並保留既有資料，避免整批消失。
+            """
+            csv_text = get_text(TWSE_APPLY_LISTING_CSV_URL)
+            csv_events = parse_twse_apply_csv(csv_text)
+            filtered_events = filter_events_within_retention_window(csv_events, retention_start)
+
+            status.setdefault("debug", {})["twse_apply_csv"] = {
+                "parsed": len(csv_events),
+                "retained": len(filtered_events),
+                "first_200_chars": normalize_text(csv_text[:200]),
+            }
+
+            return filtered_events
         def fetch_tpex_apply_events() -> list[dict[str, str]]:
             """
             申請上櫃資料優先改成「依民國年度分批抓 CSV」：
@@ -1045,7 +1082,7 @@ def main() -> None:
             return html_events
 
         fetchers = {
-            "twse_apply": lambda: parse_twse_apply_api(get_json(TWSE_APPLY_LISTING_API_URL)),
+            "twse_apply": fetch_twse_apply_events,
             "tpex_apply": fetch_tpex_apply_events,
             "tib_news": lambda: parse_tib_news_api(get_json(TWSE_NEWS_API_URL)),
         }
@@ -1059,6 +1096,9 @@ def main() -> None:
             try:
                 fetched_events = fetcher()
                 source_events[source] = filter_events_within_retention_window(fetched_events, retention_start)
+
+                if source == "twse_apply" and len(source_events[source]) == 0:
+                    raise RuntimeError("TWSE 申請上市公司開放資料 CSV 解析為 0 筆；已寫入 status.debug.twse_apply_csv，暫不覆寫既有資料。")
 
                 if source == "tpex_apply" and len(source_events[source]) == 0:
                     raise RuntimeError("TPEx 申請上櫃來源分年 CSV、ALL CSV 與 HTML 備援皆解析為 0 筆，暫不覆寫既有資料。")
