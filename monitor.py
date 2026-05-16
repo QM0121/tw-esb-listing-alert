@@ -41,7 +41,7 @@ MOPS_REALTIME_URL = "https://mopsov.twse.com.tw/mops/web/t05sr01_1"
 # 第一階段合規強化：
 # - 申請上市公司：改用 TWSE 官方 OpenAPI
 # - 證交所新聞：改用 TWSE 官方 OpenAPI，再以創新板關鍵字過濾
-TWSE_APPLY_LISTING_API_URL = "https://openapi.twse.com.tw/v1/opendata/t187ap04_L"
+TWSE_APPLY_LISTING_API_URL = "https://openapi.twse.com.tw/v1/company/applylistingLocal"
 TWSE_APPLY_LISTING_PUBLIC_URL = "https://www.twse.com.tw/zh/listed/listed/apply-listing.html"
 TWSE_NEWS_API_URL = "https://openapi.twse.com.tw/v1/news/newsList"
 TIB_NEWS_PUBLIC_URL = "https://www.twse.com.tw/TIB/zh/news.html"
@@ -51,7 +51,7 @@ TIB_NEWS_PUBLIC_URL = "https://www.twse.com.tw/TIB/zh/news.html"
 TPEX_APPLY_OTC_URL = "https://www.tpex.org.tw/zh-tw/mainboard/applying/status/company.html"
 TPEX_APPLY_OTC_CSV_URL_TEMPLATE = "https://www.tpex.org.tw/web/regular_emerging/apply_schedule/applicant/applicant_companies_download_UTF-8.php?l=zh-tw&y={year}"
 
-SCHEMA_VERSION = 11
+SCHEMA_VERSION = 12
 MAX_EVENTS_TO_KEEP = 5000
 MAX_SEEN_TO_KEEP = 30000
 
@@ -1059,6 +1059,9 @@ def main() -> None:
             try:
                 fetched_events = fetcher()
                 source_events[source] = filter_events_within_retention_window(fetched_events, retention_start)
+
+                if source == "twse_apply" and len(source_events[source]) == 0:
+                    raise RuntimeError("TWSE 申請上市公司 OpenAPI 解析為 0 筆，暫不覆寫既有資料。")
 
                 if source == "tpex_apply" and len(source_events[source]) == 0:
                     raise RuntimeError("TPEx 申請上櫃來源分年 CSV、ALL CSV 與 HTML 備援皆解析為 0 筆，暫不覆寫既有資料。")
