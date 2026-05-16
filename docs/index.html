@@ -1696,6 +1696,82 @@
       }
     }
 
+    .source-disclosure-panel {
+      margin-top: 16px;
+      padding: 20px;
+    }
+
+    .source-disclosure-intro {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fbfcfe;
+      padding: 14px 16px;
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.9;
+      font-weight: 650;
+      margin-bottom: 12px;
+    }
+
+    .source-disclosure-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .source-disclosure-item {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fbfcfe;
+      padding: 14px;
+    }
+
+    .source-disclosure-label {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      font-weight: 900;
+      margin-bottom: 7px;
+      letter-spacing: .03em;
+    }
+
+    .source-disclosure-value {
+      color: var(--navy);
+      font-size: 14px;
+      line-height: 1.85;
+      font-weight: 750;
+    }
+
+    .source-disclosure-foot {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.85;
+      font-weight: 650;
+    }
+
+    .footer-notice-stack {
+      display: grid;
+      gap: 6px;
+      max-width: 980px;
+    }
+
+    @media (max-width: 820px) {
+      .source-disclosure-panel {
+        padding: 14px;
+        border-radius: 16px;
+      }
+
+      .source-disclosure-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .source-disclosure-intro,
+      .source-disclosure-item {
+        padding: 12px;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -1710,6 +1786,7 @@
         <a href="#events-section">事件清單</a>
         <a href="#summary-section">資料摘要</a>
         <a href="#monitor-note">監測說明</a>
+        <a href="#data-disclosure">資料來源</a>
       </nav>
     </div>
   </header>
@@ -1872,14 +1949,68 @@
         </div>
       </div>
       <div class="monitor-note-foot">
-        本站提供公開資訊整理與追蹤用途，實際事件內容與程序進度仍應以官方公告為準。
+        本站提供公開資訊整理與追蹤用途，重點在於協助快速掌握事件脈絡；
+        實際事件內容、程序進度與法律效果仍應以官方公告及原始資料為準。
+      </div>
+    </section>
+
+    <section id="data-disclosure" class="panel source-disclosure-panel">
+      <h2 class="panel-title">資料來源與使用說明</h2>
+
+      <div class="source-disclosure-intro">
+        本站係將政府開放資料、官方 OpenAPI 與官方公開資訊整理為轉板進度追蹤工具，
+        不販售原始資料、不主張官方資料之權利，亦不取代任何正式公告；
+        所有事件內容仍應以原始資料提供機關之最新公告為準。
+      </div>
+
+      <div class="source-disclosure-grid">
+        <div class="source-disclosure-item">
+          <div class="source-disclosure-label">申請上市資料</div>
+          <div class="source-disclosure-value">
+            資料來源：政府資料開放平臺「向本公司申請上市之本國公司」及臺灣證券交易所相關資料資源；
+            開放資料利用依「政府資料開放授權條款－第 1 版」辦理。
+          </div>
+        </div>
+
+        <div class="source-disclosure-item">
+          <div class="source-disclosure-label">申請上櫃資料</div>
+          <div class="source-disclosure-value">
+            資料來源：政府資料開放平臺「申請上櫃公司」及證券櫃檯買賣中心相關資料資源；
+            開放資料利用依「政府資料開放授權條款－第 1 版」辦理。
+          </div>
+        </div>
+
+        <div class="source-disclosure-item">
+          <div class="source-disclosure-label">創新板與證交所新聞</div>
+          <div class="source-disclosure-value">
+            資料來源：臺灣證券交易所官方 OpenAPI「證交所新聞」；
+            本站僅就與興櫃轉板、創新板上市相關之公開訊息進行整理與分類。
+          </div>
+        </div>
+
+        <div class="source-disclosure-item">
+          <div class="source-disclosure-label">重大訊息與公告參考</div>
+          <div class="source-disclosure-value">
+            資料來源：公開資訊觀測站及其他官方公開公告；
+            本站僅整理事件摘要、日期與來源連結，原始公告內容及其權利仍歸原提供機關或權利人所有。
+          </div>
+        </div>
+      </div>
+
+      <div class="source-disclosure-foot">
+        本站已盡合理努力標示資料來源與原提供機關。資料經整理、分類與轉述後呈現；
+        如官方資料更新、修正、撤回或來源使用規範調整，本站內容與呈現方式亦可能同步調整。
+        使用者進行任何投資判斷前，仍應回到官方原始公告查證。
       </div>
     </section>
   </main>
 
   <footer class="footer">
     <div class="shell footer-inner">
-      <div>本網站資料僅供資訊追蹤，實際內容請以公開資訊觀測站、證交所、櫃買中心與主管機關公告為準。</div>
+      <div class="footer-notice-stack">
+        <div>資料來源：政府資料開放平臺、臺灣證券交易所、證券櫃檯買賣中心、公開資訊觀測站及其他官方公開公告。</div>
+        <div>開放資料來源依「政府資料開放授權條款－第 1 版」利用；本站僅提供整理、分類與追蹤，實際內容請以原始官方公告為準。</div>
+      </div>
       <div>© 2026 台灣興櫃轉板進度監測站</div>
     </div>
   </footer>
