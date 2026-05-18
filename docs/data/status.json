@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-05-18T22:41:59+08:00",
+  "last_checked_at": "2026-05-18T23:30:29+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1044 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"證交所「AI領航×璞玉發光」臺灣資本市場成長論壇 AI與璞玉互補共振，開創臺股雙動能新時代\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e2f5671019e3a85a4340026\",\"1150518\" \"上市公司115年第1季財務報告形式審閱結果處置情形\",\"https://www"
+      "first_200_chars": "標題,連結,日期 \"巨騰國際控股有限公司參與發行之臺灣存託憑證(證券代號：9136)自 115年5月19日上午9時0分起恢復交易\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e2f5671019e3bac28e7002a\",\"1150518\" \"證交所「AI領航×璞玉發光」臺灣資本市場成長論壇 AI與"
     }
   },
   "summary": {
