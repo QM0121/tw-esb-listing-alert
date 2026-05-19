@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-05-19T17:30:24+08:00",
+  "last_checked_at": "2026-05-19T18:30:23+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1043 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1044 筆事件，本輪新增事件 1 筆，Email 通知收件人數 2 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -14,7 +14,7 @@
     },
     "twse_apply": {
       "label": "TWSE 申請上市公司",
-      "fetched": 407,
+      "fetched": 408,
       "ok": true
     },
     "tpex_apply": {
@@ -28,17 +28,17 @@
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1043,
+  "new_event_count": 1,
+  "email_recipient_count": 2,
+  "total_event_count": 1044,
   "data_retention_years": 3,
   "data_window_start": "2023-05-19",
   "data_window_end": "2026-05-19",
   "data_window_label": "近 3 年資料",
   "debug": {
     "twse_apply_csv": {
-      "parsed": 3719,
-      "retained": 407,
+      "parsed": 3720,
+      "retained": 408,
       "first_200_chars": "索引,公司代號,公司簡稱,申請日期,董事長,申請時股本(仟元),上市審議委員會審議日期,交易所董事會通過上市日期,上市契約報請主管機關備查(主管機關核准)日期,股票上市買賣日期,承銷商,承銷價,備註 \"1\",\"7867\",\"特力屋\",\"1150429\",\"何湯雄\",\"960000\",\"\",\"\",\"\",\"\",\"福邦\",\"\",\"\" \"2\",\"7763\",\"崇舜\",\"1150428\",\"鍾文清\",\"60"
     },
     "tpex_apply_by_year": {
@@ -62,25 +62,25 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"巨騰國際控股有限公司參與發行之臺灣存託憑證(證券代號：9136)自 115年5月19日上午9時0分起恢復交易\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e2f5671019e3bac28e7002a\",\"1150518\" \"證交所「AI領航×璞玉發光」臺灣資本市場成長論壇 AI與"
+      "first_200_chars": "標題,連結,日期 \"雲象科技股份有限公司股票自115年5月20日於臺灣創新板上市開始買賣\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e2f5671019e3f9345cd0047\",\"1150519\" \"巨騰國際控股有限公司參與發行之臺灣存託憑證(證券代號：9136)自 115年5月19日上午9時0"
     }
   },
   "summary": {
     "stage_counts": {
-      "轉板進度重大更新": 496,
+      "轉板進度重大更新": 497,
       "送件": 188,
       "受理": 188,
       "審議通過": 165,
       "撤回申請": 6
     },
     "type_counts": {
-      "轉板進度重大更新": 656,
+      "轉板進度重大更新": 657,
       "申請上櫃": 233,
       "申請上市": 142,
       "申請創新板上市": 12
     },
     "source_counts": {
-      "TWSE 申請上市公司": 407,
+      "TWSE 申請上市公司": 408,
       "TPEx 申請上櫃公司": 630,
       "TWSE 臺灣創新板新聞稿": 6
     }
