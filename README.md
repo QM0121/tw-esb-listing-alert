@@ -11,16 +11,6 @@
 
 ---
 
-# 已完成的 GitHub Secrets
-
-請確認 Repository Secrets 已建立：
-
-* `EMAIL_SENDER`
-* `EMAIL_APP_PASSWORD`
-* `SUBSCRIBERS_API_URL`
-
----
-
 # Mail 訂閱名單來源
 
 本站使用 Google Apps Script + Google Sheet 管理訂閱名單。
