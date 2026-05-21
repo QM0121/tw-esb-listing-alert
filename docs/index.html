@@ -1078,6 +1078,68 @@
       font-weight: 800;
     }
 
+    .mail-subscribe-form {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .mail-subscribe-input {
+      width: 100%;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 0 12px;
+      outline: none;
+      min-width: 0;
+    }
+
+    .mail-subscribe-input:focus {
+      border-color: #95aac3;
+      box-shadow: 0 0 0 4px rgba(40, 75, 111, .08);
+    }
+
+    .mail-subscribe-btn {
+      height: 44px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--navy);
+      color: #fff;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 900;
+      padding: 0 14px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .mail-subscribe-btn:hover {
+      background: var(--navy-2);
+    }
+
+    .mail-subscribe-btn:disabled {
+      cursor: wait;
+      opacity: .72;
+    }
+
+    .mail-subscribe-message {
+      min-height: 22px;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      font-weight: 700;
+    }
+
+    .mail-subscribe-message.success { color: var(--green); }
+    .mail-subscribe-message.error { color: var(--red); }
+
     .monitor-note-foot {
       margin-top: 12px;
       color: var(--muted);
@@ -1777,6 +1839,16 @@
       }
     }
 
+
+    @media (max-width: 520px) {
+      .mail-subscribe-form {
+        grid-template-columns: 1fr;
+      }
+
+      .mail-subscribe-btn {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1949,8 +2021,15 @@
           <div class="monitor-note-value">網站僅保留近三年事件，超出期間會自動汰除。</div>
         </div>
         <div class="monitor-note-item">
-          <div class="monitor-note-label">Mail 通知</div>
-          <div class="monitor-note-value">本站 Mail 通知功能僅於偵測到新的符合條件事件時寄送通知，不會重複寄送歷史資料。</div>
+          <div class="monitor-note-label">Mail 通知訂閱</div>
+          <div class="monitor-note-value">
+            留下 Email 後，未來偵測到新的符合條件事件時，將寄送通知；不會重複寄送歷史資料。
+            <form id="mailSubscribeForm" class="mail-subscribe-form">
+              <input id="subscriberEmail" class="mail-subscribe-input" type="email" name="email" placeholder="請輸入 Email" autocomplete="email" required>
+              <button id="mailSubscribeBtn" class="mail-subscribe-btn" type="submit">訂閱</button>
+            </form>
+            <div id="mailSubscribeMessage" class="mail-subscribe-message" aria-live="polite"></div>
+          </div>
         </div>
       </div>
       <div class="monitor-note-foot">
@@ -2051,6 +2130,7 @@
     ];
 
     const HOME_EVENT_LIMIT = 8;
+    const MAIL_SUBSCRIBE_URL = "https://script.google.com/macros/s/AKfycbwjMhnFNyYSBGHehAhL3hLGJnRhYbZdg3w_15etU8PcmFEJcZN9l3rid2YrL3FLf9nnXg/exec";
 
     const searchEl = document.getElementById("search");
     const searchWrapEl = document.getElementById("searchWrap");
@@ -2691,6 +2771,54 @@
       return `${values.year}-${values.month}-${values.day}`;
     }
 
+    function initMailSubscribe() {
+      const form = document.getElementById("mailSubscribeForm");
+      const input = document.getElementById("subscriberEmail");
+      const button = document.getElementById("mailSubscribeBtn");
+      const message = document.getElementById("mailSubscribeMessage");
+
+      if (!form || !input || !button || !message) return;
+
+      form.addEventListener("submit", async event => {
+        event.preventDefault();
+        const email = input.value.trim().toLowerCase();
+
+        message.className = "mail-subscribe-message";
+        if (!email || !input.checkValidity()) {
+          message.textContent = "請輸入正確的 Email 格式。";
+          message.classList.add("error");
+          return;
+        }
+
+        button.disabled = true;
+        button.textContent = "送出中";
+        message.textContent = "正在送出訂閱資料…";
+
+        try {
+          await fetch(MAIL_SUBSCRIBE_URL, {
+            method: "POST",
+            mode: "no-cors",
+            body: JSON.stringify({
+              email,
+              source: "tw-esb-listing-alert",
+              page: location.href,
+              submitted_at: new Date().toISOString()
+            })
+          });
+
+          input.value = "";
+          message.textContent = "已收到訂閱申請，之後有新資料時會寄送通知。";
+          message.classList.add("success");
+        } catch (error) {
+          message.textContent = "送出失敗，請稍後再試。";
+          message.classList.add("error");
+        } finally {
+          button.disabled = false;
+          button.textContent = "訂閱";
+        }
+      });
+    }
+
     async function renderVisitCounters() {
       const todayEl = document.getElementById("todayPageviews");
       const totalEl = document.getElementById("totalPageviews");
@@ -2739,6 +2867,7 @@
         renderEvents();
         renderTypeSummary();
         renderSourceSummary();
+        initMailSubscribe();
         renderVisitCounters();
       } catch (error) {
         document.getElementById("runStatusTitle").textContent = "資料載入失敗";
