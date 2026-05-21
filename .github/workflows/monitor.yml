@@ -49,7 +49,7 @@ jobs:
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
           EMAIL_RECIPIENTS: ${{ secrets.EMAIL_RECIPIENTS }}
-          SUBSCRIBERS_API_URL: ${{ secrets.SUBSCRIBERS_API_URL }}
+          EMAIL_SUBSCRIBERS_URL: ${{ secrets.EMAIL_SUBSCRIBERS_URL }}
           MAIL_TEST_MODE: ${{ github.event.inputs.mail_test }}
           MAIL_TEST_RECIPIENTS: ${{ github.event.inputs.mail_test_recipient }}
         run: python monitor.py
