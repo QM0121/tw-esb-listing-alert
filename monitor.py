@@ -25,6 +25,9 @@ EMAIL_SMTP_PORT = int(os.getenv("EMAIL_SMTP_PORT", "465").strip() or "465")
 EMAIL_SENDER = os.getenv("EMAIL_SENDER", "").strip()
 EMAIL_APP_PASSWORD = os.getenv("EMAIL_APP_PASSWORD", "").replace(" ", "").strip()
 EMAIL_RECIPIENTS_RAW = os.getenv("EMAIL_RECIPIENTS", "").strip()
+EMAIL_SUBSCRIBERS_URL = os.getenv("EMAIL_SUBSCRIBERS_URL", "").strip()
+MAIL_TEST_MODE = os.getenv("MAIL_TEST_MODE", "").strip().lower() in {"1", "true", "yes", "y"}
+MAIL_TEST_RECIPIENTS_RAW = os.getenv("MAIL_TEST_RECIPIENTS", "").strip()
 
 HEADERS = {
     "User-Agent": (
@@ -963,12 +966,87 @@ def event_sort_key(event: dict[str, str]) -> tuple[datetime, str, str]:
 
 
 def parse_email_recipients(raw: str) -> list[str]:
-    recipients = [
-        item.strip()
-        for item in re.split(r"[,;\n]+", raw or "")
-        if item.strip()
-    ]
+    recipients = []
+    seen: set[str] = set()
+    for item in re.split(r"[,;\n]+", raw or ""):
+        email = item.strip().lower()
+        if email and "@" in email and email not in seen:
+            seen.add(email)
+            recipients.append(email)
     return recipients
+
+
+def parse_subscriber_emails_from_payload(payload_text: str) -> list[str]:
+    text = (payload_text or "").strip()
+    if not text:
+        return []
+
+    # 支援 JSON：
+    # 1) ["a@example.com", "b@example.com"]
+    # 2) {"emails": ["a@example.com"]}
+    # 3) {"subscribers": [{"email": "a@example.com"}]}
+    try:
+        payload = json.loads(text)
+        raw_items: list[Any] = []
+        if isinstance(payload, list):
+            raw_items = payload
+        elif isinstance(payload, dict):
+            value = payload.get("emails") or payload.get("subscribers") or payload.get("data") or []
+            if isinstance(value, list):
+                raw_items = value
+
+        emails: list[str] = []
+        for item in raw_items:
+            if isinstance(item, str):
+                emails.append(item)
+            elif isinstance(item, dict):
+                emails.append(str(item.get("email", "")))
+        return parse_email_recipients("\n".join(emails))
+    except json.JSONDecodeError:
+        pass
+
+    # 支援 CSV / 純文字：第一欄或 email 欄。
+    rows = list(csv.reader(text.splitlines()))
+    if not rows:
+        return []
+
+    header = [normalize_text(cell).lower() for cell in rows[0]]
+    email_index = 0
+    if "email" in header:
+        email_index = header.index("email")
+
+    emails = []
+    start_index = 1 if any("email" == cell for cell in header) else 0
+    for row in rows[start_index:]:
+        if email_index < len(row):
+            emails.append(row[email_index])
+    return parse_email_recipients("\n".join(emails))
+
+
+def fetch_subscriber_emails() -> list[str]:
+    if not EMAIL_SUBSCRIBERS_URL:
+        return []
+    try:
+        return parse_subscriber_emails_from_payload(get_text(EMAIL_SUBSCRIBERS_URL))
+    except Exception as exc:
+        print(f"讀取訂閱名單失敗：{exc}")
+        return []
+
+
+def get_email_recipients(extra_raw: str = "") -> list[str]:
+    combined = []
+    combined.extend(parse_email_recipients(EMAIL_RECIPIENTS_RAW))
+    combined.extend(parse_email_recipients(extra_raw))
+    combined.extend(fetch_subscriber_emails())
+
+    out: list[str] = []
+    seen: set[str] = set()
+    for email in combined:
+        normalized = email.strip().lower()
+        if normalized and normalized not in seen:
+            seen.add(normalized)
+            out.append(normalized)
+    return out
 
 
 def format_email_subject(events: list[dict[str, str]]) -> str:
@@ -1009,17 +1087,17 @@ def format_email_body(events: list[dict[str, str]]) -> str:
     return "\n".join(lines)
 
 
-def send_email_notification(events: list[dict[str, str]]) -> int:
+def send_email_notification(events: list[dict[str, str]], *, test_recipients_raw: str = "") -> int:
     if not events:
         return 0
 
-    recipients = parse_email_recipients(EMAIL_RECIPIENTS_RAW)
+    recipients = get_email_recipients(test_recipients_raw)
     if not EMAIL_SENDER:
         raise RuntimeError("缺少 EMAIL_SENDER。")
     if not EMAIL_APP_PASSWORD:
         raise RuntimeError("缺少 EMAIL_APP_PASSWORD。")
     if not recipients:
-        raise RuntimeError("缺少 EMAIL_RECIPIENTS。")
+        raise RuntimeError("缺少 EMAIL_RECIPIENTS 或 EMAIL_SUBSCRIBERS_URL 訂閱名單。")
 
     message = EmailMessage()
     message["Subject"] = format_email_subject(events)
@@ -1032,6 +1110,25 @@ def send_email_notification(events: list[dict[str, str]]) -> int:
         smtp.send_message(message)
 
     return len(recipients)
+
+
+def make_test_email_event() -> dict[str, str]:
+    return make_event(
+        source="mail_test",
+        event_type="Mail 通知測試",
+        stage="測試寄信",
+        event_date=taipei_now().strftime("%Y-%m-%d %H:%M"),
+        company_code="TEST",
+        company_name="台灣興櫃轉板進度監測站",
+        title="這是一封測試信：如果你收到此信，代表 Gmail SMTP 寄信設定正常。",
+        url="https://qm0121.github.io/tw-esb-listing-alert/",
+        detail="此信由 GitHub Actions 手動測試模式寄出，不代表有新轉板事件。",
+    )
+
+
+def run_mail_test() -> None:
+    recipient_count = send_email_notification([make_test_email_event()], test_recipients_raw=MAIL_TEST_RECIPIENTS_RAW)
+    print(f"Mail 測試完成：已寄出測試信給 {recipient_count} 位收件人。")
 
 
 def summarize(events: list[dict[str, str]]) -> dict[str, Any]:
@@ -1053,6 +1150,10 @@ def summarize(events: list[dict[str, str]]) -> dict[str, Any]:
 
 
 def main() -> None:
+    if MAIL_TEST_MODE:
+        run_mail_test()
+        return
+
     checked_at = taipei_now_iso()
     retention_start, retention_end = current_data_window()
     status: dict[str, Any] = {
