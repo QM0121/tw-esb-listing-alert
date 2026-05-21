@@ -1,130 +1,60 @@
-# 台灣興櫃股轉板監測 Telegram 通知
+# 台灣興櫃轉板監測 Mail 通知
 
 本專案會：
 
 1. 透過櫃買中心 OpenAPI 取得最新興櫃公司名單
-2. 讀取公開資訊觀測站「即時重大訊息」
-3. 篩選興櫃公司中與「上市、上櫃、創新板」相關的公告
-4. 命中後立即用 Telegram Bot 發送通知
-5. 將歷史通知同步顯示在 GitHub Pages 網站
+2. 整理上市、上櫃、創新板相關公開資訊
+3. 監測符合條件之新增事件
+4. 透過 Mail 發送通知
+5. 支援網站訂閱功能（Google Sheet 訂閱名單）
+6. 將歷史通知同步顯示於 GitHub Pages 網站
 
 ---
 
-## 已完成的 GitHub Secrets
+# 已完成的 GitHub Secrets
 
 請確認 Repository Secrets 已建立：
 
-- `TELEGRAM_BOT_TOKEN`
-- `TELEGRAM_CHAT_ID`
+* `EMAIL_SENDER`
+* `EMAIL_APP_PASSWORD`
+* `SUBSCRIBERS_API_URL`
 
 ---
 
-## 專案檔案
+# Mail 訂閱名單來源
 
-```text
-tw-esb-listing-alert/
-├─ .github/workflows/monitor.yml
-├─ data/seen.json
-├─ docs/
-│  ├─ index.html
-│  └─ data/
-│     ├─ alerts.json
-│     └─ status.json
-├─ monitor.py
-├─ requirements.txt
-└─ README.md
-```
+本站使用 Google Apps Script + Google Sheet 管理訂閱名單。
+
+網站使用者輸入 Email 後：
+
+* 會自動寫入 Google Sheet
+* GitHub Actions 執行時自動讀取訂閱名單
+* 偵測到新事件後寄送 Mail 通知
 
 ---
 
-## 第一次啟動
+# 測試 Mail 通知
 
-### 1. 上傳本專案檔案到你的 GitHub Repository
-
-可以直接把壓縮檔解壓縮後的檔案上傳，或使用 Git 指令推送。
-
-### 2. 到 GitHub 的 Actions 頁籤
-
-找到 workflow：
+GitHub Actions 可手動執行：
 
 ```text
-Monitor ESB Listing Alerts
+mail_test = true
 ```
 
-點：
+若測試收件人欄位留空：
 
-```text
-Run workflow
-```
+* 將自動寄送給 Google Sheet 訂閱名單
 
-這會先手動執行一次監測，也會驗證 Telegram Secrets 是否設定成功。
+若填入 Email：
 
-### 3. 等待 Telegram 測試結果
-
-如果目前 MOPS 即時重大訊息中剛好有符合條件的公告，你會收到通知。
-若沒有，Workflow 仍會成功，但不會有 Telegram 訊息。
+* 則只寄送至指定測試信箱
 
 ---
 
-## 啟用 GitHub Pages 網站
+# 網站聲明
 
-到 Repository：
+本站係整理政府開放資料、官方 OpenAPI 與官方公開資訊，作為興櫃轉板進度追蹤工具，不販售原始資料、不主張官方資料之權利，亦不取代任何正式公告。
 
-```text
-Settings → Pages
-```
+所有事件內容仍應以原始資料提供機關之最新公告為準。
 
-設定：
-
-```text
-Source: Deploy from a branch
-Branch: main
-Folder: /docs
-```
-
-網站首頁使用：
-
-```text
-docs/index.html
-```
-
----
-
-## 排程頻率
-
-GitHub Actions 已設定：
-
-```yaml
-cron: "*/5 * * * *"
-```
-
-代表約每 5 分鐘執行一次。
-
----
-
-## 通知條件
-
-第一版會偵測標題中出現：
-
-- 申請上市
-- 申請上櫃
-- 創新板
-- 股票上市 / 股票上櫃
-- 上市申請 / 上櫃申請
-
-並輔助判斷進度：
-
-- 董事會決議
-- 送件
-- 受理
-- 審議通過
-- 核准
-- 撤回
-
----
-
-## 注意事項
-
-- 本工具是公告監測，不是投資建議。
-- 公告內容請以公開資訊觀測站原始揭露為準。
-- GitHub Actions 排程不保證精準在每個整 5 分鐘立刻啟動，可能會有些微延遲。
+本站與臺灣證券交易所、證券櫃檯買賣中心及公開資訊觀測站無官方合作或隸屬關係。
