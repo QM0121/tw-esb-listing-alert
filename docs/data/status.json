@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-05-21T16:00:24+08:00",
+  "last_checked_at": "2026-05-21T16:30:24+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1045 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"證交所於5月20日舉辦首場「臺灣璞玉指數」業績發表會 璞玉指數成分股義隆電及櫻花分享產業展望\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e2f5671019e48d58fc50066\",\"1150521\" \"臺灣證券交易所有價證券上市審議委員會審議通過大鵬科技股份有限公司初次申請股票"
+      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所舉辦證券商後量子密碼學(PQC)遷移作業研討會\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e2f5671019e499e2f650073\",\"1150521\" \"聚恆科技股份有限公司股票自115年5月22日於臺灣創新板上市開始買賣\",\"https://www.twse."
     }
   },
   "summary": {
