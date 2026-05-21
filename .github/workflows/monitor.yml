@@ -2,12 +2,24 @@ name: Monitor ESB Listing Alerts
 
 on:
   workflow_dispatch:
+    inputs:
+      mail_test:
+        description: "只寄出 Mail 測試信，不更新資料"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+      mail_test_recipient:
+        description: "測試信收件人；可空白，空白時使用 EMAIL_RECIPIENTS / 訂閱名單"
+        required: false
+        default: ""
 
   # 這段 GitHub 自己的排程可留著當備援
   # 但真正穩定觸發會改靠 cron-job.org
   schedule:
     - cron: "30 * * * *"
-      timezone: "Asia/Taipei"
 
 permissions:
   contents: write
@@ -37,6 +49,9 @@ jobs:
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
           EMAIL_RECIPIENTS: ${{ secrets.EMAIL_RECIPIENTS }}
+          EMAIL_SUBSCRIBERS_URL: ${{ secrets.EMAIL_SUBSCRIBERS_URL }}
+          MAIL_TEST_MODE: ${{ github.event.inputs.mail_test }}
+          MAIL_TEST_RECIPIENTS: ${{ github.event.inputs.mail_test_recipient }}
         run: python monitor.py
 
       - name: Commit updated alert data
