@@ -48,8 +48,8 @@ jobs:
         env:
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
-          EMAIL_RECIPIENTS: ${{ secrets.EMAIL_RECIPIENTS }}
-          EMAIL_SUBSCRIBERS_URL: ${{ secrets.EMAIL_SUBSCRIBERS_URL }}
+          EMAIL_RECIPIENTS: ""
+          EMAIL_SUBSCRIBERS_URL: ${{ secrets.SUBSCRIBERS_API_URL }}
           MAIL_TEST_MODE: ${{ github.event.inputs.mail_test }}
           MAIL_TEST_RECIPIENTS: ${{ github.event.inputs.mail_test_recipient }}
         run: python monitor.py
