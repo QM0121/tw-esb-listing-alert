@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-05-25T23:30:22+08:00",
+  "last_checked_at": "2026-05-26T00:06:51+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1048 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1046 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -14,12 +14,12 @@
     },
     "twse_apply": {
       "label": "TWSE 申請上市公司",
-      "fetched": 410,
+      "fetched": 409,
       "ok": true
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
-      "fetched": 632,
+      "fetched": 631,
       "ok": true
     },
     "tib_news": {
@@ -30,15 +30,15 @@
   },
   "new_event_count": 0,
   "email_recipient_count": 0,
-  "total_event_count": 1048,
+  "total_event_count": 1046,
   "data_retention_years": 3,
-  "data_window_start": "2023-05-25",
-  "data_window_end": "2026-05-25",
+  "data_window_start": "2023-05-26",
+  "data_window_end": "2026-05-26",
   "data_window_label": "近 3 年資料",
   "debug": {
     "twse_apply_csv": {
       "parsed": 3722,
-      "retained": 410,
+      "retained": 409,
       "first_200_chars": "索引,公司代號,公司簡稱,申請日期,董事長,申請時股本(仟元),上市審議委員會審議日期,交易所董事會通過上市日期,上市契約報請主管機關備查(主管機關核准)日期,股票上市買賣日期,承銷商,承銷價,備註 \"1\",\"7867\",\"特力屋\",\"1150429\",\"何湯雄\",\"960000\",\"\",\"\",\"\",\"\",\"福邦\",\"\",\"\" \"2\",\"7763\",\"崇舜\",\"1150428\",\"鍾文清\",\"60"
     },
     "tpex_apply_by_year": {
@@ -56,7 +56,7 @@
       },
       "112": {
         "parsed": 146,
-        "retained": 134
+        "retained": 133
       }
     },
     "tib_news_csv": {
@@ -67,21 +67,21 @@
   },
   "summary": {
     "stage_counts": {
-      "轉板進度重大更新": 498,
+      "轉板進度重大更新": 496,
       "審議通過": 168,
       "送件": 188,
       "受理": 188,
       "撤回申請": 6
     },
     "type_counts": {
-      "轉板進度重大更新": 661,
+      "轉板進度重大更新": 659,
       "申請上櫃": 233,
       "申請上市": 142,
       "申請創新板上市": 12
     },
     "source_counts": {
-      "TPEx 申請上櫃公司": 632,
-      "TWSE 申請上市公司": 410,
+      "TPEx 申請上櫃公司": 631,
+      "TWSE 申請上市公司": 409,
       "TWSE 臺灣創新板新聞稿": 6
     }
   }
