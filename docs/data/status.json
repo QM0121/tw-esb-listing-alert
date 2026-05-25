@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-05-25T18:30:26+08:00",
+  "last_checked_at": "2026-05-25T19:30:24+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1048 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所對台揚科技股份有限公司（代號:2314）違反資訊申報及重大訊息規定，處以新台幣3萬元違約金\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e5dd6ae019e5ea8235a001e\",\"1150525\" \"自115年6月1日起實施有價證券借貸相關費用收付新制\",\"htt"
+      "first_200_chars": "標題,連結,日期 \"自115年5月27日起，永冠能源科技集團有限公司（永冠-KY，公司代號：1589）上市有價證券併案停止買賣\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e5dd6ae019e5ebda3df002a\",\"1150525\" \"全坤建設開發股份有限公司等11家公司預計於115年6月份假證交"
     }
   },
   "summary": {
