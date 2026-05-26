@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-05-26T16:30:23+08:00",
+  "last_checked_at": "2026-05-26T16:49:16+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1049 筆事件，本輪新增事件 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1049 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -28,8 +28,8 @@
       "ok": true
     }
   },
-  "new_event_count": 1,
-  "email_recipient_count": 6,
+  "new_event_count": 0,
+  "email_recipient_count": 0,
   "total_event_count": 1049,
   "data_retention_years": 3,
   "data_window_start": "2023-05-26",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"貝爾威勒電子(股)公司於115年5月26日送件申請股票上市\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e5dd6ae019e63103b910033\",\"1150526\" \"永擎電子股份有限公司上市股票自本（115）年5月27日起得為融資融券交易\",\"https://www.twse"
+      "first_200_chars": "標題,連結,日期 \"東方風能科技股份有限公司上市股票自本（115）年5月27日起得為融資融券交易\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e5dd6ae019e637610d80037\",\"1150526\" \"貝爾威勒電子(股)公司於115年5月26日送件申請股票上市\",\"https://www.tw"
     }
   },
   "summary": {
