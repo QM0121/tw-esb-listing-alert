@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-05-26T14:30:23+08:00",
+  "last_checked_at": "2026-05-26T15:30:21+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1048 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"自115年5月27日起，永冠能源科技集團有限公司（永冠-KY，公司代號：1589）上市有價證券併案停止買賣\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e5dd6ae019e5ebda3df002a\",\"1150525\" \"全坤建設開發股份有限公司等11家公司預計於115年6月份假證交"
+      "first_200_chars": "標題,連結,日期 \"貝爾威勒電子(股)公司於115年5月26日送件申請股票上市\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e5dd6ae019e63103b910033\",\"1150526\" \"永擎電子股份有限公司上市股票自本（115）年5月27日起得為融資融券交易\",\"https://www.twse"
     }
   },
   "summary": {
