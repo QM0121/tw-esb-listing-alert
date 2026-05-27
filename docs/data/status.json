@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-05-27T16:30:23+08:00",
+  "last_checked_at": "2026-05-27T17:30:25+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1049 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"圓祥生技(證券代號：6945)採競價拍賣方式辦理承銷，於5月27日順利完成\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019e68555da3003b\",\"1150527\" \"臺灣證券交易所再度參與COMPUTEX驅動完整AI產業生態系發展\",\"https://www."
+      "first_200_chars": "標題,連結,日期 \"全體證券商115年4月份稅後淨利366.77億元，累計稅後淨利849.42億元\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019e6899333d0047\",\"1150527\" \"圓祥生技(證券代號：6945)採競價拍賣方式辦理承銷，於5月27日順利完成\",\"https"
     }
   },
   "summary": {
