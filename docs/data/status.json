@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-05-28T15:30:24+08:00",
+  "last_checked_at": "2026-05-28T16:30:26+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1050 筆事件，本輪新增事件 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1050 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -28,8 +28,8 @@
       "ok": true
     }
   },
-  "new_event_count": 1,
-  "email_recipient_count": 6,
+  "new_event_count": 0,
+  "email_recipient_count": 0,
   "total_event_count": 1050,
   "data_retention_years": 3,
   "data_window_start": "2023-05-28",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"全體證券商115年4月份稅後淨利366.77億元，累計稅後淨利849.42億元\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019e6899333d0047\",\"1150527\" \"圓祥生技(證券代號：6945)採競價拍賣方式辦理承銷，於5月27日順利完成\",\"https"
+      "first_200_chars": "標題,連結,日期 \"「上市櫃公司永續報告書宣導會」參與踴躍，深化企業永續揭露能力、推動資本市場永續轉型\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019e6db0f77f006c\",\"1150528\" \"HanchorBio Inc. 英屬開曼群島商漢康生技股份有限公司(簡稱：漢康-KY創"
     }
   },
   "summary": {
