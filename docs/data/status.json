@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-05-28T14:30:21+08:00",
+  "last_checked_at": "2026-05-28T15:30:24+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成但有部分來源暫時抓取失敗：twse_apply。網站資料共 1049 筆事件，本輪新增 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1050 筆事件，本輪新增事件 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -14,9 +14,8 @@
     },
     "twse_apply": {
       "label": "TWSE 申請上市公司",
-      "fetched": 0,
-      "ok": false,
-      "error": "TWSE 申請上市公司開放資料 CSV 解析為 0 筆；已寫入 status.debug.twse_apply_csv，暫不覆寫既有資料。"
+      "fetched": 412,
+      "ok": true
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
@@ -29,18 +28,18 @@
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1049,
+  "new_event_count": 1,
+  "email_recipient_count": 6,
+  "total_event_count": 1050,
   "data_retention_years": 3,
   "data_window_start": "2023-05-28",
   "data_window_end": "2026-05-28",
   "data_window_label": "近 3 年資料",
   "debug": {
     "twse_apply_csv": {
-      "parsed": 0,
-      "retained": 0,
-      "first_200_chars": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html lang=\"zh-Hant-tw\"> <head> <meta charset=\"utf-8\"> <meta name=\"vi"
+      "parsed": 3725,
+      "retained": 412,
+      "first_200_chars": "索引,公司代號,公司簡稱,申請日期,董事長,申請時股本(仟元),上市審議委員會審議日期,交易所董事會通過上市日期,上市契約報請主管機關備查(主管機關核准)日期,股票上市買賣日期,承銷商,承銷價,備註 \"1\",\"7861\",\"貝爾威勒\",\"1150526\",\"徐瑞瑛\",\"646000\",\"\",\"\",\"\",\"\",\"元大\",\"\",\"\" \"2\",\"7867\",\"特力屋\",\"1150429\",\"何湯雄\",\""
     },
     "tpex_apply_by_year": {
       "115": {
@@ -68,21 +67,21 @@
   },
   "summary": {
     "stage_counts": {
-      "轉板進度重大更新": 497,
+      "轉板進度重大更新": 498,
       "送件": 189,
       "受理": 189,
       "審議通過": 168,
       "撤回申請": 6
     },
     "type_counts": {
-      "轉板進度重大更新": 660,
+      "轉板進度重大更新": 661,
       "申請上市": 144,
       "申請上櫃": 233,
       "申請創新板上市": 12
     },
     "source_counts": {
+      "TWSE 申請上市公司": 412,
       "TPEx 申請上櫃公司": 632,
-      "TWSE 申請上市公司": 411,
       "TWSE 臺灣創新板新聞稿": 6
     }
   }
