@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-05-29T14:37:19+08:00",
+  "last_checked_at": "2026-05-29T15:30:22+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1050 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"證交所與投信公司、證券商合作舉辦「115年投資講座」，6月1日起開始報名\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019e71852df30074\",\"1150529\" \"「上市櫃公司永續報告書宣導會」參與踴躍，深化企業永續揭露能力、推動資本市場永續轉型\",\"http"
+      "first_200_chars": "標題,連結,日期 \"證交所與緯穎接受彭博專訪 聚焦 COMPUTEX 2026 展現台灣 AI 強韌供應鏈與生態圈\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019e72751c9a0079\",\"1150529\" \"證交所與投信公司、證券商合作舉辦「115年投資講座」，6月1日起開始報"
     }
   },
   "summary": {
