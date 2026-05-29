@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-05-29T16:30:22+08:00",
+  "last_checked_at": "2026-05-29T17:30:24+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1050 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所對聯嘉光電投資控股股份有限公司違反資訊申報作業辦法規定，處以新台幣10萬元違約金\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019e72cb09c80085\",\"1150529\" \"證交所出席天下2000大企業論壇，以臺灣創新板打造「群山生態圈」\",\"ht"
+      "first_200_chars": "標題,連結,日期 \"打破高配息迷思！一起看懂ETF「收益平準金」配息機制\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019e730ff48d0097\",\"1150529\" \"證交所AI股權智能客服登場! 6月1日起提供全年無休服務\",\"https://www.twse.com.tw/zh/"
     }
   },
   "summary": {
