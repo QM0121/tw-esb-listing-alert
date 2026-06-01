@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-06-01T17:30:27+08:00",
+  "last_checked_at": "2026-06-01T18:30:24+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1047 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"上週外資在集中市場買超1,650.32億元，買超力積電31.98萬張最多，另賣超群創30.14萬張最多\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019e81fd77ff00e7\",\"1150601\" \"證交所 COMPUTEX「科技風Media Lounge」首度曝光"
+      "first_200_chars": "標題,連結,日期 \"上市金融控股公司115年第1季財務報告均已完成申報作業\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019e8293376d00f3\",\"1150601\" \"證交所公布114年度本國上市公司全體員工薪酬資訊\",\"https://www.twse.com.tw/zh/abo"
     }
   },
   "summary": {
