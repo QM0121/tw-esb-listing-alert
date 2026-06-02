@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-06-03T04:24:40+08:00",
+  "last_checked_at": "2026-06-03T04:30:26+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成但有部分來源暫時抓取失敗：twse_apply, tib_news。網站資料共 1047 筆事件，本輪新增 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成但有部分來源暫時抓取失敗：tpex_apply。網站資料共 1047 筆事件，本輪新增 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -14,20 +14,19 @@
     },
     "twse_apply": {
       "label": "TWSE 申請上市公司",
-      "fetched": 0,
-      "ok": false,
-      "error": "抓取來源失敗：https://www.twse.com.tw/company/applylistingCsvAndHtml?selectType=Local&type=open_data；HTTPSConnectionPool(host='www.twse.com.tw', port=443): Read timed out. (read timeout=40)"
+      "fetched": 411,
+      "ok": true
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
-      "fetched": 630,
-      "ok": true
+      "fetched": 0,
+      "ok": false,
+      "error": "抓取來源失敗：https://www.tpex.org.tw/web/regular_emerging/apply_schedule/applicant/applicant_companies_download_UTF-8.php?l=zh-tw&y=115；520 Server Error: <none> for url: https://www.tpex.org.tw/web/regular_emerging/apply_schedule/applicant/applicant_companies_download_UTF-8.php?l=zh-tw&y=115"
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
-      "fetched": 0,
-      "ok": false,
-      "error": "抓取來源失敗：https://www.twse.com.tw/news/newsList?response=open_data；HTTPSConnectionPool(host='www.twse.com.tw', port=443): Read timed out. (read timeout=40)"
+      "fetched": 6,
+      "ok": true
     }
   },
   "new_event_count": 0,
@@ -38,23 +37,15 @@
   "data_window_end": "2026-06-03",
   "data_window_label": "近 3 年資料",
   "debug": {
-    "tpex_apply_by_year": {
-      "115": {
-        "parsed": 23,
-        "retained": 23
-      },
-      "114": {
-        "parsed": 250,
-        "retained": 250
-      },
-      "113": {
-        "parsed": 226,
-        "retained": 226
-      },
-      "112": {
-        "parsed": 146,
-        "retained": 131
-      }
+    "twse_apply_csv": {
+      "parsed": 3725,
+      "retained": 411,
+      "first_200_chars": "索引,公司代號,公司簡稱,申請日期,董事長,申請時股本(仟元),上市審議委員會審議日期,交易所董事會通過上市日期,上市契約報請主管機關備查(主管機關核准)日期,股票上市買賣日期,承銷商,承銷價,備註 \"1\",\"7861\",\"貝爾威勒\",\"1150526\",\"徐瑞瑛\",\"646000\",\"\",\"\",\"\",\"\",\"元大\",\"\",\"\" \"2\",\"7867\",\"特力屋\",\"1150429\",\"何湯雄\",\""
+    },
+    "tib_news_csv": {
+      "parsed": 6,
+      "retained": 6,
+      "first_200_chars": "標題,連結,日期 \"資拓宏宇國際股份有限公司上市股票自本（115）年6月3日起得為融資融券交易\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019e8786ea480111\",\"1150602\" \"鴻勁精密股份有限公司上市股票自本（115）年6月3日起得為融資融券交易\",\"https://w"
     }
   },
   "summary": {
