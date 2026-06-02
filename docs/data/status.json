@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-06-02T16:30:30+08:00",
+  "last_checked_at": "2026-06-02T17:30:27+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1047 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"證交所持續推動2026年「地球特攻隊」永續行動 「沃土共生日」走入農田實踐友善農業\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019e8755c6040109\",\"1150602\" \"上市金融控股公司115年第1季財務報告均已完成申報作業\",\"https://www.t"
+      "first_200_chars": "標題,連結,日期 \"資拓宏宇國際股份有限公司上市股票自本（115）年6月3日起得為融資融券交易\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019e8786ea480111\",\"1150602\" \"鴻勁精密股份有限公司上市股票自本（115）年6月3日起得為融資融券交易\",\"https://w"
     }
   },
   "summary": {
