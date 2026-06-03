@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-06-03T14:30:25+08:00",
+  "last_checked_at": "2026-06-03T15:21:57+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1047 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"資拓宏宇國際股份有限公司上市股票自本（115）年6月3日起得為融資融券交易\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019e8786ea480111\",\"1150602\" \"鴻勁精密股份有限公司上市股票自本（115）年6月3日起得為融資融券交易\",\"https://w"
+      "first_200_chars": "標題,連結,日期 \"臺股市值創新高 證交所透過COMPUTEX助攻AI發展\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019e8c476111011b\",\"1150603\" \"資拓宏宇國際股份有限公司上市股票自本（115）年6月3日起得為融資融券交易\",\"https://www.twse"
     }
   },
   "summary": {
