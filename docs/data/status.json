@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-06-04T23:30:29+08:00",
+  "last_checked_at": "2026-06-05T00:30:24+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1048 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成但有部分來源暫時抓取失敗：twse_apply, tib_news。網站資料共 1046 筆事件，本輪新增 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -14,32 +14,34 @@
     },
     "twse_apply": {
       "label": "TWSE 申請上市公司",
-      "fetched": 411,
-      "ok": true
+      "fetched": 0,
+      "ok": false,
+      "error": "TWSE 申請上市公司開放資料 CSV 解析為 0 筆；已寫入 status.debug.twse_apply_csv，暫不覆寫既有資料。"
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
-      "fetched": 631,
+      "fetched": 629,
       "ok": true
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
-      "fetched": 6,
-      "ok": true
+      "fetched": 0,
+      "ok": false,
+      "error": "TWSE 證交所新聞開放資料 CSV 解析為 0 筆；已寫入 status.debug.tib_news_csv，暫不覆寫既有資料。"
     }
   },
   "new_event_count": 0,
   "email_recipient_count": 0,
-  "total_event_count": 1048,
+  "total_event_count": 1046,
   "data_retention_years": 3,
-  "data_window_start": "2023-06-04",
-  "data_window_end": "2026-06-04",
+  "data_window_start": "2023-06-05",
+  "data_window_end": "2026-06-05",
   "data_window_label": "近 3 年資料",
   "debug": {
     "twse_apply_csv": {
-      "parsed": 3725,
-      "retained": 411,
-      "first_200_chars": "索引,公司代號,公司簡稱,申請日期,董事長,申請時股本(仟元),上市審議委員會審議日期,交易所董事會通過上市日期,上市契約報請主管機關備查(主管機關核准)日期,股票上市買賣日期,承銷商,承銷價,備註 \"1\",\"7861\",\"貝爾威勒\",\"1150526\",\"徐瑞瑛\",\"646000\",\"\",\"\",\"\",\"\",\"元大\",\"\",\"\" \"2\",\"7867\",\"特力屋\",\"1150429\",\"何湯雄\",\""
+      "parsed": 0,
+      "retained": 0,
+      "first_200_chars": "<html> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"> </head> <body> 因為安全性考量，您所執行的頁面無法呈現。<BR> FOR SECURITY REASONS, THIS PAGE CAN NOT BE ACCESSED.<BR> <BR> 您可以<A HREF=\"jav"
     },
     "tpex_apply_by_year": {
       "115": {
@@ -56,31 +58,31 @@
       },
       "112": {
         "parsed": 146,
-        "retained": 131
+        "retained": 129
       }
     },
     "tib_news_csv": {
-      "parsed": 6,
-      "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"群益臺灣加權正2 ETF (00685L) 將進行分割作業，115年7月7日為新受益憑證上市買賣日\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019e91ddc319014b\",\"1150604\" \"證交所攜手上市公司於 COMPUTEX 2026 展現臺灣在全球 AI"
+      "parsed": 0,
+      "retained": 0,
+      "first_200_chars": "<html> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"> </head> <body> 因為安全性考量，您所執行的頁面無法呈現。<BR> FOR SECURITY REASONS, THIS PAGE CAN NOT BE ACCESSED.<BR> <BR> 您可以<A HREF=\"jav"
     }
   },
   "summary": {
     "stage_counts": {
       "轉板進度重大更新": 498,
-      "送件": 188,
-      "受理": 188,
+      "送件": 187,
+      "受理": 187,
       "審議通過": 168,
       "撤回申請": 6
     },
     "type_counts": {
       "轉板進度重大更新": 661,
       "申請上市": 144,
-      "申請上櫃": 231,
+      "申請上櫃": 229,
       "申請創新板上市": 12
     },
     "source_counts": {
-      "TPEx 申請上櫃公司": 631,
+      "TPEx 申請上櫃公司": 629,
       "TWSE 申請上市公司": 411,
       "TWSE 臺灣創新板新聞稿": 6
     }
