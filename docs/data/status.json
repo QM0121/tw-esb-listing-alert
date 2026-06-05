@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-06-05T17:30:24+08:00",
+  "last_checked_at": "2026-06-05T18:30:29+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1048 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"2026年5月集中市場相關數據\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019e971d2c4e0190\",\"1150605\" \"安聯投信募集發行之「安聯美國科技領航主動式ETF」、聯博投信募集發行之「聯博台灣動能收益50主動式ETF」及富邦投信募集發行之「富邦台灣龍"
+      "first_200_chars": "標題,連結,日期 \"本週發行量加權股價指數漲幅約為0.76%，上市股票總市值達147.03兆元\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019e9730679f0194\",\"1150605\" \"2026年5月集中市場相關數據\",\"https://www.twse.com.tw/zh/ab"
     }
   },
   "summary": {
