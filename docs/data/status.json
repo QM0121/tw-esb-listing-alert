@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-06-09T18:30:22+08:00",
+  "last_checked_at": "2026-06-09T19:30:26+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1051 筆事件，本輪新增事件 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1051 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -28,8 +28,8 @@
       "ok": true
     }
   },
-  "new_event_count": 1,
-  "email_recipient_count": 6,
+  "new_event_count": 0,
+  "email_recipient_count": 0,
   "total_event_count": 1051,
   "data_retention_years": 3,
   "data_window_start": "2023-06-09",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所有價證券上市審議委員會審議通過特力屋股份有限公司初次申請股票上市案\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019eabea708a01c7\",\"1150609\" \"中國信託投信募集發行之「中國信託台灣收益成長主動式ETF」，自115年6月11日起掛牌上"
+      "first_200_chars": "標題,連結,日期 \"貿聯控股(BizLink Holding Inc.) (公司簡稱：貿聯-KY，公司代號：3665)上市普通股暨以其為標的之上市認購(售)權證自115年6 月10日起暫停交易\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019eac23318f01cb\",\"1150609\""
     }
   },
   "summary": {
