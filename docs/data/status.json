@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-06-10T16:30:35+08:00",
+  "last_checked_at": "2026-06-10T17:30:28+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1051 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1052 筆事件，本輪新增事件 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -19,7 +19,7 @@
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
-      "fetched": 631,
+      "fetched": 632,
       "ok": true
     },
     "tib_news": {
@@ -28,9 +28,9 @@
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1051,
+  "new_event_count": 1,
+  "email_recipient_count": 6,
+  "total_event_count": 1052,
   "data_retention_years": 3,
   "data_window_start": "2023-06-10",
   "data_window_end": "2026-06-10",
@@ -43,8 +43,8 @@
     },
     "tpex_apply_by_year": {
       "115": {
-        "parsed": 26,
-        "retained": 26
+        "parsed": 27,
+        "retained": 27
       },
       "114": {
         "parsed": 251,
@@ -62,26 +62,26 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"邊玩邊學還能拿好禮！證交所於屏東公益嘉年華傳授防詐與投資知識\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019eb063d89e01db\",\"1150610\" \"臺灣證券交易所股份有限公司召開115年股東常會\",\"https://www.twse.com.tw/zh/a"
+      "first_200_chars": "標題,連結,日期 \"115年6月11日除息影響加權股價指數\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019eb0d03b5901df\",\"1150610\" \"邊玩邊學還能拿好禮！證交所於屏東公益嘉年華傳授防詐與投資知識\",\"https://www.twse.com.tw/zh/about"
     }
   },
   "summary": {
     "stage_counts": {
-      "審議通過": 169,
+      "審議通過": 170,
       "送件": 189,
       "受理": 189,
       "轉板進度重大更新": 498,
       "撤回申請": 6
     },
     "type_counts": {
-      "轉板進度重大更新": 662,
+      "轉板進度重大更新": 663,
       "申請上櫃": 231,
       "申請上市": 146,
       "申請創新板上市": 12
     },
     "source_counts": {
+      "TPEx 申請上櫃公司": 632,
       "TWSE 申請上市公司": 414,
-      "TPEx 申請上櫃公司": 631,
       "TWSE 臺灣創新板新聞稿": 6
     }
   }
