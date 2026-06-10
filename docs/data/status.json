@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-06-10T14:47:55+08:00",
+  "last_checked_at": "2026-06-10T15:30:27+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1051 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所股份有限公司召開115年股東常會\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019eb03d31fa01d7\",\"1150610\" \"證交所推動2026年「地球特攻隊」永續倡議 世界環境日「回收藝術工作坊」實踐循環再生行動\",\"https://www.tw"
+      "first_200_chars": "標題,連結,日期 \"邊玩邊學還能拿好禮！證交所於屏東公益嘉年華傳授防詐與投資知識\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019eb063d89e01db\",\"1150610\" \"臺灣證券交易所股份有限公司召開115年股東常會\",\"https://www.twse.com.tw/zh/a"
     }
   },
   "summary": {
