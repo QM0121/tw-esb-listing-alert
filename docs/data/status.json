@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-06-10T17:30:28+08:00",
+  "last_checked_at": "2026-06-10T18:30:24+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1052 筆事件，本輪新增事件 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1052 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -28,8 +28,8 @@
       "ok": true
     }
   },
-  "new_event_count": 1,
-  "email_recipient_count": 6,
+  "new_event_count": 0,
+  "email_recipient_count": 0,
   "total_event_count": 1052,
   "data_retention_years": 3,
   "data_window_start": "2023-06-10",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"115年6月11日除息影響加權股價指數\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019eb0d03b5901df\",\"1150610\" \"邊玩邊學還能拿好禮！證交所於屏東公益嘉年華傳授防詐與投資知識\",\"https://www.twse.com.tw/zh/about"
+      "first_200_chars": "標題,連結,日期 \"貿聯控股(BizLink Holding Inc.) (公司簡稱：貿聯-KY，公司代號：3665)上市普通股暨以其為標的之上市認購(售)權證自115年6月11日起恢復交易\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019eb0ea790801e3\",\"1150610\""
     }
   },
   "summary": {
