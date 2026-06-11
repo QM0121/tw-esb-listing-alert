@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-06-11T13:30:29+08:00",
+  "last_checked_at": "2026-06-11T14:30:26+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1052 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成但有部分來源暫時抓取失敗：twse_apply, tib_news。網站資料共 1052 筆事件，本輪新增 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -14,8 +14,9 @@
     },
     "twse_apply": {
       "label": "TWSE 申請上市公司",
-      "fetched": 414,
-      "ok": true
+      "fetched": 0,
+      "ok": false,
+      "error": "抓取來源失敗：https://www.twse.com.tw/company/applylistingCsvAndHtml?selectType=Local&type=open_data；HTTPSConnectionPool(host='www.twse.com.tw', port=443): Max retries exceeded with url: /company/applylistingCsvAndHtml?selectType=Local&type=open_data (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.twse.com.tw', port=443) at 0x7fb8fb235880>, 'Connection to www.twse.com.tw timed out. (connect timeout=40)'))"
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
@@ -24,8 +25,9 @@
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
-      "fetched": 6,
-      "ok": true
+      "fetched": 0,
+      "ok": false,
+      "error": "抓取來源失敗：https://www.twse.com.tw/news/newsList?response=open_data；HTTPSConnectionPool(host='www.twse.com.tw', port=443): Max retries exceeded with url: /news/newsList?response=open_data (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.twse.com.tw', port=443) at 0x7fb8fb237110>, 'Connection to www.twse.com.tw timed out. (connect timeout=40)'))"
     }
   },
   "new_event_count": 0,
@@ -36,11 +38,6 @@
   "data_window_end": "2026-06-11",
   "data_window_label": "近 3 年資料",
   "debug": {
-    "twse_apply_csv": {
-      "parsed": 3729,
-      "retained": 414,
-      "first_200_chars": "索引,公司代號,公司簡稱,申請日期,董事長,申請時股本(仟元),上市審議委員會審議日期,交易所董事會通過上市日期,上市契約報請主管機關備查(主管機關核准)日期,股票上市買賣日期,承銷商,承銷價,備註 \"1\",\"7710\",\"東擎科技\",\"1150605\",\"李俊瑩\",\"639053\",\"\",\"\",\"\",\"\",\"元大\",\"\",\"\" \"2\",\"7861\",\"貝爾威勒\",\"1150526\",\"徐瑞瑛\","
-    },
     "tpex_apply_by_year": {
       "115": {
         "parsed": 27,
@@ -58,11 +55,6 @@
         "parsed": 146,
         "retained": 128
       }
-    },
-    "tib_news_csv": {
-      "parsed": 6,
-      "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"貿聯控股(BizLink Holding Inc.) (公司簡稱：貿聯-KY，公司代號：3665)上市普通股暨以其為標的之上市認購(售)權證自115年6月11日起恢復交易\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019eb0ea790801e3\",\"1150610\""
     }
   },
   "summary": {
