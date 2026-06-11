@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-06-11T11:30:25+08:00",
+  "last_checked_at": "2026-06-11T12:30:22+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成但有部分來源暫時抓取失敗：twse_apply, tib_news。網站資料共 1052 筆事件，本輪新增 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -16,7 +16,7 @@
       "label": "TWSE 申請上市公司",
       "fetched": 0,
       "ok": false,
-      "error": "抓取來源失敗：https://www.twse.com.tw/company/applylistingCsvAndHtml?selectType=Local&type=open_data；HTTPSConnectionPool(host='www.twse.com.tw', port=443): Max retries exceeded with url: /company/applylistingCsvAndHtml?selectType=Local&type=open_data (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.twse.com.tw', port=443) at 0x7fae86fa92e0>, 'Connection to www.twse.com.tw timed out. (connect timeout=40)'))"
+      "error": "抓取來源失敗：https://www.twse.com.tw/company/applylistingCsvAndHtml?selectType=Local&type=open_data；HTTPSConnectionPool(host='www.twse.com.tw', port=443): Max retries exceeded with url: /company/applylistingCsvAndHtml?selectType=Local&type=open_data (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.twse.com.tw', port=443) at 0x7fe518101550>, 'Connection to www.twse.com.tw timed out. (connect timeout=40)'))"
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
@@ -27,7 +27,7 @@
       "label": "TWSE 臺灣創新板新聞稿",
       "fetched": 0,
       "ok": false,
-      "error": "抓取來源失敗：https://www.twse.com.tw/news/newsList?response=open_data；HTTPSConnectionPool(host='www.twse.com.tw', port=443): Max retries exceeded with url: /news/newsList?response=open_data (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.twse.com.tw', port=443) at 0x7fae86faab70>, 'Connection to www.twse.com.tw timed out. (connect timeout=40)'))"
+      "error": "抓取來源失敗：https://www.twse.com.tw/news/newsList?response=open_data；HTTPSConnectionPool(host='www.twse.com.tw', port=443): Max retries exceeded with url: /news/newsList?response=open_data (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.twse.com.tw', port=443) at 0x7fe518102bd0>, 'Connection to www.twse.com.tw timed out. (connect timeout=40)'))"
     }
   },
   "new_event_count": 0,
