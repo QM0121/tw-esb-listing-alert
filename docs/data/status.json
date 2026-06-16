@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-06-16T14:05:20+08:00",
+  "last_checked_at": "2026-06-16T14:30:33+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1048 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1049 筆事件，本輪新增事件 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -19,7 +19,7 @@
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
-      "fetched": 629,
+      "fetched": 630,
       "ok": true
     },
     "tib_news": {
@@ -28,9 +28,9 @@
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1048,
+  "new_event_count": 1,
+  "email_recipient_count": 6,
+  "total_event_count": 1049,
   "data_retention_years": 3,
   "data_window_start": "2023-06-16",
   "data_window_end": "2026-06-16",
@@ -47,8 +47,8 @@
         "retained": 28
       },
       "114": {
-        "parsed": 252,
-        "retained": 252
+        "parsed": 253,
+        "retained": 253
       },
       "113": {
         "parsed": 226,
@@ -62,25 +62,25 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所對科妍生物科技股份有限公司(代號：1786)違反重大訊息規定，處以新臺幣3萬元違約金\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019ecae9ba920224\",\"1150615\" \"海昌生技(代號：7814)初上櫃採競價拍賣方式辦理承銷，因合格標單未達"
+      "first_200_chars": "標題,連結,日期 \"證交所辦理「防範內線交易宣導會」，人員參與熱烈並深獲好評\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019ecf17c2f40238\",\"1150616\" \"臺灣證券交易所對科妍生物科技股份有限公司(代號：1786)違反重大訊息規定，處以新臺幣3萬元違約金\",\"http"
     }
   },
   "summary": {
     "stage_counts": {
-      "轉板進度重大更新": 498,
+      "轉板進度重大更新": 499,
       "審議通過": 170,
       "送件": 187,
       "受理": 187,
       "撤回申請": 6
     },
     "type_counts": {
-      "轉板進度重大更新": 663,
+      "轉板進度重大更新": 664,
       "申請上櫃": 227,
       "申請上市": 146,
       "申請創新板上市": 12
     },
     "source_counts": {
-      "TPEx 申請上櫃公司": 629,
+      "TPEx 申請上櫃公司": 630,
       "TWSE 申請上市公司": 413,
       "TWSE 臺灣創新板新聞稿": 6
     }
