@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-06-18T18:30:30+08:00",
+  "last_checked_at": "2026-06-18T19:30:26+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1058 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所對東森國際股份有限公司(公司代號：2614)違反重大訊息規定，處以新台幣5萬元違約金\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019ed9c2435e0289\",\"1150618\" \"提升企業永續揭露實作能力 證交所「IFRS S2揭露實作工作坊」圓滿落"
+      "first_200_chars": "標題,連結,日期 \"本週發行量加權股價指數漲幅約為5.20%，上市股票總市值達151.61兆元\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019eda505f230292\",\"1150618\" \"臺灣證券交易所對東森國際股份有限公司(公司代號：2614)違反重大訊息規定，處以新台幣5萬元違"
     }
   },
   "summary": {
