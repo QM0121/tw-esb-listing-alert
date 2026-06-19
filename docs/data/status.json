@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-06-19T20:30:30+08:00",
+  "last_checked_at": "2026-06-19T21:30:29+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成但有部分來源暫時抓取失敗：twse_apply, tib_news。網站資料共 1058 筆事件，本輪新增 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -16,7 +16,7 @@
       "label": "TWSE 申請上市公司",
       "fetched": 0,
       "ok": false,
-      "error": "抓取來源失敗：https://www.twse.com.tw/company/applylistingCsvAndHtml?selectType=Local&type=open_data；404 Client Error: Not Found for url: https://www.twse.com.tw/company/applylistingCsvAndHtml?selectType=Local&type=open_data"
+      "error": "抓取來源失敗：https://www.twse.com.tw/company/applylistingCsvAndHtml?selectType=Local&type=open_data；HTTPSConnectionPool(host='www.twse.com.tw', port=443): Read timed out. (read timeout=40)"
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
@@ -27,7 +27,7 @@
       "label": "TWSE 臺灣創新板新聞稿",
       "fetched": 0,
       "ok": false,
-      "error": "抓取來源失敗：https://www.twse.com.tw/news/newsList?response=open_data；404 Client Error: Not Found for url: https://www.twse.com.tw/news/newsList?response=open_data"
+      "error": "抓取來源失敗：https://www.twse.com.tw/news/newsList?response=open_data；HTTPSConnectionPool(host='www.twse.com.tw', port=443): Read timed out. (read timeout=40)"
     }
   },
   "new_event_count": 0,
