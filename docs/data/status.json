@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-06-22T04:30:24+08:00",
+  "last_checked_at": "2026-06-22T04:51:59+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1056 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成但有部分來源暫時抓取失敗：tpex_apply。網站資料共 1056 筆事件，本輪新增 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -19,8 +19,9 @@
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
-      "fetched": 636,
-      "ok": true
+      "fetched": 0,
+      "ok": false,
+      "error": "抓取來源失敗：https://www.tpex.org.tw/web/regular_emerging/apply_schedule/applicant/applicant_companies_download_UTF-8.php?l=zh-tw&y=112；520 Server Error: <none> for url: https://www.tpex.org.tw/web/regular_emerging/apply_schedule/applicant/applicant_companies_download_UTF-8.php?l=zh-tw&y=112"
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
@@ -40,24 +41,6 @@
       "parsed": 3732,
       "retained": 414,
       "first_200_chars": "索引,公司代號,公司簡稱,申請日期,董事長,申請時股本(仟元),上市審議委員會審議日期,交易所董事會通過上市日期,上市契約報請主管機關備查(主管機關核准)日期,股票上市買賣日期,承銷商,承銷價,備註 \"1\",\"7710\",\"東擎科技\",\"1150605\",\"李俊瑩\",\"639053\",\"\",\"\",\"\",\"\",\"元大\",\"\",\"\" \"2\",\"7861\",\"貝爾威勒\",\"1150526\",\"徐瑞瑛\","
-    },
-    "tpex_apply_by_year": {
-      "115": {
-        "parsed": 34,
-        "retained": 34
-      },
-      "114": {
-        "parsed": 253,
-        "retained": 253
-      },
-      "113": {
-        "parsed": 226,
-        "retained": 226
-      },
-      "112": {
-        "parsed": 146,
-        "retained": 123
-      }
     },
     "tib_news_csv": {
       "parsed": 6,
