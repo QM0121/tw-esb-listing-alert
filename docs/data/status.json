@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-06-24T16:30:26+08:00",
+  "last_checked_at": "2026-06-24T17:30:27+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1058 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1060 筆事件，本輪新增事件 2 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -14,7 +14,7 @@
     },
     "twse_apply": {
       "label": "TWSE 申請上市公司",
-      "fetched": 415,
+      "fetched": 417,
       "ok": true
     },
     "tpex_apply": {
@@ -28,17 +28,17 @@
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1058,
+  "new_event_count": 2,
+  "email_recipient_count": 6,
+  "total_event_count": 1060,
   "data_retention_years": 3,
   "data_window_start": "2023-06-24",
   "data_window_end": "2026-06-24",
   "data_window_label": "近 3 年資料",
   "debug": {
     "twse_apply_csv": {
-      "parsed": 3733,
-      "retained": 415,
+      "parsed": 3735,
+      "retained": 417,
       "first_200_chars": "索引,公司代號,公司簡稱,申請日期,董事長,申請時股本(仟元),上市審議委員會審議日期,交易所董事會通過上市日期,上市契約報請主管機關備查(主管機關核准)日期,股票上市買賣日期,承銷商,承銷價,備註 \"1\",\"7710\",\"東擎科技\",\"1150605\",\"李俊瑩\",\"639053\",\"\",\"\",\"\",\"\",\"元大\",\"\",\"\" \"2\",\"7861\",\"貝爾威勒\",\"1150526\",\"徐瑞瑛\","
     },
     "tpex_apply_by_year": {
@@ -62,26 +62,26 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"「創新引領未來：多元技術與市場拓展之路」115年上半年度臺灣創新板（tib-創）法說會第二日 聯友金屬深耕關鍵金屬循環經濟、奧義賽博展現AI資安創新實力\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69e6379f4019ef3f8d5bd02e4\",\"1150623\" \"臺灣證券交易所對"
+      "first_200_chars": "標題,連結,日期 \"打造亞洲那斯達克－證交所6月再赴美招商，深化及延續臺美資本鏈結\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019ef8f1eb570006\",\"1150624\" \"世紀離岸風電設備股份有限公司(世紀風電，公司代號：2072)上市普通股自115年6月25日起暫停交易\",\""
     }
   },
   "summary": {
     "stage_counts": {
+      "轉板進度重大更新": 503,
       "審議通過": 173,
-      "轉板進度重大更新": 501,
       "送件": 189,
       "受理": 189,
       "撤回申請": 6
     },
     "type_counts": {
-      "轉板進度重大更新": 669,
+      "轉板進度重大更新": 671,
       "申請上櫃": 231,
       "申請上市": 146,
       "申請創新板上市": 12
     },
     "source_counts": {
+      "TWSE 申請上市公司": 417,
       "TPEx 申請上櫃公司": 637,
-      "TWSE 申請上市公司": 415,
       "TWSE 臺灣創新板新聞稿": 6
     }
   }
