@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-06-25T17:30:24+08:00",
+  "last_checked_at": "2026-06-25T18:30:26+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1060 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"全體證券商115年5月份稅後淨利325.76億元，累計稅後淨利1,175.18億元\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019efdee20f30017\",\"1150625\" \"證交所攜手SparkLabs Taiwan舉辦「Physical AI產業小聚」，協助"
+      "first_200_chars": "標題,連結,日期 \"「創新引領未來：多元技術與市場拓展之路」115年上半年度臺灣創新板（tib-創）法說會第四日 聚賢研發、富田、邦睿生技展現先進製程與生殖醫學強勁動能\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019efe4442c7001f\",\"1150625\" \"世紀離岸風電設備股份"
     }
   },
   "summary": {
