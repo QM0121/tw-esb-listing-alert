@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-06-25T23:30:26+08:00",
+  "last_checked_at": "2026-06-26T00:30:26+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1060 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1058 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -19,7 +19,7 @@
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
-      "fetched": 637,
+      "fetched": 635,
       "ok": true
     },
     "tib_news": {
@@ -30,10 +30,10 @@
   },
   "new_event_count": 0,
   "email_recipient_count": 0,
-  "total_event_count": 1060,
+  "total_event_count": 1058,
   "data_retention_years": 3,
-  "data_window_start": "2023-06-25",
-  "data_window_end": "2026-06-25",
+  "data_window_start": "2023-06-26",
+  "data_window_end": "2026-06-26",
   "data_window_label": "近 3 年資料",
   "debug": {
     "twse_apply_csv": {
@@ -56,7 +56,7 @@
       },
       "112": {
         "parsed": 146,
-        "retained": 123
+        "retained": 121
       }
     },
     "tib_news_csv": {
@@ -67,21 +67,21 @@
   },
   "summary": {
     "stage_counts": {
-      "轉板進度重大更新": 503,
+      "轉板進度重大更新": 501,
       "審議通過": 173,
       "送件": 189,
       "受理": 189,
       "撤回申請": 6
     },
     "type_counts": {
-      "轉板進度重大更新": 671,
+      "轉板進度重大更新": 669,
       "申請上櫃": 231,
       "申請上市": 146,
       "申請創新板上市": 12
     },
     "source_counts": {
       "TWSE 申請上市公司": 417,
-      "TPEx 申請上櫃公司": 637,
+      "TPEx 申請上櫃公司": 635,
       "TWSE 臺灣創新板新聞稿": 6
     }
   }
