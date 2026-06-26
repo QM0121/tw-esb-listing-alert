@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-06-26T16:30:26+08:00",
+  "last_checked_at": "2026-06-26T17:30:25+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成但有部分來源暫時抓取失敗：tpex_apply。網站資料共 1063 筆事件，本輪新增 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1069 筆事件，本輪新增事件 6 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -19,9 +19,8 @@
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
-      "fetched": 0,
-      "ok": false,
-      "error": "TPEx 申請上櫃來源分年 CSV、ALL CSV 與 HTML 備援皆解析為 0 筆，暫不覆寫既有資料。"
+      "fetched": 646,
+      "ok": true
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
@@ -29,9 +28,9 @@
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1063,
+  "new_event_count": 6,
+  "email_recipient_count": 6,
+  "total_event_count": 1069,
   "data_retention_years": 3,
   "data_window_start": "2023-06-26",
   "data_window_end": "2026-06-26",
@@ -44,51 +43,44 @@
     },
     "tpex_apply_by_year": {
       "115": {
-        "parsed": 0,
-        "retained": 0
+        "parsed": 45,
+        "retained": 45
       },
       "114": {
-        "parsed": 0,
-        "retained": 0
+        "parsed": 254,
+        "retained": 254
       },
       "113": {
-        "parsed": 0,
-        "retained": 0
+        "parsed": 226,
+        "retained": 226
       },
       "112": {
-        "parsed": 0,
-        "retained": 0
+        "parsed": 146,
+        "retained": 121
       }
-    },
-    "tpex_apply_all_csv": {
-      "parsed": 0,
-      "retained": 0
-    },
-    "tpex_apply_html_fallback": {
-      "retained": 0
     },
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"從臺灣出發 透過連結式ETF掌握日本投資契機\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f02c5bbc10023\",\"1150626\" \"「創新引領未來：多元技術與市場拓展之路」115年上半年度臺灣創新板（tib-創）法說會第四日 聚賢研發、富田、邦睿生技展現先"
+      "first_200_chars": "標題,連結,日期 \"本週發行量加權股價指數跌幅約為4.07%，上市股票總市值達145.46兆元\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f033c73c0002d\",\"1150626\" \"臺灣證券交易所訂於6月30日召開有價證券上市審議委員會第888次會議，將審議稜研科技(股)公司"
     }
   },
   "summary": {
     "stage_counts": {
       "送件": 191,
       "受理": 191,
-      "轉板進度重大更新": 502,
+      "轉板進度重大更新": 508,
       "審議通過": 173,
       "撤回申請": 6
     },
     "type_counts": {
       "申請上櫃": 235,
-      "轉板進度重大更新": 670,
+      "轉板進度重大更新": 676,
       "申請上市": 146,
       "申請創新板上市": 12
     },
     "source_counts": {
-      "TPEx 申請上櫃公司": 640,
+      "TPEx 申請上櫃公司": 646,
       "TWSE 申請上市公司": 417,
       "TWSE 臺灣創新板新聞稿": 6
     }
