@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-06-26T14:34:32+08:00",
+  "last_checked_at": "2026-06-26T15:30:24+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1063 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 6,
       "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"「創新引領未來：多元技術與市場拓展之路」115年上半年度臺灣創新板（tib-創）法說會第四日 聚賢研發、富田、邦睿生技展現先進製程與生殖醫學強勁動能\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019efe4442c7001f\",\"1150625\" \"世紀離岸風電設備股份"
+      "first_200_chars": "標題,連結,日期 \"從臺灣出發 透過連結式ETF掌握日本投資契機\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f02c5bbc10023\",\"1150626\" \"「創新引領未來：多元技術與市場拓展之路」115年上半年度臺灣創新板（tib-創）法說會第四日 聚賢研發、富田、邦睿生技展現先"
     }
   },
   "summary": {
