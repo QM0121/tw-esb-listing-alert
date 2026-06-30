@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-06-30T17:30:29+08:00",
+  "last_checked_at": "2026-06-30T18:30:28+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1065 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1066 筆事件，本輪新增事件 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -24,13 +24,13 @@
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
-      "fetched": 6,
+      "fetched": 7,
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1065,
+  "new_event_count": 1,
+  "email_recipient_count": 6,
+  "total_event_count": 1066,
   "data_retention_years": 3,
   "data_window_start": "2023-06-30",
   "data_window_end": "2026-06-30",
@@ -60,29 +60,29 @@
       }
     },
     "tib_news_csv": {
-      "parsed": 6,
-      "retained": 6,
-      "first_200_chars": "標題,連結,日期 \"證交所攜手台經院與資策會推出臺灣創新板(tib-創)綠能環保、電腦及週邊設備及生技醫療產業之洞察報告\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f12e2aa9a0045\",\"1150629\" \"賴清德總統定調「亞洲那斯達克」戰略 tib-創 正式接軌全球創新資本"
+      "parsed": 7,
+      "retained": 7,
+      "first_200_chars": "標題,連結,日期 \"「權證資訊揭露平台」變更網址，歡迎投資人善加使用，作為權證投資之參考\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f1802010f005e\",\"1150630\" \"臺灣證券交易所有價證券上市審議委員會審議通過稜研科技(股)公司初次申請股票創新板上市案\",\"http"
     }
   },
   "summary": {
     "stage_counts": {
       "送件": 191,
       "受理": 191,
+      "審議通過": 174,
       "轉板進度重大更新": 504,
-      "審議通過": 173,
       "撤回申請": 6
     },
     "type_counts": {
       "申請上櫃": 237,
+      "申請創新板上市": 13,
       "轉板進度重大更新": 672,
-      "申請上市": 144,
-      "申請創新板上市": 12
+      "申請上市": 144
     },
     "source_counts": {
       "TPEx 申請上櫃公司": 646,
-      "TWSE 申請上市公司": 413,
-      "TWSE 臺灣創新板新聞稿": 6
+      "TWSE 臺灣創新板新聞稿": 7,
+      "TWSE 申請上市公司": 413
     }
   }
 }
