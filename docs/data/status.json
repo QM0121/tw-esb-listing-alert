@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-07-01T17:30:27+08:00",
+  "last_checked_at": "2026-07-01T18:30:25+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1066 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 7,
       "retained": 7,
-      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所對福懋油脂股份有限公司違反上市公司董事會設置及行使職權應遵循事項要點規定，處以新台幣10萬元違約金\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f1ceaf0bf007b\",\"1150701\" \"證交所攜手KPMG安侯建業、元大證券及新加坡創業行動社群"
+      "first_200_chars": "標題,連結,日期 \"上市公司執行買回庫藏股情形\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f1d350d8c0082\",\"1150701\" \"臺灣證券交易所對福懋油脂股份有限公司違反上市公司董事會設置及行使職權應遵循事項要點規定，處以新台幣10萬元違約金\",\"https://www."
     }
   },
   "summary": {
