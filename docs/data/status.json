@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-07-01T14:50:40+08:00",
+  "last_checked_at": "2026-07-01T15:30:23+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1066 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 7,
       "retained": 7,
-      "first_200_chars": "標題,連結,日期 \"115年第3季得為上市認購（售）權證（含牛熊證）之標的證券\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f18275b660066\",\"1150630\" \"證交所公布本國上市公司114年度非擔任主管職務之全時員工薪資資訊\",\"https://www.twse.com"
+      "first_200_chars": "標題,連結,日期 \"證交所推「反詐洋芋片」 攜手全臺證券商 邀全民「凍ㄟ！先Check一下！」\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f1c81ed040073\",\"1150701\" \"115年第3季得為上市認購（售）權證（含牛熊證）之標的證券\",\"https://www.tws"
     }
   },
   "summary": {
