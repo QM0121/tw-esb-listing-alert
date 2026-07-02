@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-07-02T16:30:31+08:00",
+  "last_checked_at": "2026-07-02T17:30:30+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1072 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 7,
       "retained": 7,
-      "first_200_chars": "標題,連結,日期 \"國泰永續金融暨氣候變遷高峰論壇盛大登場 證交所與國泰共促永續創新與韌性發展\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f21a979240091\",\"1150702\" \"上市公司執行買回庫藏股情形\",\"https://www.twse.com.tw/zh/abou"
+      "first_200_chars": "標題,連結,日期 \"證交所領航雙軸轉型！ESG 數位平台再升級，AI 賦能上市公司精進永續資訊揭露\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f21f771500095\",\"1150702\" \"國泰永續金融暨氣候變遷高峰論壇盛大登場 證交所與國泰共促永續創新與韌性發展\",\"https"
     }
   },
   "summary": {
