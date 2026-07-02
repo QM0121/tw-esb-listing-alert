@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-07-02T14:30:28+08:00",
+  "last_checked_at": "2026-07-02T15:30:30+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1047 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1072 筆事件，本輪新增事件 5 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -19,7 +19,7 @@
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
-      "fetched": 627,
+      "fetched": 652,
       "ok": true
     },
     "tib_news": {
@@ -28,9 +28,9 @@
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1047,
+  "new_event_count": 5,
+  "email_recipient_count": 6,
+  "total_event_count": 1072,
   "data_retention_years": 3,
   "data_window_start": "2023-07-02",
   "data_window_end": "2026-07-02",
@@ -43,8 +43,8 @@
     },
     "tpex_apply_by_year": {
       "115": {
-        "parsed": 30,
-        "retained": 30
+        "parsed": 55,
+        "retained": 55
       },
       "114": {
         "parsed": 254,
@@ -62,25 +62,25 @@
     "tib_news_csv": {
       "parsed": 7,
       "retained": 7,
-      "first_200_chars": "標題,連結,日期 \"上市公司執行買回庫藏股情形\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f1d350d8c0082\",\"1150701\" \"臺灣證券交易所對福懋油脂股份有限公司違反上市公司董事會設置及行使職權應遵循事項要點規定，處以新台幣10萬元違約金\",\"https://www."
+      "first_200_chars": "標題,連結,日期 \"國泰永續金融暨氣候變遷高峰論壇盛大登場 證交所與國泰共促永續創新與韌性發展\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f21a979240091\",\"1150702\" \"上市公司執行買回庫藏股情形\",\"https://www.twse.com.tw/zh/abou"
     }
   },
   "summary": {
     "stage_counts": {
-      "轉板進度重大更新": 500,
-      "送件": 186,
-      "受理": 186,
-      "審議通過": 169,
+      "轉板進度重大更新": 510,
+      "送件": 191,
+      "受理": 191,
+      "審議通過": 174,
       "撤回申請": 6
     },
     "type_counts": {
-      "轉板進度重大更新": 663,
-      "申請上櫃": 227,
+      "轉板進度重大更新": 678,
+      "申請上櫃": 237,
       "申請創新板上市": 13,
       "申請上市": 144
     },
     "source_counts": {
-      "TPEx 申請上櫃公司": 627,
+      "TPEx 申請上櫃公司": 652,
       "TWSE 臺灣創新板新聞稿": 7,
       "TWSE 申請上市公司": 413
     }
