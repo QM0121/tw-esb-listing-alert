@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-07-05T08:30:38+08:00",
+  "last_checked_at": "2026-07-05T09:13:57+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1070 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成但有部分來源暫時抓取失敗：twse_apply, tib_news。網站資料共 1070 筆事件，本輪新增 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -14,8 +14,9 @@
     },
     "twse_apply": {
       "label": "TWSE 申請上市公司",
-      "fetched": 413,
-      "ok": true
+      "fetched": 0,
+      "ok": false,
+      "error": "TWSE 申請上市公司開放資料 CSV 解析為 0 筆；已寫入 status.debug.twse_apply_csv，暫不覆寫既有資料。"
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
@@ -24,8 +25,9 @@
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
-      "fetched": 7,
-      "ok": true
+      "fetched": 0,
+      "ok": false,
+      "error": "TWSE 證交所新聞開放資料 CSV 解析為 0 筆；已寫入 status.debug.tib_news_csv，暫不覆寫既有資料。"
     }
   },
   "new_event_count": 0,
@@ -37,9 +39,9 @@
   "data_window_label": "近 3 年資料",
   "debug": {
     "twse_apply_csv": {
-      "parsed": 3735,
-      "retained": 413,
-      "first_200_chars": "索引,公司代號,公司簡稱,申請日期,董事長,申請時股本(仟元),上市審議委員會審議日期,交易所董事會通過上市日期,上市契約報請主管機關備查(主管機關核准)日期,股票上市買賣日期,承銷商,承銷價,備註 \"1\",\"7710\",\"東擎科技\",\"1150605\",\"李俊瑩\",\"639053\",\"\",\"\",\"\",\"\",\"元大\",\"\",\"\" \"2\",\"7861\",\"貝爾威勒\",\"1150526\",\"徐瑞瑛\","
+      "parsed": 0,
+      "retained": 0,
+      "first_200_chars": "<html> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"> </head> <body> 因為安全性考量，您所執行的頁面無法呈現。<BR> FOR SECURITY REASONS, THIS PAGE CAN NOT BE ACCESSED.<BR> <BR> 您可以<A HREF=\"jav"
     },
     "tpex_apply_by_year": {
       "115": {
@@ -60,9 +62,9 @@
       }
     },
     "tib_news_csv": {
-      "parsed": 7,
-      "retained": 7,
-      "first_200_chars": "標題,連結,日期 \"翔耀實業股份有限公司(翔耀，公司代號：2438)上市普通股自115年7月6日起暫停交易\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f274d5e7a00a4\",\"1150703\" \"本週發行量加權股價指數漲幅約為4.96%，上市股票總市值達152.66兆元\",\"h"
+      "parsed": 0,
+      "retained": 0,
+      "first_200_chars": "<html> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"> </head> <body> 因為安全性考量，您所執行的頁面無法呈現。<BR> FOR SECURITY REASONS, THIS PAGE CAN NOT BE ACCESSED.<BR> <BR> 您可以<A HREF=\"jav"
     }
   },
   "summary": {
