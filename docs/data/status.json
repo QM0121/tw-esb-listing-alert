@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-07-07T17:30:42+08:00",
+  "last_checked_at": "2026-07-07T18:05:27+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成但有部分來源暫時抓取失敗：twse_apply, tib_news。網站資料共 1071 筆事件，本輪新增 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1071 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -14,9 +14,8 @@
     },
     "twse_apply": {
       "label": "TWSE 申請上市公司",
-      "fetched": 0,
-      "ok": false,
-      "error": "抓取來源失敗：https://www.twse.com.tw/company/applylistingCsvAndHtml?selectType=Local&type=open_data；404 Client Error: Not Found for url: https://www.twse.com.tw/company/applylistingCsvAndHtml?selectType=Local&type=open_data"
+      "fetched": 413,
+      "ok": true
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
@@ -25,19 +24,23 @@
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
-      "fetched": 0,
-      "ok": false,
-      "error": "抓取來源失敗：https://www.twse.com.tw/news/newsList?response=open_data；404 Client Error: Not Found for url: https://www.twse.com.tw/news/newsList?response=open_data"
+      "fetched": 7,
+      "ok": true
     }
   },
-  "new_event_count": 1,
-  "email_recipient_count": 6,
+  "new_event_count": 0,
+  "email_recipient_count": 0,
   "total_event_count": 1071,
   "data_retention_years": 3,
   "data_window_start": "2023-07-07",
   "data_window_end": "2026-07-07",
   "data_window_label": "近 3 年資料",
   "debug": {
+    "twse_apply_csv": {
+      "parsed": 3735,
+      "retained": 413,
+      "first_200_chars": "索引,公司代號,公司簡稱,申請日期,董事長,申請時股本(仟元),上市審議委員會審議日期,交易所董事會通過上市日期,上市契約報請主管機關備查(主管機關核准)日期,股票上市買賣日期,承銷商,承銷價,備註 \"1\",\"7710\",\"東擎科技\",\"1150605\",\"李俊瑩\",\"639053\",\"\",\"\",\"\",\"\",\"元大\",\"\",\"\" \"2\",\"7861\",\"貝爾威勒\",\"1150526\",\"徐瑞瑛\","
+    },
     "tpex_apply_by_year": {
       "115": {
         "parsed": 56,
@@ -55,6 +58,11 @@
         "parsed": 146,
         "retained": 115
       }
+    },
+    "tib_news_csv": {
+      "parsed": 7,
+      "retained": 7,
+      "first_200_chars": "標題,連結,日期 \"翔耀實業股份有限公司(翔耀，公司代號：2438)上市普通股自115年7月7日起恢復交易\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f36c0eb7700c2\",\"1150706\" \"海昌生技(證券代號：7814)採競價拍賣方式辦理承銷，於7月6日順利完成\",\"ht"
     }
   },
   "summary": {
