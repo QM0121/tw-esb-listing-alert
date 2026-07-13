@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-07-13T18:30:34+08:00",
+  "last_checked_at": "2026-07-13T19:30:36+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1071 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 7,
       "retained": 7,
-      "first_200_chars": "標題,連結,日期 \"第一金投信募集發行之主動第一金優股息ETF，自115年7月15日起掛牌上市，並得辦理融資融券\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f5af873240141\",\"1150713\" \"邁萪科技股份有限公司上市股票自本（115）年7月14日起得為融資融券交易\","
+      "first_200_chars": "標題,連結,日期 \"證交所持續完善ETF市場基礎建設 推動申贖平台功能再升級\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f5b28082a0145\",\"1150713\" \"第一金投信募集發行之主動第一金優股息ETF，自115年7月15日起掛牌上市，並得辦理融資融券\",\"https:/"
     }
   },
   "summary": {
