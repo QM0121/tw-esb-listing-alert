@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-07-14T17:30:37+08:00",
+  "last_checked_at": "2026-07-14T18:30:39+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1070 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 7,
       "retained": 7,
-      "first_200_chars": "標題,連結,日期 \"台鎔科技(證券代號：6947)採競價拍賣方式辦理承銷，於7月14日順利完成\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f5f90c0810157\",\"1150714\" \"全體上市公司(不含金融保險業及三商投資控股股份有限公司)115年6月份當月營收較114年同期成"
+      "first_200_chars": "標題,連結,日期 \"AI 基礎建設產業接軌資本市場：臺灣創新板（tib-創）成為散熱、電源與先進封裝企業的資本化路徑\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f5ffd9dc2015c\",\"1150714\" \"台鎔科技(證券代號：6947)採競價拍賣方式辦理承銷，於7月14日順利完"
     }
   },
   "summary": {
