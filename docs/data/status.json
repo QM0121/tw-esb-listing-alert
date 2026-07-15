@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-07-15T14:35:13+08:00",
+  "last_checked_at": "2026-07-15T15:30:40+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1071 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1072 筆事件，本輪新增事件 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -19,7 +19,7 @@
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
-      "fetched": 648,
+      "fetched": 649,
       "ok": true
     },
     "tib_news": {
@@ -28,9 +28,9 @@
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1071,
+  "new_event_count": 1,
+  "email_recipient_count": 6,
+  "total_event_count": 1072,
   "data_retention_years": 3,
   "data_window_start": "2023-07-15",
   "data_window_end": "2026-07-15",
@@ -47,8 +47,8 @@
         "retained": 56
       },
       "114": {
-        "parsed": 254,
-        "retained": 254
+        "parsed": 255,
+        "retained": 255
       },
       "113": {
         "parsed": 226,
@@ -62,27 +62,27 @@
     "tib_news_csv": {
       "parsed": 8,
       "retained": 8,
-      "first_200_chars": "標題,連結,日期 \"CAROTA Corporation(英屬開曼群島商科絡達股份有限公司)於115年7月15日送件申請股票創新板第一上市\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f646a21dc0168\",\"1150715\" \"AI 基礎建設產業接軌資本市場：臺灣創新板（tib"
+      "first_200_chars": "標題,連結,日期 \"凌陽創新科技股份有限公司股票自115年7月16日開始上市買賣\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f648a19d00170\",\"1150715\" \"永悅健康(證券代號：7835)採競價拍賣方式辦理承銷，於7月15日順利完成\",\"https://www.tw"
     }
   },
   "summary": {
     "stage_counts": {
+      "轉板進度重大更新": 511,
       "送件": 191,
       "受理": 190,
       "審議通過": 174,
-      "轉板進度重大更新": 510,
       "撤回申請": 6
     },
     "type_counts": {
+      "轉板進度重大更新": 679,
       "申請創新板上市": 14,
       "申請上市": 146,
-      "轉板進度重大更新": 678,
       "申請上櫃": 233
     },
     "source_counts": {
+      "TPEx 申請上櫃公司": 649,
       "TWSE 臺灣創新板新聞稿": 8,
-      "TWSE 申請上市公司": 415,
-      "TPEx 申請上櫃公司": 648
+      "TWSE 申請上市公司": 415
     }
   }
 }
