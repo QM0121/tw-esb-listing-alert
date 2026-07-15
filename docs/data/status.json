@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-07-15T13:30:37+08:00",
+  "last_checked_at": "2026-07-15T14:30:39+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1070 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1071 筆事件，本輪新增事件 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -24,13 +24,13 @@
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
-      "fetched": 7,
+      "fetched": 8,
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1070,
+  "new_event_count": 1,
+  "email_recipient_count": 6,
+  "total_event_count": 1071,
   "data_retention_years": 3,
   "data_window_start": "2023-07-15",
   "data_window_end": "2026-07-15",
@@ -60,29 +60,29 @@
       }
     },
     "tib_news_csv": {
-      "parsed": 7,
-      "retained": 7,
-      "first_200_chars": "標題,連結,日期 \"AI 基礎建設產業接軌資本市場：臺灣創新板（tib-創）成為散熱、電源與先進封裝企業的資本化路徑\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f5ffd9dc2015c\",\"1150714\" \"台鎔科技(證券代號：6947)採競價拍賣方式辦理承銷，於7月14日順利完"
+      "parsed": 8,
+      "retained": 8,
+      "first_200_chars": "標題,連結,日期 \"CAROTA Corporation(英屬開曼群島商科絡達股份有限公司)於115年7月15日送件申請股票創新板第一上市\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f646a21dc0168\",\"1150715\" \"AI 基礎建設產業接軌資本市場：臺灣創新板（tib"
     }
   },
   "summary": {
     "stage_counts": {
-      "送件": 190,
+      "送件": 191,
       "受理": 190,
       "審議通過": 174,
       "轉板進度重大更新": 510,
       "撤回申請": 6
     },
     "type_counts": {
+      "申請創新板上市": 14,
       "申請上市": 146,
       "轉板進度重大更新": 678,
-      "申請上櫃": 233,
-      "申請創新板上市": 13
+      "申請上櫃": 233
     },
     "source_counts": {
+      "TWSE 臺灣創新板新聞稿": 8,
       "TWSE 申請上市公司": 415,
-      "TPEx 申請上櫃公司": 648,
-      "TWSE 臺灣創新板新聞稿": 7
+      "TPEx 申請上櫃公司": 648
     }
   }
 }
