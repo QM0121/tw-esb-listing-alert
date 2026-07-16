@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-07-16T18:30:37+08:00",
+  "last_checked_at": "2026-07-16T19:30:37+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1075 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所有價證券上市審議委員會審議通過東擎科技股份有限公司初次申請股票上市案\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f6a3a83b2019d\",\"1150716\" \"兆捷科技國際(股)公司於115年7月16日送件申請股票創新板上市\",\"https://"
+      "first_200_chars": "標題,連結,日期 \"證交所前進亞洲生技大展 助攻生技產業接軌資本市場\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f6a8c35c201a6\",\"1150716\" \"臺灣證券交易所有價證券上市審議委員會審議通過東擎科技股份有限公司初次申請股票上市案\",\"https://www.twse"
     }
   },
   "summary": {
