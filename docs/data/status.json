@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-07-16T15:30:35+08:00",
+  "last_checked_at": "2026-07-16T16:30:37+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1074 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1075 筆事件，本輪新增事件 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -24,13 +24,13 @@
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
-      "fetched": 8,
+      "fetched": 9,
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1074,
+  "new_event_count": 1,
+  "email_recipient_count": 6,
+  "total_event_count": 1075,
   "data_retention_years": 3,
   "data_window_start": "2023-07-16",
   "data_window_end": "2026-07-16",
@@ -60,29 +60,29 @@
       }
     },
     "tib_news_csv": {
-      "parsed": 8,
-      "retained": 8,
-      "first_200_chars": "標題,連結,日期 \"凌陽創新科技股份有限公司股票自115年7月16日開始上市買賣\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f648a19d00170\",\"1150715\" \"永悅健康(證券代號：7835)採競價拍賣方式辦理承銷，於7月15日順利完成\",\"https://www.tw"
+      "parsed": 9,
+      "retained": 9,
+      "first_200_chars": "標題,連結,日期 \"兆捷科技國際(股)公司於115年7月16日送件申請股票創新板上市\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f69e71b6d0199\",\"1150716\" \"凌陽創新科技股份有限公司股票自115年7月16日開始上市買賣\",\"https://www.twse.co"
     }
   },
   "summary": {
     "stage_counts": {
       "轉板進度重大更新": 512,
       "審議通過": 175,
-      "送件": 191,
+      "送件": 192,
       "受理": 190,
       "撤回申請": 6
     },
     "type_counts": {
       "轉板進度重大更新": 681,
-      "申請創新板上市": 14,
+      "申請創新板上市": 15,
       "申請上市": 146,
       "申請上櫃": 233
     },
     "source_counts": {
       "TPEx 申請上櫃公司": 649,
       "TWSE 申請上市公司": 417,
-      "TWSE 臺灣創新板新聞稿": 8
+      "TWSE 臺灣創新板新聞稿": 9
     }
   }
 }
