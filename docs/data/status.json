@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-07-16T08:30:35+08:00",
+  "last_checked_at": "2026-07-16T09:30:35+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1072 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1073 筆事件，本輪新增事件 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -14,7 +14,7 @@
     },
     "twse_apply": {
       "label": "TWSE 申請上市公司",
-      "fetched": 415,
+      "fetched": 416,
       "ok": true
     },
     "tpex_apply": {
@@ -28,17 +28,17 @@
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1072,
+  "new_event_count": 1,
+  "email_recipient_count": 6,
+  "total_event_count": 1073,
   "data_retention_years": 3,
   "data_window_start": "2023-07-16",
   "data_window_end": "2026-07-16",
   "data_window_label": "近 3 年資料",
   "debug": {
     "twse_apply_csv": {
-      "parsed": 3737,
-      "retained": 415,
+      "parsed": 3738,
+      "retained": 416,
       "first_200_chars": "索引,公司代號,公司簡稱,申請日期,董事長,申請時股本(仟元),上市審議委員會審議日期,交易所董事會通過上市日期,上市契約報請主管機關備查(主管機關核准)日期,股票上市買賣日期,承銷商,承銷價,備註 \"1\",\"4537\",\"旭東\",\"1150709\",\"莊添財\",\"788400\",\"\",\"\",\"\",\"\",\"富邦\",\"\",\"\" \"2\",\"7710\",\"東擎科技\",\"1150605\",\"李俊瑩\",\"6"
     },
     "tpex_apply_by_year": {
@@ -67,22 +67,22 @@
   },
   "summary": {
     "stage_counts": {
-      "轉板進度重大更新": 511,
+      "轉板進度重大更新": 512,
       "送件": 191,
       "受理": 190,
       "審議通過": 174,
       "撤回申請": 6
     },
     "type_counts": {
-      "轉板進度重大更新": 679,
+      "轉板進度重大更新": 680,
       "申請創新板上市": 14,
       "申請上市": 146,
       "申請上櫃": 233
     },
     "source_counts": {
       "TPEx 申請上櫃公司": 649,
-      "TWSE 臺灣創新板新聞稿": 8,
-      "TWSE 申請上市公司": 415
+      "TWSE 申請上市公司": 416,
+      "TWSE 臺灣創新板新聞稿": 8
     }
   }
 }
