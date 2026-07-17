@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-07-17T17:30:27+08:00",
+  "last_checked_at": "2026-07-17T18:17:03+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1075 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"大鵬科(證券代號：7689)採競價拍賣方式辦理承銷，於7月17日順利完成\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f6eca1d3201bc\",\"1150717\" \"下半年溫室氣體盤查實作工作坊擴大辦理 協助產業提升碳管理與揭露之永續競爭力\",\"https://"
+      "first_200_chars": "標題,連結,日期 \"本週發行量加權股價指數跌幅約為5.92%，上市股票總市值達139.36兆元\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f6f7ca59b01d1\",\"1150717\" \"臺灣證券交易所對台揚科技股份有限公司（代號：2314）違反資訊申報作業辦法規定，處以新台幣5萬"
     }
   },
   "summary": {
