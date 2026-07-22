@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-07-22T17:30:32+08:00",
+  "last_checked_at": "2026-07-22T18:30:24+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1076 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"臺灣創新板（tib-創）以新經濟雙引擎 接軌全球創新資本浪潮 AI原生防禦 × 訂閱制內容經濟：臺灣新興科技企業的資本市場新路徑\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f89254ab6022b\",\"1150722\" \"長廣精機股份有限公司上市股票自本（1"
+      "first_200_chars": "標題,連結,日期 \"泰宗生物科技股份有限公司(泰宗，公司代號：4169)上市普通股自115年7月23日起暫停交易\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f893bb2710233\",\"1150722\" \"全體證券商115年6月稅後淨利265.72億元，累計稅後淨利1,440.9億"
     }
   },
   "summary": {
