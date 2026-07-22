@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-07-22T16:30:32+08:00",
+  "last_checked_at": "2026-07-22T17:30:32+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1076 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"證交所持續推動2026年「地球特攻隊」永續宣導「清冰箱救剩食」倡議惜食減廢 打造低碳生活新習慣\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f87860f9301f6\",\"1150722\" \"耐特科技材料(股)公司於115年7月20日送件申請股票上市\",\"https"
+      "first_200_chars": "標題,連結,日期 \"臺灣創新板（tib-創）以新經濟雙引擎 接軌全球創新資本浪潮 AI原生防禦 × 訂閱制內容經濟：臺灣新興科技企業的資本市場新路徑\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f89254ab6022b\",\"1150722\" \"長廣精機股份有限公司上市股票自本（1"
     }
   },
   "summary": {
