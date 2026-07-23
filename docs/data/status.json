@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-07-23T18:30:30+08:00",
+  "last_checked_at": "2026-07-23T18:38:46+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1076 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"關貿網路股份有限公司等9家公司預計於115年8月份假證交所場地自行舉辦法人說明會\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f8e6ca26a0247\",\"1150723\" \"永悅健康股份有限公司股票自115年7月24日於臺灣創新板上市開始買賣\",\"https:/"
+      "first_200_chars": "標題,連結,日期 \"自115年7月27日起，隆銘綠能科技工程股份有限公司(隆銘綠能，公司代號：3018)上市有價證券恢復交易方法\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f8e8a033b024b\",\"1150723\" \"關貿網路股份有限公司等9家公司預計於115年8月份假證交所場"
     }
   },
   "summary": {
