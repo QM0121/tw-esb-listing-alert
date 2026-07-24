@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-07-24T16:30:26+08:00",
+  "last_checked_at": "2026-07-24T17:30:29+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1081 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"泰宗生物科技股份有限公司(泰宗，公司代號：4169)上市普通股自115年7月24日起恢復交易\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f8eb654820253\",\"1150723\" \"證交所舉辦「企業併購實戰論壇」，助力上市公司價值提升開創新局\",\"https"
+      "first_200_chars": "標題,連結,日期 \"英柏得科技(股)公司於115年7月24日送件申請股票上市\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69ef76943019f9358fd67026c\",\"1150724\" \"泰宗生物科技股份有限公司(泰宗，公司代號：4169)上市普通股自115年7月24日起恢復交易\",\"https:/"
     }
   },
   "summary": {
