@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-07-27T23:30:28+08:00",
+  "last_checked_at": "2026-07-28T00:30:30+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1089 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1082 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -14,12 +14,12 @@
     },
     "twse_apply": {
       "label": "TWSE 申請上市公司",
-      "fetched": 427,
+      "fetched": 423,
       "ok": true
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
-      "fetched": 653,
+      "fetched": 650,
       "ok": true
     },
     "tib_news": {
@@ -30,15 +30,15 @@
   },
   "new_event_count": 0,
   "email_recipient_count": 0,
-  "total_event_count": 1089,
+  "total_event_count": 1082,
   "data_retention_years": 3,
-  "data_window_start": "2023-07-27",
-  "data_window_end": "2026-07-27",
+  "data_window_start": "2023-07-28",
+  "data_window_end": "2026-07-28",
   "data_window_label": "近 3 年資料",
   "debug": {
     "twse_apply_csv": {
       "parsed": 3750,
-      "retained": 427,
+      "retained": 423,
       "first_200_chars": "索引,公司代號,公司簡稱,申請日期,董事長,申請時股本(仟元),上市審議委員會審議日期,交易所董事會通過上市日期,上市契約報請主管機關備查(主管機關核准)日期,股票上市買賣日期,承銷商,承銷價,備註 \"1\",\"7883\",\"饗賓\",\"1150727\",\"陳毅航\",\"609760\",\"\",\"\",\"\",\"\",\"元大\",\"\",\"\" \"2\",\"8908\",\"欣雄\",\"1150727\",\"朱文煌\",\"315"
     },
     "tpex_apply_by_year": {
@@ -56,7 +56,7 @@
       },
       "112": {
         "parsed": 146,
-        "retained": 110
+        "retained": 107
       }
     },
     "tib_news_csv": {
@@ -67,21 +67,21 @@
   },
   "summary": {
     "stage_counts": {
-      "送件": 198,
-      "受理": 196,
-      "轉板進度重大更新": 516,
+      "送件": 195,
+      "受理": 193,
+      "轉板進度重大更新": 515,
       "審議通過": 173,
       "撤回申請": 6
     },
     "type_counts": {
-      "申請上市": 154,
-      "申請上櫃": 237,
-      "轉板進度重大更新": 683,
+      "申請上市": 150,
+      "申請上櫃": 235,
+      "轉板進度重大更新": 682,
       "申請創新板上市": 15
     },
     "source_counts": {
-      "TWSE 申請上市公司": 427,
-      "TPEx 申請上櫃公司": 653,
+      "TWSE 申請上市公司": 423,
+      "TPEx 申請上櫃公司": 650,
       "TWSE 臺灣創新板新聞稿": 9
     }
   }
