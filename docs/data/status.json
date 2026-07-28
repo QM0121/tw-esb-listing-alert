@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-07-28T15:30:32+08:00",
+  "last_checked_at": "2026-07-28T15:58:44+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1083 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"饗賓餐旅事業(股)公司及欣雄天然氣(股)公司於115年7月27日送件申請股票上市\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69f96ff79019fa2fbf2d80035\",\"1150727\" \"大鵬科技股份有限公司股票自115年7月28日開始上市買賣\",\"https://www.t"
+      "first_200_chars": "標題,連結,日期 \"三商美邦人壽保險股份有限公司 (三商壽，公司代號：2867)因進行股份轉換其上市有價證券自115年8月20日起停止買賣，並自115年9月1日起終止上市\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69f96ff79019fa7a779a60065\",\"1150728\" \"饗賓餐旅事業(股)"
     }
   },
   "summary": {
