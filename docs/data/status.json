@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-07-30T16:30:30+08:00",
+  "last_checked_at": "2026-07-30T17:30:23+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1093 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"國際市場波動加劇 臺股基本面及資金動能維持穩健\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69f96ff79019fad937542007f\",\"1150729\" \"臺灣證券交易所訂於7月31日召開有價證券上市審議委員會第890次會議，將審議英屬開曼群島商禾碩康(股)公司之申請股票上市案"
+      "first_200_chars": "標題,連結,日期 \"貝萊德投信募集發行之「貝萊德iShares安碩世界股票ETF」、「貝萊德iShares安碩10年期以上A級美元公司債ETF」及永豐投信募集發行之「永豐台灣科技趨勢主動式ETF」，自115年8月3日起掛牌上市，並得辦理融資融券\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69f96ff7901"
     }
   },
   "summary": {
