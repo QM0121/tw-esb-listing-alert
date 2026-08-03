@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-08-03T17:30:50+08:00",
+  "last_checked_at": "2026-08-03T18:30:26+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1086 筆事件，本輪新增事件 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1086 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -28,8 +28,8 @@
       "ok": true
     }
   },
-  "new_event_count": 1,
-  "email_recipient_count": 6,
+  "new_event_count": 0,
+  "email_recipient_count": 0,
   "total_event_count": 1086,
   "data_retention_years": 3,
   "data_window_start": "2023-08-03",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"上週外資在集中市場賣超824.55億元，賣超旺宏3.77萬張最多，另買超長榮航13.70萬張最多\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69f96ff79019fc5ab268800bc\",\"1150803\" \"資訊透明讓投資更踏實！理性評估ETF收益結構與產品特質\",\"https:"
+      "first_200_chars": "標題,連結,日期 \"證交所修正公布注意暨處置規定，自115年8月10日起實施\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69f96ff79019fc6ff768600c2\",\"1150803\" \"上週外資在集中市場賣超824.55億元，賣超旺宏3.77萬張最多，另買超長榮航13.70萬張最多\",\"https"
     }
   },
   "summary": {
