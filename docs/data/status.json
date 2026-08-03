@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-08-03T19:30:25+08:00",
+  "last_checked_at": "2026-08-03T20:30:31+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1086 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"上市公司115年第2季財務報告公告申報期限及注意事項\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69f96ff79019fc738a3f100ca\",\"1150803\" \"證交所修正公布注意暨處置規定，自115年8月10日起實施\",\"https://www.twse.com.tw/zh/"
+      "first_200_chars": "標題,連結,日期 \"金管會、國發會啟動「TiBOOST 創新大步計畫」徵件 臺灣創新板(tib-創)助攻新創成長\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da0019fc7914d450005\",\"1150803\" \"上市公司115年第2季財務報告公告申報期限及注意事項\",\"https://w"
     }
   },
   "summary": {
