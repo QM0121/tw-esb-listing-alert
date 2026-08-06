@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-08-06T16:30:33+08:00",
+  "last_checked_at": "2026-08-06T17:30:29+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1089 筆事件，本輪新增事件 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1089 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -28,8 +28,8 @@
       "ok": true
     }
   },
-  "new_event_count": 1,
-  "email_recipient_count": 6,
+  "new_event_count": 0,
+  "email_recipient_count": 0,
   "total_event_count": 1089,
   "data_retention_years": 3,
   "data_window_start": "2023-08-06",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"證交所攜手企業持續深耕培育屏東足球小將 臺灣少年足球計畫耕耘十二載 成果豐碩\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da0019fca6442f20009\",\"1150804\" \"金管會、國發會啟動「TiBOOST 創新大步計畫」徵件 臺灣創新板(tib-創)助攻新創成長"
+      "first_200_chars": "標題,連結,日期 \"臺灣創新板（tib-創）引領電動車與綠色移動產業鏈的資本化升級 制度彈性・市值核心・與「AI 新十大建設」及淨零轉型政策直接接軌\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da0019fd65c2f490073\",\"1150806\" \"證交所攜手企業持續深耕培育屏東足球小將"
     }
   },
   "summary": {
