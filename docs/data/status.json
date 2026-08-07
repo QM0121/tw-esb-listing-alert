@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-08-07T13:30:27+08:00",
+  "last_checked_at": "2026-08-07T14:30:25+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成但有部分來源暫時抓取失敗：tib_news。網站資料共 1089 筆事件，本輪新增 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1089 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -24,9 +24,8 @@
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
-      "fetched": 0,
-      "ok": false,
-      "error": "抓取來源失敗：https://www.twse.com.tw/news/newsList?response=open_data；HTTPSConnectionPool(host='www.twse.com.tw', port=443): Read timed out. (read timeout=40)"
+      "fetched": 9,
+      "ok": true
     }
   },
   "new_event_count": 0,
@@ -59,6 +58,11 @@
         "parsed": 146,
         "retained": 103
       }
+    },
+    "tib_news_csv": {
+      "parsed": 9,
+      "retained": 9,
+      "first_200_chars": "標題,連結,日期 \"臺灣創新板（tib-創）引領電動車與綠色移動產業鏈的資本化升級 制度彈性・市值核心・與「AI 新十大建設」及淨零轉型政策直接接軌\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da0019fd65c2f490073\",\"1150806\" \"證交所攜手企業持續深耕培育屏東足球小將"
     }
   },
   "summary": {
