@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-08-07T16:34:06+08:00",
+  "last_checked_at": "2026-08-07T17:30:25+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1087 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1089 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -19,7 +19,7 @@
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
-      "fetched": 659,
+      "fetched": 661,
       "ok": true
     },
     "tib_news": {
@@ -30,7 +30,7 @@
   },
   "new_event_count": 0,
   "email_recipient_count": 0,
-  "total_event_count": 1087,
+  "total_event_count": 1089,
   "data_retention_years": 3,
   "data_window_start": "2023-08-07",
   "data_window_end": "2026-08-07",
@@ -43,8 +43,8 @@
     },
     "tpex_apply_by_year": {
       "115": {
-        "parsed": 75,
-        "retained": 75
+        "parsed": 77,
+        "retained": 77
       },
       "114": {
         "parsed": 255,
@@ -62,25 +62,25 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"臺灣創新板（tib-創）引領電動車與綠色移動產業鏈的資本化升級 制度彈性・市值核心・與「AI 新十大建設」及淨零轉型政策直接接軌\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da0019fd65c2f490073\",\"1150806\" \"證交所攜手企業持續深耕培育屏東足球小將"
+      "first_200_chars": "標題,連結,日期 \"自115年8月10日起，證交所將採行公布注意暨處置新規定\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da0019fdb6d4e0500ab\",\"1150807\" \"華德動能科技股份有限公司股票自115年8月10日於臺灣創新板上市開始買賣\",\"https://www.twse."
     }
   },
   "summary": {
     "stage_counts": {
       "審議通過": 178,
-      "送件": 193,
-      "受理": 191,
+      "送件": 194,
+      "受理": 192,
       "轉板進度重大更新": 520,
       "撤回申請": 5
     },
     "type_counts": {
       "轉板進度重大更新": 692,
-      "申請上櫃": 237,
+      "申請上櫃": 239,
       "申請上市": 143,
       "申請創新板上市": 15
     },
     "source_counts": {
-      "TPEx 申請上櫃公司": 659,
+      "TPEx 申請上櫃公司": 661,
       "TWSE 申請上市公司": 419,
       "TWSE 臺灣創新板新聞稿": 9
     }
