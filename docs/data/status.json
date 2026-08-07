@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-08-07T17:30:25+08:00",
+  "last_checked_at": "2026-08-07T18:24:38+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1089 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"自115年8月10日起，證交所將採行公布注意暨處置新規定\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da0019fdb6d4e0500ab\",\"1150807\" \"華德動能科技股份有限公司股票自115年8月10日於臺灣創新板上市開始買賣\",\"https://www.twse."
+      "first_200_chars": "標題,連結,日期 \"2026年7月集中市場相關數據\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da0019fdb9fb4d600b3\",\"1150807\" \"本週發行量加權股價指數漲幅約為2.57%，上市股票總市值達144.56兆元\",\"https://www.twse.com.tw/zh/ab"
     }
   },
   "summary": {
