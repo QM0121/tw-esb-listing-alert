@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-08-11T16:30:27+08:00",
+  "last_checked_at": "2026-08-11T17:30:09+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1088 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1089 筆事件，本輪新增事件 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -19,7 +19,7 @@
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
-      "fetched": 660,
+      "fetched": 661,
       "ok": true
     },
     "tib_news": {
@@ -28,9 +28,9 @@
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1088,
+  "new_event_count": 1,
+  "email_recipient_count": 6,
+  "total_event_count": 1089,
   "data_retention_years": 3,
   "data_window_start": "2023-08-11",
   "data_window_end": "2026-08-11",
@@ -43,8 +43,8 @@
     },
     "tpex_apply_by_year": {
       "115": {
-        "parsed": 77,
-        "retained": 77
+        "parsed": 78,
+        "retained": 78
       },
       "114": {
         "parsed": 255,
@@ -62,26 +62,26 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"全體上市公司(不含金融保險業及三商投資控股股份有限公司)115年7月份當月營收較114年同期成長48.16％，累計營業收入較114年同期成長34.47％\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da0019fefd311df00d1\",\"1150811\" \"心誠鎂行動醫電股"
+      "first_200_chars": "標題,連結,日期 \"自115年8月13日起，永冠能源科技集團有限公司（永冠-KY，公司代號：1589）上市有價證券併案列為變更交易方法且停止買賣\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da0019ff020663200d7\",\"1150811\" \"證交所舉辦「臺灣運動產業暨資本趨勢論壇」串聯"
     }
   },
   "summary": {
     "stage_counts": {
       "轉板進度重大更新": 521,
-      "審議通過": 176,
+      "審議通過": 177,
       "送件": 194,
       "受理": 192,
       "撤回申請": 5
     },
     "type_counts": {
-      "轉板進度重大更新": 691,
+      "轉板進度重大更新": 692,
       "申請上櫃": 239,
       "申請上市": 143,
       "申請創新板上市": 15
     },
     "source_counts": {
       "TWSE 申請上市公司": 419,
-      "TPEx 申請上櫃公司": 660,
+      "TPEx 申請上櫃公司": 661,
       "TWSE 臺灣創新板新聞稿": 9
     }
   }
