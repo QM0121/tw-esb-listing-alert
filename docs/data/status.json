@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-08-11T17:30:09+08:00",
+  "last_checked_at": "2026-08-11T18:26:35+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1089 筆事件，本輪新增事件 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1089 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -28,8 +28,8 @@
       "ok": true
     }
   },
-  "new_event_count": 1,
-  "email_recipient_count": 6,
+  "new_event_count": 0,
+  "email_recipient_count": 0,
   "total_event_count": 1089,
   "data_retention_years": 3,
   "data_window_start": "2023-08-11",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"自115年8月13日起，永冠能源科技集團有限公司（永冠-KY，公司代號：1589）上市有價證券併案列為變更交易方法且停止買賣\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da0019ff020663200d7\",\"1150811\" \"證交所舉辦「臺灣運動產業暨資本趨勢論壇」串聯"
+      "first_200_chars": "標題,連結,日期 \"榮成紙業股份有限公司(榮成，公司代號：1909)上市普通股自115年8月12日起暫停交易\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da0019ff049e15300dd\",\"1150811\" \"自115年8月13日起，永冠能源科技集團有限公司（永冠-KY，公司代號：1589"
     }
   },
   "summary": {
