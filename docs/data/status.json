@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-08-11T15:44:58+08:00",
+  "last_checked_at": "2026-08-11T16:30:27+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1088 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"富田電機股份有限公司上市股票自本（115）年8月11日起得為融資融券交易\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da0019feb01bf2600c5\",\"1150810\" \"和運租車股份有限公司股票自115年8月11日開始上市買賣\",\"https://www.twse."
+      "first_200_chars": "標題,連結,日期 \"全體上市公司(不含金融保險業及三商投資控股股份有限公司)115年7月份當月營收較114年同期成長48.16％，累計營業收入較114年同期成長34.47％\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da0019fefd311df00d1\",\"1150811\" \"心誠鎂行動醫電股"
     }
   },
   "summary": {
