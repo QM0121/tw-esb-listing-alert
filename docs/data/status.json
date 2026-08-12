@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-08-12T18:34:06+08:00",
+  "last_checked_at": "2026-08-12T19:30:25+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1089 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"榮成紙業股份有限公司(榮成，公司代號：1909)上市普通股自115年8月13日起恢復交易\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da0019ff56dbd6900f5\",\"1150812\" \"臺灣證券交易所對永冠能源科技集團有限公司（永冠-KY，公司代號：1589）違反上"
+      "first_200_chars": "標題,連結,日期 \"泰山企業股份有限公司(泰山，公司代號：1218)上市普通股自115年8月13日起暫停交易\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da0019ff5a2b5b700f9\",\"1150812\" \"榮成紙業股份有限公司(榮成，公司代號：1909)上市普通股自115年8月13日起"
     }
   },
   "summary": {
