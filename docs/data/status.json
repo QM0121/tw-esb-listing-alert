@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-08-12T15:30:26+08:00",
+  "last_checked_at": "2026-08-12T16:30:24+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1089 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"榮成紙業股份有限公司(榮成，公司代號：1909)上市普通股自115年8月12日起暫停交易\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da0019ff049e15300dd\",\"1150811\" \"自115年8月13日起，永冠能源科技集團有限公司（永冠-KY，公司代號：1589"
+      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所對永冠能源科技集團有限公司（永冠-KY，公司代號：1589）違反上市公司董事會設置及行使職權應遵循事項要點規定，處以新台幣10萬元違約金\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da0019ff514901100ef\",\"1150812\" \"奧義賽博科技股份有"
     }
   },
   "summary": {
