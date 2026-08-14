@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-08-14T17:30:29+08:00",
+  "last_checked_at": "2026-08-14T18:30:26+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1088 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"從在地 IP 到國際獨角獸！證交所跨界《創新辦桌》轉譯拓荒精神 以市值多元標準對接全球資本，為臺灣孵化下一波護國群山\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da0019ffe271cac0113\",\"1150814\" \"泰山企業股份有限公司(泰山，公司代號：1218)上市"
+      "first_200_chars": "標題,連結,日期 \"本週發行量加權股價指數漲幅約為3.58%，上市股票總市值達149.74兆元\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da0019fffa599520119\",\"1150814\" \"從在地 IP 到國際獨角獸！證交所跨界《創新辦桌》轉譯拓荒精神 以市值多元標準對接全球資本，為"
     }
   },
   "summary": {
