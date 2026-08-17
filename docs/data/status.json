@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-08-17T17:30:26+08:00",
+  "last_checked_at": "2026-08-17T18:04:21+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1087 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"2026臺灣週將於11月3日至13日舉行\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da001a00eae654a013f\",\"1150817\" \"上週外資在集中市場買超2,061.36億元，買超力積電31.64萬張最多，另賣超華航14.72萬張最多\",\"https://ww"
+      "first_200_chars": "標題,連結,日期 \"堤維西交通工業股份有限公司(堤維西，公司代號：1522)發行之甲種特別股(堤維西甲特，股票代號：1522A)將於115年10月8日終止上市\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da001a00f259c7f0150\",\"1150817\" \"國內上市公司115年第2季財務"
     }
   },
   "summary": {
