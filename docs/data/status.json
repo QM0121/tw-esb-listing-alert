@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-08-17T14:30:27+08:00",
+  "last_checked_at": "2026-08-17T15:30:28+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1087 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所對華碩電腦股份有限公司違反重大訊息規定，處以新台幣3萬元違約金\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da001a0001e54d40130\",\"1150814\" \"本國上市公司(不含金融保險公司) 除凌巨外，均已申報115年第2季財務報告\",\"https:"
+      "first_200_chars": "標題,連結,日期 \"上週外資在集中市場買超2,061.36億元，買超力積電31.64萬張最多，另賣超華航14.72萬張最多\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da001a00e7609880137\",\"1150817\" \"臺灣證券交易所對華碩電腦股份有限公司違反重大訊息規定，處以新台幣3"
     }
   },
   "summary": {
