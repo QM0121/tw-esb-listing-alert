@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-08-20T15:22:25+08:00",
+  "last_checked_at": "2026-08-20T15:30:29+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成但有部分來源暫時抓取失敗：tib_news。網站資料共 1087 筆事件，本輪新增 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1087 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -24,9 +24,8 @@
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
-      "fetched": 0,
-      "ok": false,
-      "error": "抓取來源失敗：https://www.twse.com.tw/news/newsList?response=open_data；HTTPSConnectionPool(host='www.twse.com.tw', port=443): Read timed out. (read timeout=40)"
+      "fetched": 9,
+      "ok": true
     }
   },
   "new_event_count": 0,
@@ -59,6 +58,11 @@
         "parsed": 146,
         "retained": 100
       }
+    },
+    "tib_news_csv": {
+      "parsed": 9,
+      "retained": 9,
+      "first_200_chars": "標題,連結,日期 \"大華銀投信募集發行之大華銀韓國 KOSPI 50 ETF，自115年8月21日起掛牌上市，並得辦理融資融券\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da001a0193351860166\",\"1150819\" \"本國上市公司(不含金融保險業)115年上半年度營收成長32.8"
     }
   },
   "summary": {
