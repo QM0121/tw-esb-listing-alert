@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-08-25T15:30:26+08:00",
+  "last_checked_at": "2026-08-25T16:06:25+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1088 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"證交所攜手富邦證券於9月3日「SEMICON Taiwan」辦理主題式業績發表會及產業講座，7家上市公司與產業專家接力開講!\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a023cc7101a03788dd0e0018\",\"1150825\" \"怡華實業股份有限公司等17家公司預計於115"
+      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所攜手四家半導體創新企業參展「SEMICON Taiwan 2026」\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a023cc7101a037ea14480020\",\"1150825\" \"臺灣證券交易所針對光麗生技控股股份有限公司（光麗-KY，證券代號 6431）違反重大訊"
     }
   },
   "summary": {
