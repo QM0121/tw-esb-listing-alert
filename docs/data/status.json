@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-08-26T17:30:27+08:00",
+  "last_checked_at": "2026-08-26T18:04:48+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1095 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1096 筆事件，本輪新增事件 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -24,13 +24,13 @@
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
-      "fetched": 9,
+      "fetched": 10,
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1095,
+  "new_event_count": 1,
+  "email_recipient_count": 6,
+  "total_event_count": 1096,
   "data_retention_years": 3,
   "data_window_start": "2023-08-26",
   "data_window_end": "2026-08-26",
@@ -60,29 +60,29 @@
       }
     },
     "tib_news_csv": {
-      "parsed": 9,
-      "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"全體證券商115年7月稅後淨利109.61億元，累計稅後淨利1,550.51億元\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a023cc7101a03d24da730058\",\"1150826\" \"臺灣證券交易所訂於8月28日召開有價證券上市審議委員會第892次會議，將審議耐特科技材料"
+      "parsed": 10,
+      "retained": 10,
+      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所有價證券上市審議委員會審議通過兆捷科技國際股份有限公司初次申請股票創新板上市案\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a023cc7101a03d7f162f005c\",\"1150826\" \"全體證券商115年7月稅後淨利109.61億元，累計稅後淨利1,550.51"
     }
   },
   "summary": {
     "stage_counts": {
       "轉板進度重大更新": 527,
+      "審議通過": 176,
       "送件": 195,
       "受理": 193,
-      "審議通過": 175,
       "撤回申請": 5
     },
     "type_counts": {
       "轉板進度重大更新": 696,
+      "申請創新板上市": 16,
       "申請上櫃": 241,
-      "申請上市": 143,
-      "申請創新板上市": 15
+      "申請上市": 143
     },
     "source_counts": {
       "TPEx 申請上櫃公司": 668,
-      "TWSE 申請上市公司": 418,
-      "TWSE 臺灣創新板新聞稿": 9
+      "TWSE 臺灣創新板新聞稿": 10,
+      "TWSE 申請上市公司": 418
     }
   }
 }
