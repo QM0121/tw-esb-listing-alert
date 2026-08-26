@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-08-26T08:30:27+08:00",
+  "last_checked_at": "2026-08-26T09:30:27+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1089 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 9,
       "retained": 9,
-      "first_200_chars": "標題,連結,日期 \"凌巨科技股份有限公司上市有價證券自115年8月27日起恢復買賣\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a023cc7101a03877623c004b\",\"1150825\" \"臺灣證券交易所攜手四家半導體創新企業參展「SEMICON Taiwan 2026」\",\"https://w"
+      "first_200_chars": "標題,連結,日期 \"證交所創新板 X 文總《創新辦桌》EP3勸世三姊妹 挺在地文化創新IP，將在地文化唱進紐約外百老匯\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a023cc7101a0326bd62c0009\",\"1150826\" \"凌巨科技股份有限公司上市有價證券自115年8月27日起恢復買賣\",\"h"
     }
   },
   "summary": {
