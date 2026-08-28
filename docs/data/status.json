@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-08-28T15:30:29+08:00",
+  "last_checked_at": "2026-08-28T16:30:28+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1099 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 10,
       "retained": 10,
-      "first_200_chars": "標題,連結,日期 \"大大寬頻(股)公司於115年8月27日送件申請股票上市\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a023cc7101a0428e57e9006a\",\"1150827\" \"現在開始學習正好！證交所啟動「證好學 TWSE Academy」投資人教育平台\",\"https://www.tws"
+      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所有價證券上市審議委員會審議通過耐特科技材料股份有限公司初次申請股票上市案\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a023cc7101a0477bd59d0071\",\"1150828\" \"大大寬頻(股)公司於115年8月27日送件申請股票上市\",\"https://www"
     }
   },
   "summary": {
