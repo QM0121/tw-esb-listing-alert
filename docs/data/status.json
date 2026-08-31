@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-08-31T18:30:28+08:00",
+  "last_checked_at": "2026-08-31T19:30:29+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1096 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 10,
       "retained": 10,
-      "first_200_chars": "標題,連結,日期 \"復華投信募集發行之「復華全球未來50主動式ETF」、玉山投信募集發行之「玉山未來全球算力ETF」及中國信託投信募集發行之「中國信託台日韓PCB ETF」，自115年9月2日起掛牌上市，並得辦理融資融券\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a023cc7101a0574c928600"
+      "first_200_chars": "標題,連結,日期 \"證交所攜手台經院與資策會推出臺灣創新板(tib-創)半導體、汽車工業、通信網路及其他電子產業之洞察報告\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a023cc7101a05763b31000ae\",\"1150831\" \"第一上市公司除永冠-KY外，均已申報115年第2季財務報告\",\"h"
     }
   },
   "summary": {
