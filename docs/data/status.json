@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-09-03T17:30:30+08:00",
+  "last_checked_at": "2026-09-03T17:59:47+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1100 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 10,
       "retained": 10,
-      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所有價證券上市審議委員會審議通過英柏得科技股份有限公司初次申請股票上市案\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a05b1e6901a061c7a761002e\",\"1150902\" \"超秦企業(股)公司及仲恩生醫科技(股)公司於115年9月2日送件申請股票上市\",\"h"
+      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所攜手半導體四新銳 進駐SEMICON Taiwan 2026 臺灣創新板（tib-創）以「市值核心」制度接軌半導體生態系整合浪潮\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a066696301a066a31aaa0006\",\"1150903\" \"臺灣證券交易所有價證券上市"
     }
   },
   "summary": {
