@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-09-04T16:30:25+08:00",
+  "last_checked_at": "2026-09-04T17:30:25+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1101 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 10,
       "retained": 10,
-      "first_200_chars": "標題,連結,日期 \"證交所前進倫敦推廣亞資中心 深化全球資金鏈結\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a066696301a06b375fd9000e\",\"1150904\" \"臺灣證券交易所攜手半導體四新銳 進駐SEMICON Taiwan 2026 臺灣創新板（tib-創）以「市值核心」制度接軌半"
+      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所有價證券上市審議委員會審議通過饗賓餐旅事業股份有限公司初次申請股票上市案\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a066696301a06bbcf4170019\",\"1150904\" \"本週發行量加權股價指數漲幅約為0.47%，上市股票總市值達152.20兆元\",\"h"
     }
   },
   "summary": {
