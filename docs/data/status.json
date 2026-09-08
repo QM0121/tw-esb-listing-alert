@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-09-08T13:30:29+08:00",
+  "last_checked_at": "2026-09-08T14:30:26+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成但有部分來源暫時抓取失敗：twse_apply, tib_news。網站資料共 1099 筆事件，本輪新增 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成但有部分來源暫時抓取失敗：twse_apply。網站資料共 1099 筆事件，本輪新增 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -25,9 +25,8 @@
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
-      "fetched": 0,
-      "ok": false,
-      "error": "抓取來源失敗：https://www.twse.com.tw/news/newsList?response=open_data；HTTPSConnectionPool(host='www.twse.com.tw', port=443): Read timed out. (read timeout=40)"
+      "fetched": 10,
+      "ok": true
     }
   },
   "new_event_count": 0,
@@ -60,6 +59,11 @@
         "parsed": 146,
         "retained": 91
       }
+    },
+    "tib_news_csv": {
+      "parsed": 10,
+      "retained": 10,
+      "first_200_chars": "標題,連結,日期 \"2026年8月集中市場相關數據\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a066696301a07b4ef65c0064\",\"1150907\" \"證交所強化ETF折溢價資訊揭露，呼籲投資人建立正確投資觀念\",\"https://www.twse.com.tw/zh/about/news"
     }
   },
   "summary": {
