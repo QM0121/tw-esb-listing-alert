@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-09-08T16:30:24+08:00",
+  "last_checked_at": "2026-09-08T17:30:29+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1100 筆事件，本輪新增事件 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1100 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -28,8 +28,8 @@
       "ok": true
     }
   },
-  "new_event_count": 1,
-  "email_recipient_count": 6,
+  "new_event_count": 0,
+  "email_recipient_count": 0,
   "total_event_count": 1100,
   "data_retention_years": 3,
   "data_window_start": "2023-09-08",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 11,
       "retained": 11,
-      "first_200_chars": "標題,連結,日期 \"瑞宇國際(股)公司於115年9月8日送件申請股票創新板上市\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a066696301a0800d1db9006d\",\"1150908\" \"2026年8月集中市場相關數據\",\"https://www.twse.com.tw/zh/about/news"
+      "first_200_chars": "標題,連結,日期 \"SEMICON Taiwan聚焦半導體供應鏈新動能 7家關鍵供應鏈及創新板企業展現產業多元實力\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a066696301a0802b90c60071\",\"1150908\" \"瑞宇國際(股)公司於115年9月8日送件申請股票創新板上市\",\"https"
     }
   },
   "summary": {
