@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-09-09T08:30:26+08:00",
+  "last_checked_at": "2026-09-09T09:30:25+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1100 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1101 筆事件，本輪新增事件 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -14,7 +14,7 @@
     },
     "twse_apply": {
       "label": "TWSE 申請上市公司",
-      "fetched": 422,
+      "fetched": 423,
       "ok": true
     },
     "tpex_apply": {
@@ -28,17 +28,17 @@
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1100,
+  "new_event_count": 1,
+  "email_recipient_count": 6,
+  "total_event_count": 1101,
   "data_retention_years": 3,
   "data_window_start": "2023-09-09",
   "data_window_end": "2026-09-09",
   "data_window_label": "近 3 年資料",
   "debug": {
     "twse_apply_csv": {
-      "parsed": 3764,
-      "retained": 422,
+      "parsed": 3765,
+      "retained": 423,
       "first_200_chars": "索引,公司代號,公司簡稱,申請日期,董事長,申請時股本(仟元),上市審議委員會審議日期,交易所董事會通過上市日期,上市契約報請主管機關備查(主管機關核准)日期,股票上市買賣日期,承銷商,承銷價,備註 \"1\",\"8345\",\"超秦\",\"1150902\",\"卓靖倫\",\"600080\",\"\",\"\",\"\",\"\",\"國泰\",\"\",\"\" \"2\",\"7729\",\"仲恩生醫\",\"1150902\",\"王玲美\",\"8"
     },
     "tpex_apply_by_year": {
@@ -70,19 +70,19 @@
       "送件": 200,
       "審議通過": 177,
       "受理": 197,
-      "轉板進度重大更新": 521,
+      "轉板進度重大更新": 522,
       "撤回申請": 5
     },
     "type_counts": {
       "申請創新板上市": 17,
-      "轉板進度重大更新": 691,
+      "轉板進度重大更新": 692,
       "申請上市": 149,
       "申請上櫃": 243
     },
     "source_counts": {
       "TWSE 臺灣創新板新聞稿": 11,
       "TPEx 申請上櫃公司": 667,
-      "TWSE 申請上市公司": 422
+      "TWSE 申請上市公司": 423
     }
   }
 }
