@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-09-11T16:30:24+08:00",
+  "last_checked_at": "2026-09-11T17:30:26+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1107 筆事件，本輪新增事件 1 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1107 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -28,8 +28,8 @@
       "ok": true
     }
   },
-  "new_event_count": 1,
-  "email_recipient_count": 6,
+  "new_event_count": 0,
+  "email_recipient_count": 0,
   "total_event_count": 1107,
   "data_retention_years": 3,
   "data_window_start": "2023-09-11",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 12,
       "retained": 12,
-      "first_200_chars": "標題,連結,日期 \"國際投資人高度關注臺灣 證交所倫敦行深化引資與亞資合作\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a066696301a08a4235bb0087\",\"1150911\" \"臺灣證券交易所對南寶樹脂化學工廠股份有限公司違反重大訊息規定，處以新臺幣3萬元違約金\",\"https://www."
+      "first_200_chars": "標題,連結,日期 \"漢測(證券代號：7856)採競價拍賣方式辦理承銷，於9月11日順利完成\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a066696301a08fcdf1d80099\",\"1150911\" \"臺灣證券交易所有價證券上市審議委員會審議通過貝爾威勒電子股份有限公司初次申請股票上市案\",\"htt"
     }
   },
   "summary": {
