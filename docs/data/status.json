@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-09-11T13:30:24+08:00",
+  "last_checked_at": "2026-09-11T14:30:35+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1106 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 12,
       "retained": 12,
-      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所對南寶樹脂化學工廠股份有限公司違反重大訊息規定，處以新臺幣3萬元違約金\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a066696301a0859f757a0083\",\"1150909\" \"Modernity Financial Holdings, Ltd. (英屬開曼群島"
+      "first_200_chars": "標題,連結,日期 \"國際投資人高度關注臺灣 證交所倫敦行深化引資與亞資合作\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a066696301a08a4235bb0087\",\"1150911\" \"臺灣證券交易所對南寶樹脂化學工廠股份有限公司違反重大訊息規定，處以新臺幣3萬元違約金\",\"https://www."
     }
   },
   "summary": {
