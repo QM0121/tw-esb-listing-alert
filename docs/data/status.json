@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-09-14T18:30:30+08:00",
+  "last_checked_at": "2026-09-14T19:30:29+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成但有部分來源暫時抓取失敗：tpex_apply。網站資料共 1103 筆事件，本輪新增 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -45,7 +45,7 @@
     "tib_news_csv": {
       "parsed": 12,
       "retained": 12,
-      "first_200_chars": "標題,連結,日期 \"上週外資在集中市場賣超51.04億元，賣超仁寶9.82萬張最多，另買超友達22.36萬張最多\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a066696301a09e8b9eb000a8\",\"1150914\" \"本週發行量加權股價指數跌幅約為0.79%，上市股票總市值達151.02兆元\""
+      "first_200_chars": "標題,連結,日期 \"證交所規劃「臺股儀表板」 強化風險教育協助投資人穩健理財\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a066696301a09f897cc100d5\",\"1150914\" \"上週外資在集中市場賣超51.04億元，賣超仁寶9.82萬張最多，另買超友達22.36萬張最多\",\"https:/"
     }
   },
   "summary": {
