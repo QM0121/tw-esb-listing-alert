@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-09-15T16:30:26+08:00",
+  "last_checked_at": "2026-09-15T17:30:29+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1110 筆事件，本輪新增事件 4 筆，Email 通知收件人數 6 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1110 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -28,8 +28,8 @@
       "ok": true
     }
   },
-  "new_event_count": 4,
-  "email_recipient_count": 6,
+  "new_event_count": 0,
+  "email_recipient_count": 0,
   "total_event_count": 1110,
   "data_retention_years": 3,
   "data_window_start": "2023-09-15",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 12,
       "retained": 12,
-      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所推出「tibit全能應援貼圖」限時登場 以賽場拚搏呼應創新精神 讓「tib-創」走進大眾日常\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a066696301a0a2f1cb5700db\",\"1150915\" \"證交所規劃「臺股儀表板」 強化風險教育協助投資人穩健理財\",\""
+      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所對揚智科技股份有限公司（代號3041）違反重大訊息規定，處以新台幣5萬元違約金\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a066696301a0a44fc80200ea\",\"1150915\" \"115年9月16日除息影響加權股價指數\",\"https://www.twse"
     }
   },
   "summary": {
