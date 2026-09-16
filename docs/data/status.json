@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-09-16T16:30:25+08:00",
+  "last_checked_at": "2026-09-16T17:30:25+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1110 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 12,
       "retained": 12,
-      "first_200_chars": "標題,連結,日期 \"臺灣全球金融中心排名兩年躍升31名 亞資政策國際能見度大幅提升\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a066696301a0a8e012790103\",\"1150916\" \"臺巴資本市場交流再深化：臺灣證券交易所與巴拉圭亞松森證券交易所簽署合作備忘錄\",\"https://www."
+      "first_200_chars": "標題,連結,日期 \"富邦NASDAQ ETF(00662)將進行分割作業，115年11月17日為新受益憑證上市買賣日\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a066696301a0a97449a70107\",\"1150916\" \"臺灣全球金融中心排名兩年躍升31名 亞資政策國際能見度大幅提升\",\"ht"
     }
   },
   "summary": {
