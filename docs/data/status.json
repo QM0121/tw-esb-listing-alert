@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-09-22T17:30:27+08:00",
+  "last_checked_at": "2026-09-22T18:30:28+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1111 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1112 筆事件，本輪新增事件 1 筆，Email 通知收件人數 7 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -24,13 +24,13 @@
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
-      "fetched": 12,
+      "fetched": 13,
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1111,
+  "new_event_count": 1,
+  "email_recipient_count": 7,
+  "total_event_count": 1112,
   "data_retention_years": 3,
   "data_window_start": "2023-09-22",
   "data_window_end": "2026-09-22",
@@ -60,14 +60,14 @@
       }
     },
     "tib_news_csv": {
-      "parsed": 12,
-      "retained": 12,
-      "first_200_chars": "標題,連結,日期 \"讓數據說話！證交所「臺股儀表板」9月23日正式上線\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0bdcc0001a0c84d814a0020\",\"1150922\" \"全體證券商115年8月稅後淨利274.22億元，累計稅後淨利1,824.73億元\",\"https://www.twse"
+      "parsed": 13,
+      "retained": 13,
+      "first_200_chars": "標題,連結,日期 \"Elixiron Immunotherapeutics (Cayman) Limited（安立璽榮醫藥(股)公司）於115年9月22日送件申請股票於臺灣創新板(tib-創)第一上市\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0bdcc0001a0c882a3240048\",\"11509"
     }
   },
   "summary": {
     "stage_counts": {
-      "送件": 201,
+      "送件": 202,
       "受理": 197,
       "轉板進度重大更新": 527,
       "審議通過": 181,
@@ -76,13 +76,13 @@
     "type_counts": {
       "申請上櫃": 245,
       "轉板進度重大更新": 701,
-      "申請創新板上市": 18,
+      "申請創新板上市": 19,
       "申請上市": 147
     },
     "source_counts": {
       "TPEx 申請上櫃公司": 674,
-      "TWSE 申請上市公司": 425,
-      "TWSE 臺灣創新板新聞稿": 12
+      "TWSE 臺灣創新板新聞稿": 13,
+      "TWSE 申請上市公司": 425
     }
   }
 }
