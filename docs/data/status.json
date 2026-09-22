@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-09-22T16:30:27+08:00",
+  "last_checked_at": "2026-09-22T17:30:27+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1111 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 12,
       "retained": 12,
-      "first_200_chars": "標題,連結,日期 \"全體證券商115年8月稅後淨利274.22億元，累計稅後淨利1,824.73億元\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0bdcc0001a0c8131eaa0018\",\"1150922\" \"證交所攜手富邦證券 共同舉辦推動優質企業啓航資本市場交流會\",\"https://www."
+      "first_200_chars": "標題,連結,日期 \"讓數據說話！證交所「臺股儀表板」9月23日正式上線\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0bdcc0001a0c84d814a0020\",\"1150922\" \"全體證券商115年8月稅後淨利274.22億元，累計稅後淨利1,824.73億元\",\"https://www.twse"
     }
   },
   "summary": {
