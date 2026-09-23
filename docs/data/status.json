@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-09-23T08:48:59+08:00",
+  "last_checked_at": "2026-09-23T09:30:33+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1112 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 13,
       "retained": 13,
-      "first_200_chars": "標題,連結,日期 \"Elixiron Immunotherapeutics (Cayman) Limited（安立璽榮醫藥(股)公司）於115年9月22日送件申請股票於臺灣創新板(tib-創)第一上市\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0bdcc0001a0c882a3240048\",\"11509"
+      "first_200_chars": "標題,連結,日期 \"證交所「創新板」與文總攜手推出《創新辦桌》第四集 光影交織掌中乾坤 「新勝景掌中劇團」跨界硬實力 讓臺灣傳統技藝驚豔國際\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0bdcc0001a0c853cac60034\",\"1150923\" \"Elixiron Immunotherapeut"
     }
   },
   "summary": {
