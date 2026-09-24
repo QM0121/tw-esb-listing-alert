@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-09-24T13:30:25+08:00",
+  "last_checked_at": "2026-09-24T14:30:28+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1117 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 13,
       "retained": 13,
-      "first_200_chars": "標題,連結,日期 \"儒億(證券代號：6604)採競價拍賣方式辦理承銷，於9月23日順利完成\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0bdcc0001a0cd9d28730059\",\"1150923\" \"大台北區瓦斯股份有限公司等8家公司預計於115年10月份假證交所場地自行舉辦法人說明會\",\"htt"
+      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所訂於9月30日召開有價證券上市審議委員會第896次會議，將審議英屬開曼群島商科絡達股份有限公司之申請股票創新板上市案\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0bdcc0001a0d20f2289005d\",\"1150924\" \"儒億(證券代號：6604)採競價拍賣方"
     }
   },
   "summary": {
