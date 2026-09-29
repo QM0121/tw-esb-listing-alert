@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-09-29T13:30:25+08:00",
+  "last_checked_at": "2026-09-29T14:30:25+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1116 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 13,
       "retained": 13,
-      "first_200_chars": "標題,連結,日期 \"本週發行量加權股價指數漲幅約為1.79%，上市股票總市值達157.08兆元\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0bdcc0001a0d2b9f344006b\",\"1150924\" \"臺灣證券交易所針對正瀚生技股份有限公司違反重大訊息規定，處以新臺幣三萬元之違約金\",\"http"
+      "first_200_chars": "標題,連結,日期 \"證交所攜手台經院與資策會推出臺灣創新板(tib-創)半導體及數位雲端產業之洞察報告\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0bdcc0001a0ebd1549a0090\",\"1150929\" \"上週外資在集中市場買超701.49億元，買超友達24.73萬張最多，另賣超仁寶4.54"
     }
   },
   "summary": {
