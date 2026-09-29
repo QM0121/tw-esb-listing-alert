@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-09-29T17:31:01+08:00",
+  "last_checked_at": "2026-09-29T18:30:25+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1117 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 14,
       "retained": 14,
-      "first_200_chars": "標題,連結,日期 \"訊聯細胞智藥(股)公司於115年9月29日送件申請股票於臺灣創新板(tib-創)上市\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0bdcc0001a0ec5a996c0098\",\"1150929\" \"證交所攜手台經院與資策會推出臺灣創新板(tib-創)半導體及數位雲端產業之洞察報告\""
+      "first_200_chars": "標題,連結,日期 \"TiBOOST創新大步計畫徵件延長至10月5日 重量級產業與創投評審陣容同步揭曉\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0bdcc0001a0ec877a6b009f\",\"1150929\" \"訊聯細胞智藥(股)公司於115年9月29日送件申請股票於臺灣創新板(tib-創)上市\""
     }
   },
   "summary": {
