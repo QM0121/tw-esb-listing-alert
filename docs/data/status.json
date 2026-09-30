@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-09-30T18:30:29+08:00",
+  "last_checked_at": "2026-09-30T19:30:26+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1118 筆事件，本輪新增事件 1 筆，Email 通知收件人數 7 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1118 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -28,8 +28,8 @@
       "ok": true
     }
   },
-  "new_event_count": 1,
-  "email_recipient_count": 7,
+  "new_event_count": 0,
+  "email_recipient_count": 0,
   "total_event_count": 1118,
   "data_retention_years": 3,
   "data_window_start": "2023-09-30",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 15,
       "retained": 15,
-      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所有價證券上市審議委員會審議通過英屬開曼群島商科絡達股份有限公司初次申請股票於臺灣創新板(tib-創)第一上市案\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0bdcc0001a0f1d94c2500a7\",\"1150930\" \"跳脫配息數字迷思：看懂「收益平準金」，回歸E"
+      "first_200_chars": "標題,連結,日期 \"115年第4季得為上市認購（售）權證（含牛熊證）之標的證券\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0bdcc0001a0f210070f00af\",\"1150930\" \"證交所建置上市公司財務報告或年度自結財務資訊之董事會預計召開日期專區，以便利投資人查詢\",\"https://w"
     }
   },
   "summary": {
