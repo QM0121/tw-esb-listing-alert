@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-09-30T17:30:32+08:00",
+  "last_checked_at": "2026-09-30T18:30:29+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1117 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1118 筆事件，本輪新增事件 1 筆，Email 通知收件人數 7 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -24,13 +24,13 @@
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
-      "fetched": 14,
+      "fetched": 15,
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1117,
+  "new_event_count": 1,
+  "email_recipient_count": 7,
+  "total_event_count": 1118,
   "data_retention_years": 3,
   "data_window_start": "2023-09-30",
   "data_window_end": "2026-09-30",
@@ -60,28 +60,28 @@
       }
     },
     "tib_news_csv": {
-      "parsed": 14,
-      "retained": 14,
-      "first_200_chars": "標題,連結,日期 \"TiBOOST創新大步計畫徵件延長至10月5日 重量級產業與創投評審陣容同步揭曉\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0bdcc0001a0ec877a6b009f\",\"1150929\" \"訊聯細胞智藥(股)公司於115年9月29日送件申請股票於臺灣創新板(tib-創)上市\""
+      "parsed": 15,
+      "retained": 15,
+      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所有價證券上市審議委員會審議通過英屬開曼群島商科絡達股份有限公司初次申請股票於臺灣創新板(tib-創)第一上市案\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0bdcc0001a0f1d94c2500a7\",\"1150930\" \"跳脫配息數字迷思：看懂「收益平準金」，回歸E"
     }
   },
   "summary": {
     "stage_counts": {
+      "審議通過": 182,
       "送件": 203,
       "受理": 197,
       "轉板進度重大更新": 531,
-      "審議通過": 181,
       "撤回申請": 5
     },
     "type_counts": {
+      "申請創新板上市": 21,
       "申請上櫃": 247,
-      "申請創新板上市": 20,
       "轉板進度重大更新": 705,
       "申請上市": 145
     },
     "source_counts": {
+      "TWSE 臺灣創新板新聞稿": 15,
       "TPEx 申請上櫃公司": 681,
-      "TWSE 臺灣創新板新聞稿": 14,
       "TWSE 申請上市公司": 422
     }
   }
