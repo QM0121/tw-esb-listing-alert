@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-10-03T09:30:26+08:00",
+  "last_checked_at": "2026-10-03T10:12:16+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成但有部分來源暫時抓取失敗：tpex_apply。網站資料共 1123 筆事件，本輪新增 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成但有部分來源暫時抓取失敗：twse_apply, tpex_apply。網站資料共 1117 筆事件，本輪新增 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -14,8 +14,9 @@
     },
     "twse_apply": {
       "label": "TWSE 申請上市公司",
-      "fetched": 420,
-      "ok": true
+      "fetched": 0,
+      "ok": false,
+      "error": "TWSE 申請上市公司開放資料 CSV 解析為 0 筆；已寫入 status.debug.twse_apply_csv，暫不覆寫既有資料。"
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
@@ -25,47 +26,47 @@
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
-      "fetched": 15,
+      "fetched": 9,
       "ok": true
     }
   },
   "new_event_count": 0,
   "email_recipient_count": 0,
-  "total_event_count": 1123,
+  "total_event_count": 1117,
   "data_retention_years": 3,
   "data_window_start": "2023-10-03",
   "data_window_end": "2026-10-03",
   "data_window_label": "近 3 年資料",
   "debug": {
     "twse_apply_csv": {
-      "parsed": 3774,
-      "retained": 420,
-      "first_200_chars": "索引,公司代號,公司簡稱,申請日期,董事長,申請時股本(仟元),上市審議委員會審議日期,交易所董事會通過上市日期,上市契約報請主管機關備查(主管機關核准)日期,股票上市買賣日期,承銷商,承銷價,備註 \"1\",\"8345\",\"超秦\",\"1150902\",\"卓靖倫\",\"600080\",\"\",\"\",\"\",\"\",\"國泰\",\"\",\"\" \"2\",\"7729\",\"仲恩生醫\",\"1150902\",\"王玲美\",\"8"
+      "parsed": 0,
+      "retained": 0,
+      "first_200_chars": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html lang=\"zh-Hant-tw\"> <head> <meta charset=\"utf-8\"> <meta name"
     },
     "tib_news_csv": {
-      "parsed": 15,
-      "retained": 15,
-      "first_200_chars": "標題,連結,日期 \"本週發行量加權股價指數漲幅約為0.94%，上市股票總市值達158.56兆元\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a0fc0564af003b\",\"1151002\" \"臺灣證券交易所訂於10月6日召開有價證券上市審議委員會第897次會議，將審議大大寬頻(股)公司"
+      "parsed": 9,
+      "retained": 9,
+      "first_200_chars": "標題,連結,日期 \"大華銀投信募集發行之大華銀韓國 KOSPI 50 ETF，自115年8月21日起掛牌上市，並得辦理融資融券\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d69fc76da001a0193351860166\",\"1150819\" \"本國上市公司(不含金融保險業)115年上半年度營收成長32.8"
     }
   },
   "summary": {
     "stage_counts": {
       "轉板進度重大更新": 534,
-      "送件": 204,
+      "送件": 200,
       "受理": 198,
-      "審議通過": 182,
+      "審議通過": 180,
       "撤回申請": 5
     },
     "type_counts": {
       "轉板進度重大更新": 708,
       "申請上櫃": 249,
-      "申請創新板上市": 21,
-      "申請上市": 145
+      "申請上市": 145,
+      "申請創新板上市": 15
     },
     "source_counts": {
       "TPEx 申請上櫃公司": 688,
-      "TWSE 臺灣創新板新聞稿": 15,
-      "TWSE 申請上市公司": 420
+      "TWSE 申請上市公司": 420,
+      "TWSE 臺灣創新板新聞稿": 9
     }
   }
 }
