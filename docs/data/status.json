@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-10-03T10:12:16+08:00",
+  "last_checked_at": "2026-10-03T10:30:26+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成但有部分來源暫時抓取失敗：twse_apply, tpex_apply。網站資料共 1117 筆事件，本輪新增 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -22,7 +22,7 @@
       "label": "TPEx 申請上櫃公司",
       "fetched": 0,
       "ok": false,
-      "error": "抓取來源失敗：https://www.tpex.org.tw/web/regular_emerging/apply_schedule/applicant/applicant_companies_download_UTF-8.php?l=zh-tw&y=115；HTTPSConnectionPool(host='www.tpex.org.tw', port=443): Max retries exceeded with url: /web/regular_emerging/apply_schedule/applicant/applicant_companies_download_UTF-8.php?l=zh-tw&y=115 (Caused by NameResolutionError(\"HTTPSConnection(host='www.tpex.org.tw', port=443): Failed to resolve 'www.tpex.org.tw' ([Errno -2] Name or service not known)\"))"
+      "error": "抓取來源失敗：https://www.tpex.org.tw/web/regular_emerging/apply_schedule/applicant/applicant_companies_download_UTF-8.php?l=zh-tw&y=115；('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
