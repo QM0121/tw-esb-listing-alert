@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-10-06T14:30:29+08:00",
+  "last_checked_at": "2026-10-06T15:30:26+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1125 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 15,
       "retained": 15,
-      "first_200_chars": "標題,連結,日期 \"證交所徵才「職得你來」 攜手定義市場新未來\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a10fe364b50056\",\"1151006\" \"精華生醫 (證券代號：7806)採競價拍賣方式辦理承銷，於10月5日順利完成\",\"https://www.twse.com.t"
+      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所「投資資訊中心(Investment InfoHub)」升級，新增「璞玉」專區\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a11012ba550062\",\"1151006\" \"證交所徵才「職得你來」 攜手定義市場新未來\",\"https://www.tw"
     }
   },
   "summary": {
