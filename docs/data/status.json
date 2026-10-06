@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-10-06T17:30:26+08:00",
+  "last_checked_at": "2026-10-06T18:30:27+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1127 筆事件，本輪新增事件 2 筆，Email 通知收件人數 7 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1127 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -28,8 +28,8 @@
       "ok": true
     }
   },
-  "new_event_count": 2,
-  "email_recipient_count": 7,
+  "new_event_count": 0,
+  "email_recipient_count": 0,
   "total_event_count": 1127,
   "data_retention_years": 3,
   "data_window_start": "2023-10-06",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 16,
       "retained": 16,
-      "first_200_chars": "標題,連結,日期 \"展逸國際企業(股)公司於115年10月6日送件申請股票於臺灣創新板 (tib-創)上市\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a11078a03f0071\",\"1151006\" \"未來就在下一站！臺灣創新板「創未來列車」駛進北捷板南線 證交所攜創新企業走入通勤日"
+      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所有價證券上市審議委員會審議通過大大寬頻股份有限公司初次申請股票上市案\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a110bed5240081\",\"1151006\" \"鈺祥企業(股)公司於115年10月6日送件申請股票上市\",\"https://www.t"
     }
   },
   "summary": {
