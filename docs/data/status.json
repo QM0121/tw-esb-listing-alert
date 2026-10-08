@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-10-08T17:18:05+08:00",
+  "last_checked_at": "2026-10-08T17:30:26+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1128 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 16,
       "retained": 16,
-      "first_200_chars": "標題,連結,日期 \"本週發行量加權股價指數漲幅約為1.73%，上市股票總市值達161.36兆元\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a11ac9ea8d00db\",\"1151008\" \"泰合 (證券代號：6467)採競價拍賣方式辦理承銷，於今10月8日順利完成\",\"https:/"
+      "first_200_chars": "標題,連結,日期 \"IFRS永續揭露準則第三階段接軌啟動 導入計畫宣導會自10月21日登場\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a11ad6d94e00e4\",\"1151008\" \"永冠能源科技集團有限公司（永冠-KY，公司代號：1589）有價證券將於115年11月18日終止上市"
     }
   },
   "summary": {
