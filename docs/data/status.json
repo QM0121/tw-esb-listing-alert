@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-10-08T14:30:25+08:00",
+  "last_checked_at": "2026-10-08T15:30:25+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1128 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 16,
       "retained": 16,
-      "first_200_chars": "標題,連結,日期 \"證交所溫室氣體盤查實作工作坊圓滿落幕 持續深化企業碳管理實務能力\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a11a293fb200ce\",\"1151008\" \"臺灣證券交易所對誠研科技股份有限公司（代號：3494）違反重大訊息規定，處以新台幣5萬元違約金\",\"ht"
+      "first_200_chars": "標題,連結,日期 \"泰合 (證券代號：6467)採競價拍賣方式辦理承銷，於今10月8日順利完成\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a11a5f607c00d3\",\"1151008\" \"證交所溫室氣體盤查實作工作坊圓滿落幕 持續深化企業碳管理實務能力\",\"https://www."
     }
   },
   "summary": {
