@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-10-12T17:30:30+08:00",
+  "last_checked_at": "2026-10-12T18:30:28+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1125 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 16,
       "retained": 16,
-      "first_200_chars": "標題,連結,日期 \"證交所林修銘董事長接受《日經》專訪：深化臺日金融合作，發揮產業優勢連結全球資金，建構「世界科技島」\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a12f2224bb010c\",\"1151012\" \"上週外資在集中市場賣超236.57億元，賣超友達43.48萬張最多，另"
+      "first_200_chars": "標題,連結,日期 \"自115年10月14日起，永冠能源科技集團有限公司（永冠-KY，公司代號：1589）上市有價證券併案列為變更交易方法且停止買賣\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a12f97b69f0115\",\"1151012\" \"臺灣證券交易所有價證券上市審議委員會審議通"
     }
   },
   "summary": {
