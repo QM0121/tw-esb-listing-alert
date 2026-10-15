@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-10-15T16:30:32+08:00",
+  "last_checked_at": "2026-10-15T17:30:30+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1125 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 16,
       "retained": 16,
-      "first_200_chars": "標題,連結,日期 \"世紀能源設備股份有限公司上市股票自本（115）年10月16日起得為融資融券交易\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a13e4b84030159\",\"1151015\" \"證交所招募倒數計時！「職得你來」探索多元未來\",\"https://www.twse.com"
+      "first_200_chars": "標題,連結,日期 \"東擎科技 (證券代號：7710)採競價拍賣方式辦理承銷，於今10月15日順利完成\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a13edec7a80161\",\"1151015\" \"世紀能源設備股份有限公司上市股票自本（115）年10月16日起得為融資融券交易\",\"ht"
     }
   },
   "summary": {
