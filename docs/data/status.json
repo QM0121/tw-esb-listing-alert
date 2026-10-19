@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-10-19T11:30:27+08:00",
+  "last_checked_at": "2026-10-19T12:30:28+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1121 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 16,
       "retained": 16,
-      "first_200_chars": "標題,連結,日期 \"群益投信募集發行之主動群益核心50ETF，自115年10月20日起掛牌上市，並得辦理融資融券\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a1442e8b5d0199\",\"1151016\" \"泰宗生物科技股份有限公司上市股票自本(115)年10月19日起得為融資融券交"
+      "first_200_chars": "標題,連結,日期 \"國際雙認證！證交所奪 Euromoney 亞洲散戶參與創新獎、「證好學」登 WFE Focus頭版\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a15241784d01a0\",\"1151019\" \"群益投信募集發行之主動群益核心50ETF，自115年10月20日起掛牌"
     }
   },
   "summary": {
