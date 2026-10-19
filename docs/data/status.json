@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-10-19T16:30:26+08:00",
+  "last_checked_at": "2026-10-19T17:30:28+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1121 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 16,
       "retained": 16,
-      "first_200_chars": "標題,連結,日期 \"和暢科技(證券代號：6825)採競價拍賣方式辦理承銷，於10月19日順利完成\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a153152e5701ac\",\"1151019\" \"上週外資在集中市場賣超5,862.28億元，賣超力積電19.12萬張最多，另買超中鋼16.7"
+      "first_200_chars": "標題,連結,日期 \"泰合生技藥品股份有限公司股票自115年10月20日開始上市買賣\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a15371acef01b0\",\"1151019\" \"和暢科技(證券代號：6825)採競價拍賣方式辦理承銷，於10月19日順利完成\",\"https://www."
     }
   },
   "summary": {
