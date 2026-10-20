@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-10-20T17:30:29+08:00",
+  "last_checked_at": "2026-10-20T18:16:38+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1119 筆事件，本輪新增事件 1 筆，Email 通知收件人數 7 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1120 筆事件，本輪新增事件 1 筆，Email 通知收件人數 7 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -24,13 +24,13 @@
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
-      "fetched": 16,
+      "fetched": 17,
       "ok": true
     }
   },
   "new_event_count": 1,
   "email_recipient_count": 7,
-  "total_event_count": 1119,
+  "total_event_count": 1120,
   "data_retention_years": 3,
   "data_window_start": "2023-10-20",
   "data_window_end": "2026-10-20",
@@ -60,29 +60,29 @@
       }
     },
     "tib_news_csv": {
-      "parsed": 16,
-      "retained": 16,
-      "first_200_chars": "標題,連結,日期 \"Power Up Plan 2.0上路 讓企業價值被世界看見 助攻企業國際競爭力！\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a157d5ad7801d0\",\"1151020\" \"泰合生技藥品股份有限公司股票自115年10月20日開始上市買賣\",\"https://"
+      "parsed": 17,
+      "retained": 17,
+      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所訂於10月22日召開有價證券上市審議委員會第900次會議，將審議超秦企業(股)公司之申請股票上市案\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a158cb1aa401de\",\"1151020\" \"臺灣證券交易所有價證券上市審議委員會審議通過瑞宇國際股份"
     }
   },
   "summary": {
     "stage_counts": {
       "轉板進度重大更新": 534,
-      "審議通過": 185,
+      "審議通過": 186,
       "送件": 201,
       "受理": 194,
       "撤回申請": 5
     },
     "type_counts": {
       "轉板進度重大更新": 711,
+      "申請創新板上市": 23,
       "申請上市": 139,
-      "申請上櫃": 247,
-      "申請創新板上市": 22
+      "申請上櫃": 247
     },
     "source_counts": {
       "TWSE 申請上市公司": 416,
-      "TPEx 申請上櫃公司": 687,
-      "TWSE 臺灣創新板新聞稿": 16
+      "TWSE 臺灣創新板新聞稿": 17,
+      "TPEx 申請上櫃公司": 687
     }
   }
 }
