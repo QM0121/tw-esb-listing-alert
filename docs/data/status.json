@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-10-22T19:30:36+08:00",
+  "last_checked_at": "2026-10-22T20:30:31+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1131 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 17,
       "retained": 17,
-      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所有價證券上市審議委員會審議通過超秦企業股份有限公司初次申請股票上市案\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a1631face801fc\",\"1151022\" \"全體證券商115年9月稅後淨利187.81億元，累計稅後淨利2,012.54億元\",\""
+      "first_200_chars": "標題,連結,日期 \"東擎科技股份有限公司股票自115年10月27日開始上市買賣\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a16390e31d0207\",\"1151022\" \"臺灣證券交易所集中交易市場115年10月23日休市一天\",\"https://www.twse.com.tw/z"
     }
   },
   "summary": {
