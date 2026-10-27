@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-10-27T18:30:29+08:00",
+  "last_checked_at": "2026-10-27T18:46:12+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1129 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 17,
       "retained": 17,
-      "first_200_chars": "標題,連結,日期 \"「TiBOOST創新大步計畫」鏈結396家全球AI新創 12強出爐 助攻臺灣從科技島邁向資本島\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a17cd2bd9e022a\",\"1151027\" \"富蘭克林華美投信募集發行之「富蘭克林華美核心AI電力算力ETF」及兆豐國際"
+      "first_200_chars": "標題,連結,日期 \"深化臺美資本市場交流 北美華人會計師協會來訪證交所 攜手拓展企業來臺上市契機\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a17cee408a022e\",\"1151027\" \"「TiBOOST創新大步計畫」鏈結396家全球AI新創 12強出爐 助攻臺灣從科技島邁向資本"
     }
   },
   "summary": {
