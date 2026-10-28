@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-10-28T13:30:29+08:00",
+  "last_checked_at": "2026-10-28T14:30:31+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1131 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1127 筆事件，本輪新增事件 2 筆，Email 通知收件人數 7 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -19,7 +19,7 @@
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
-      "fetched": 695,
+      "fetched": 691,
       "ok": true
     },
     "tib_news": {
@@ -28,9 +28,9 @@
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1131,
+  "new_event_count": 2,
+  "email_recipient_count": 7,
+  "total_event_count": 1127,
   "data_retention_years": 3,
   "data_window_start": "2023-10-28",
   "data_window_end": "2026-10-28",
@@ -43,8 +43,8 @@
     },
     "tpex_apply_by_year": {
       "115": {
-        "parsed": 141,
-        "retained": 141
+        "parsed": 137,
+        "retained": 137
       },
       "114": {
         "parsed": 255,
@@ -62,25 +62,25 @@
     "tib_news_csv": {
       "parsed": 17,
       "retained": 17,
-      "first_200_chars": "標題,連結,日期 \"深化臺美資本市場交流 北美華人會計師協會來訪證交所 攜手拓展企業來臺上市契機\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a17cee408a022e\",\"1151027\" \"「TiBOOST創新大步計畫」鏈結396家全球AI新創 12強出爐 助攻臺灣從科技島邁向資本"
+      "first_200_chars": "標題,連結,日期 \"證交所參與彭博日本週論壇，分享ETF發展\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a18060525d0243\",\"1151028\" \"深化臺美資本市場交流 北美華人會計師協會來訪證交所 攜手拓展企業來臺上市契機\",\"https://www.twse.com.tw"
     }
   },
   "summary": {
     "stage_counts": {
-      "送件": 204,
-      "受理": 197,
+      "送件": 203,
+      "受理": 196,
       "轉板進度重大更新": 538,
-      "審議通過": 187,
+      "審議通過": 185,
       "撤回申請": 5
     },
     "type_counts": {
-      "申請上櫃": 255,
-      "轉板進度重大更新": 716,
+      "申請上櫃": 253,
+      "轉板進度重大更新": 714,
       "申請創新板上市": 23,
       "申請上市": 137
     },
     "source_counts": {
-      "TPEx 申請上櫃公司": 695,
+      "TPEx 申請上櫃公司": 691,
       "TWSE 申請上市公司": 419,
       "TWSE 臺灣創新板新聞稿": 17
     }
