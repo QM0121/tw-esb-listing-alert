@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-10-28T15:05:31+08:00",
+  "last_checked_at": "2026-10-28T15:30:29+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1127 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 17,
       "retained": 17,
-      "first_200_chars": "標題,連結,日期 \"證交所參與彭博日本週論壇，分享ETF發展\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a18060525d0243\",\"1151028\" \"深化臺美資本市場交流 北美華人會計師協會來訪證交所 攜手拓展企業來臺上市契機\",\"https://www.twse.com.tw"
+      "first_200_chars": "標題,連結,日期 \"「2026臺灣週：資安韌性與戰略」訂於11月4日舉行，聚焦金融資安韌性發展及新型態AI威脅\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a1815cf18a027d\",\"1151028\" \"證交所參與彭博日本週論壇，分享ETF發展\",\"https://www.twse"
     }
   },
   "summary": {
