@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-10-29T16:30:30+08:00",
+  "last_checked_at": "2026-10-29T17:30:30+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1139 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 17,
       "retained": 17,
-      "first_200_chars": "標題,連結,日期 \"證交所舉辦「證券商後量子密碼學(PQC)遷移作業研討會」\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a181e36011029d\",\"1151028\" \"臺灣證券交易所有價證券上市審議委員會審議通過仲恩生醫科技股份有限公司初次申請股票上市案\",\"https://ww"
+      "first_200_chars": "標題,連結,日期 \"偉全實業股份有限公司等22家公司預計於115年11月份假證交所場地自行舉辦法人說明會\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a186ee367e02a9\",\"1151029\" \"證交所舉辦「證券商後量子密碼學(PQC)遷移作業研討會」\",\"https://www"
     }
   },
   "summary": {
