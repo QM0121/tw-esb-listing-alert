@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-10-29T13:30:27+08:00",
+  "last_checked_at": "2026-10-29T14:11:11+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成但有部分來源暫時抓取失敗：tib_news。網站資料共 1138 筆事件，本輪新增 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1138 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -24,9 +24,8 @@
     },
     "tib_news": {
       "label": "TWSE 臺灣創新板新聞稿",
-      "fetched": 0,
-      "ok": false,
-      "error": "抓取來源失敗：https://www.twse.com.tw/news/newsList?response=open_data；HTTPSConnectionPool(host='www.twse.com.tw', port=443): Read timed out. (read timeout=40)"
+      "fetched": 17,
+      "ok": true
     }
   },
   "new_event_count": 0,
@@ -59,6 +58,11 @@
         "parsed": 146,
         "retained": 73
       }
+    },
+    "tib_news_csv": {
+      "parsed": 17,
+      "retained": 17,
+      "first_200_chars": "標題,連結,日期 \"證交所舉辦「證券商後量子密碼學(PQC)遷移作業研討會」\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a181e36011029d\",\"1151028\" \"臺灣證券交易所有價證券上市審議委員會審議通過仲恩生醫科技股份有限公司初次申請股票上市案\",\"https://ww"
     }
   },
   "summary": {
