@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-10-29T17:30:30+08:00",
+  "last_checked_at": "2026-10-29T18:30:31+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1139 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 17,
       "retained": 17,
-      "first_200_chars": "標題,連結,日期 \"偉全實業股份有限公司等22家公司預計於115年11月份假證交所場地自行舉辦法人說明會\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a186ee367e02a9\",\"1151029\" \"證交所舉辦「證券商後量子密碼學(PQC)遷移作業研討會」\",\"https://www"
+      "first_200_chars": "標題,連結,日期 \"特力屋股份有限公司股票自115年10月30日開始上市買賣\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a18728628802b5\",\"1151029\" \"證交所攜手台經院與資策會推出臺灣創新板(tib-創) 通信網路、其他電子、綠能環保及生技醫療產業之洞察報告\",\""
     }
   },
   "summary": {
