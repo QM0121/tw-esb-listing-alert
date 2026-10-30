@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-10-30T17:30:28+08:00",
+  "last_checked_at": "2026-10-30T18:19:44+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1142 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 17,
       "retained": 17,
-      "first_200_chars": "標題,連結,日期 \"十年成長逾25倍 AAM論壇聚焦臺灣ETF市場成長 證交所深化商品創新與國際合作\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a18c0b340602e0\",\"1151030\" \"證交所發布116年度（第二屆）ESG評鑑指標\",\"https://www.twse.co"
+      "first_200_chars": "標題,連結,日期 \"台新投信募集發行之主動台新臺灣中小ETF，自115年11月3日起掛牌上市，並得辦理融資融券\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a18c4176ee02e8\",\"1151030\" \"本週發行量加權股價指數跌幅約為1.80%，上市股票總市值達148.03兆元\","
     }
   },
   "summary": {
