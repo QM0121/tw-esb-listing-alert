@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-10-30T13:30:28+08:00",
+  "last_checked_at": "2026-10-30T14:30:29+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1140 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1142 筆事件，本輪新增事件 2 筆，Email 通知收件人數 7 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -19,7 +19,7 @@
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
-      "fetched": 702,
+      "fetched": 704,
       "ok": true
     },
     "tib_news": {
@@ -28,9 +28,9 @@
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1140,
+  "new_event_count": 2,
+  "email_recipient_count": 7,
+  "total_event_count": 1142,
   "data_retention_years": 3,
   "data_window_start": "2023-10-30",
   "data_window_end": "2026-10-30",
@@ -43,8 +43,8 @@
     },
     "tpex_apply_by_year": {
       "115": {
-        "parsed": 148,
-        "retained": 148
+        "parsed": 150,
+        "retained": 150
       },
       "114": {
         "parsed": 255,
@@ -62,26 +62,26 @@
     "tib_news_csv": {
       "parsed": 17,
       "retained": 17,
-      "first_200_chars": "標題,連結,日期 \"資本市場服務團攜手KPMG 推動優質企業邁向資本市場座談會圓滿落\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a1873f0d0502b9\",\"1151029\" \"特力屋股份有限公司股票自115年10月30日開始上市買賣\",\"https://www.twse.com."
+      "first_200_chars": "標題,連結,日期 \"證交所發布116年度（第二屆）ESG評鑑指標\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a0fa351b01a18b67ad4f02cd\",\"1151030\" \"資本市場服務團攜手KPMG 推動優質企業邁向資本市場座談會圓滿落\",\"https://www.twse.com.tw/zh/"
     }
   },
   "summary": {
     "stage_counts": {
-      "轉板進度重大更新": 542,
+      "轉板進度重大更新": 544,
       "送件": 206,
       "受理": 199,
       "審議通過": 188,
       "撤回申請": 5
     },
     "type_counts": {
-      "轉板進度重大更新": 721,
+      "轉板進度重大更新": 723,
       "申請上櫃": 259,
       "申請創新板上市": 23,
       "申請上市": 137
     },
     "source_counts": {
+      "TPEx 申請上櫃公司": 704,
       "TWSE 申請上市公司": 421,
-      "TPEx 申請上櫃公司": 702,
       "TWSE 臺灣創新板新聞稿": 17
     }
   }
