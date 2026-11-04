@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-11-04T15:30:29+08:00",
+  "last_checked_at": "2026-11-04T16:30:31+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1143 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 17,
       "retained": 17,
-      "first_200_chars": "標題,連結,日期 \"紐約證券交易所(NYSE)來訪證交所 深化臺美資本市場合作契機\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a19afd9c01a1a0cf0c7b0344\",\"1151103\" \"「2026臺灣週」盛大開幕 賴總統：「推動金融市場國際化、提升資本市場創新活力、建立長期信賴的投資市場」\""
+      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所與彭博簽署合作備忘錄 攜手深化國際資本市場連結\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a19afd9c01a1a590cc5d035a\",\"1151104\" \"紐約證券交易所(NYSE)來訪證交所 深化臺美資本市場合作契機\",\"https://www.twse.com"
     }
   },
   "summary": {
