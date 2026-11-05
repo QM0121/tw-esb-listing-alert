@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-11-05T15:30:29+08:00",
+  "last_checked_at": "2026-11-05T16:30:33+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1143 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 17,
       "retained": 17,
-      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所針對Grand Ocean Retail Group Limited（大洋-KY，證券代號：5907）違反重大訊息規定，處以新臺幣3萬元違約金\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a19afd9c01a1a621d7b90366\",\"1151104\" \"「2026臺"
+      "first_200_chars": "標題,連結,日期 \"騏億鑫(證券代號：7848)採競價拍賣方式辦理承銷，於11月5日順利完成\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a19afd9c01a1aaaa169b037a\",\"1151105\" \"臺股展現穩健韌性 經濟及企業基本面強化市場信心\",\"https://www.twse.com.t"
     }
   },
   "summary": {
