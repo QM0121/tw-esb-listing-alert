@@ -1,5 +1,5 @@
 {
-  "last_checked_at": "2026-11-11T09:21:43+08:00",
+  "last_checked_at": "2026-11-11T15:59:50+08:00",
   "last_run_ok": true,
   "schema_version": 15,
   "message": "完成：網站重建 1139 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
@@ -62,7 +62,7 @@
     "tib_news_csv": {
       "parsed": 18,
       "retained": 18,
-      "first_200_chars": "標題,連結,日期 \"台揚科技股份有限公司（台揚，公司代號：2314）有價證券將於115年12月21日終止上市\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a19afd9c01a1c51620830435\",\"1151110\" \"台揚科技股份有限公司(台揚，公司代號：2314)上市普通股自115年11月11日"
+      "first_200_chars": "標題,連結,日期 \"全體上市公司(不含金融保險業)115年10月份當月營收較114年同期成長52.40％，累計營業收入較114年同期成長39.87％\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a19afd9c01a1c973e34c043f\",\"1151111\" \"TiBOOST創新大步計畫圓滿落幕，前三"
     }
   },
   "summary": {
