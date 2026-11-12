@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-11-12T21:03:23+08:00",
+  "last_checked_at": "2026-11-13T04:59:15+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1141 筆事件，本輪新增事件 1 筆，Email 通知收件人數 7 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1141 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -28,12 +28,12 @@
       "ok": true
     }
   },
-  "new_event_count": 1,
-  "email_recipient_count": 7,
+  "new_event_count": 0,
+  "email_recipient_count": 0,
   "total_event_count": 1141,
   "data_retention_years": 3,
-  "data_window_start": "2023-11-12",
-  "data_window_end": "2026-11-12",
+  "data_window_start": "2023-11-13",
+  "data_window_end": "2026-11-13",
   "data_window_label": "近 3 年資料",
   "debug": {
     "twse_apply_csv": {
