@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-11-13T10:00:15+08:00",
+  "last_checked_at": "2026-11-13T17:50:28+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1141 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1143 筆事件，本輪新增事件 2 筆，Email 通知收件人數 7 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -19,7 +19,7 @@
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
-      "fetched": 703,
+      "fetched": 705,
       "ok": true
     },
     "tib_news": {
@@ -28,9 +28,9 @@
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1141,
+  "new_event_count": 2,
+  "email_recipient_count": 7,
+  "total_event_count": 1143,
   "data_retention_years": 3,
   "data_window_start": "2023-11-13",
   "data_window_end": "2026-11-13",
@@ -43,8 +43,8 @@
     },
     "tpex_apply_by_year": {
       "115": {
-        "parsed": 154,
-        "retained": 154
+        "parsed": 156,
+        "retained": 156
       },
       "114": {
         "parsed": 255,
@@ -62,26 +62,26 @@
     "tib_news_csv": {
       "parsed": 18,
       "retained": 18,
-      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所有價證券上市審議委員會審議通過鈺祥企業股份有限公司初次申請股票上市案\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a19afd9c01a1cf40c5460482\",\"1151112\" \"亞洲公司治理協會於台灣年會發布「CG Watch 2026」亞洲公司治理評鑑結果，臺灣"
+      "first_200_chars": "標題,連結,日期 \"臺灣證券交易所訂於11月17日召開有價證券上市審議委員會第904次會議，將審議展逸國際企業(股)公司之申請股票創新板上市案\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a19afd9c01a1d4504b2304a5\",\"1151113\" \"本週發行量加權股價指數漲幅約為10.01%，上"
     }
   },
   "summary": {
     "stage_counts": {
-      "審議通過": 188,
-      "轉板進度重大更新": 543,
+      "轉板進度重大更新": 544,
+      "審議通過": 189,
       "送件": 206,
       "受理": 199,
       "撤回申請": 5
     },
     "type_counts": {
-      "轉板進度重大更新": 721,
+      "轉板進度重大更新": 723,
       "申請創新板上市": 24,
       "申請上櫃": 259,
       "申請上市": 137
     },
     "source_counts": {
+      "TPEx 申請上櫃公司": 705,
       "TWSE 申請上市公司": 420,
-      "TPEx 申請上櫃公司": 703,
       "TWSE 臺灣創新板新聞稿": 18
     }
   }
