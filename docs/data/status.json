@@ -1,8 +1,8 @@
 {
-  "last_checked_at": "2026-11-18T12:37:50+08:00",
+  "last_checked_at": "2026-11-18T22:25:28+08:00",
   "last_run_ok": true,
   "schema_version": 15,
-  "message": "完成：網站重建 1144 筆事件，本輪新增事件 0 筆，Email 通知收件人數 0 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
+  "message": "完成：網站重建 1145 筆事件，本輪新增事件 1 筆，Email 通知收件人數 7 位；目前網站僅保留近三年資料，超出期間會於每次更新時自動汰除。",
   "sources": {
     "mops": {
       "label": "MOPS 即時重大訊息",
@@ -19,7 +19,7 @@
     },
     "tpex_apply": {
       "label": "TPEx 申請上櫃公司",
-      "fetched": 705,
+      "fetched": 706,
       "ok": true
     },
     "tib_news": {
@@ -28,9 +28,9 @@
       "ok": true
     }
   },
-  "new_event_count": 0,
-  "email_recipient_count": 0,
-  "total_event_count": 1144,
+  "new_event_count": 1,
+  "email_recipient_count": 7,
+  "total_event_count": 1145,
   "data_retention_years": 3,
   "data_window_start": "2023-11-18",
   "data_window_end": "2026-11-18",
@@ -43,8 +43,8 @@
     },
     "tpex_apply_by_year": {
       "115": {
-        "parsed": 156,
-        "retained": 156
+        "parsed": 157,
+        "retained": 157
       },
       "114": {
         "parsed": 255,
@@ -62,26 +62,26 @@
     "tib_news_csv": {
       "parsed": 19,
       "retained": 19,
-      "first_200_chars": "標題,連結,日期 \"國際機構肯定AI成長前景 全體上市公司前三季獲利亮眼、展現韌性\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a19afd9c01a1e91ed1990505\",\"1151117\" \"臺灣證券交易所有價證券上市審議委員會審議通過展逸國際企業股份有限公司初次申請股票於臺灣創新板(tib-創)"
+      "first_200_chars": "標題,連結,日期 \"TLC BioSciences Corp.於115年11月18日送件申請股票第一上市\",\"https://www.twse.com.tw/zh/about/news/news/content.html?8a8216d6a19afd9c01a1ee394b290548\",\"1151118\" \"證交所舉辦「提升企業價值計畫線上實作工作坊」，助力上市公司掌握計畫編製實務重點\",\""
     }
   },
   "summary": {
     "stage_counts": {
-      "審議通過": 190,
+      "審議通過": 191,
       "轉板進度重大更新": 544,
       "送件": 206,
       "受理": 199,
       "撤回申請": 5
     },
     "type_counts": {
+      "轉板進度重大更新": 724,
       "申請創新板上市": 25,
-      "轉板進度重大更新": 723,
       "申請上櫃": 259,
       "申請上市": 137
     },
     "source_counts": {
+      "TPEx 申請上櫃公司": 706,
       "TWSE 臺灣創新板新聞稿": 19,
-      "TPEx 申請上櫃公司": 705,
       "TWSE 申請上市公司": 420
     }
   }
