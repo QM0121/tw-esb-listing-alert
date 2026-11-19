@@ -1865,20 +1865,20 @@
       }
     }
   </style>
+  <link rel="stylesheet" href="./monitor-theme.css">
 </head>
 <body>
   <header class="site-header">
     <div class="shell header-inner">
-      <div>
+      <a class="brand" href="./index.html">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
         <h1 class="brand-title">台灣興櫃轉板進度監測站</h1>
-        <p class="brand-subtitle">監測申請上市、申請上櫃、申請創新板上市及轉板進度重大更新</p>
-      </div>
+      </a>
       <nav class="nav" aria-label="主要導覽">
-        <a href="#overview">總覽</a>
-        <a href="#events-section">事件清單</a>
-        <a href="#summary-section">資料摘要</a>
-        <a href="#monitor-note">監測說明</a>
+        <a href="./events.html">全部事件</a>
+        <a href="./active-cases.html">進行中案件</a>
         <a href="#data-disclosure">資料來源</a>
+        <a class="feedback-nav" href="#feedback">意見回饋</a>
       </nav>
     </div>
   </header>
@@ -1886,52 +1886,32 @@
   <main class="shell page" id="overview">
     <section class="hero" aria-live="polite">
       <div class="hero-main">
-        <div class="hero-eyebrow">LISTING MONITOR</div>
-        <h2 class="hero-title" id="runStatusTitle">載入本輪檢查結果中…</h2>
-        <p class="hero-desc" id="runStatusDesc">系統正在讀取最新監測狀態。</p>
+        <div>
+          <div class="hero-eyebrow">市場監測總覽</div>
+          <h2 class="hero-title">上市櫃進度追蹤</h2>
+          <p class="hero-desc"><strong id="runStatusTitle">讀取監測狀態中…</strong><br><span id="runStatusDesc"></span></p>
+          <div class="hero-actions"><a href="#company-search">搜尋公司</a><a href="./active-cases.html">查看進行中案件 →</a></div>
+        </div>
+        <figure class="activity"><figcaption>近六月事件數<small>依事件日期</small></figcaption>
+          <div class="activity-bars" id="activityBars"></div>
+        </figure>
       </div>
     </section>
 
-    <section class="kpi-grid">
-      <article class="kpi-card">
-        <div class="kpi-label">上次檢查時間</div>
-        <div class="kpi-value" id="lastChecked">—</div>
-        <div class="kpi-note">系統排程完成後自動更新</div>
-      </article>
-
-      <article class="kpi-card">
-        <div class="kpi-label">資料索取範圍</div>
-        <div class="kpi-value" id="dataWindowLabel">近 3 年資料</div>
-        <div class="kpi-note">超過期間的舊資料會自動汰除</div>
-      </article>
-
-      <article class="kpi-card">
-        <div class="kpi-label">目前保留期間</div>
-        <div class="kpi-value"><span id="dataWindowStart">—</span> ～ <span id="dataWindowEnd">—</span></div>
-        <div class="kpi-note">依每日更新自動往前滾動</div>
-      </article>
-
-      <article class="kpi-card">
-        <div class="kpi-label">今日瀏覽次數</div>
-        <div class="kpi-value" id="todayPageviews">—</div>
-        <div class="kpi-note">依 GoatCounter 公開統計顯示</div>
-      </article>
-
-      <article class="kpi-card">
-        <div class="kpi-label">累計總瀏覽次數</div>
-        <div class="kpi-value" id="totalPageviews">—</div>
-        <div class="kpi-note">全站累計瀏覽統計</div>
-      </article>
-
+    <section class="kpi-grid" aria-label="監測數據">
+      <article class="kpi-card"><div class="kpi-label">已收錄事件</div><div class="kpi-value" id="heroEvents">—</div></article>
+      <article class="kpi-card"><div class="kpi-label">進行中案件</div><div class="kpi-value" id="heroCases">—</div></article>
+      <article class="kpi-card"><div class="kpi-label">追蹤期間</div><div class="kpi-value" id="dataWindowLabel">—</div></article>
+      <article class="kpi-card"><div class="kpi-label">最近檢查（臺灣時間）</div><div class="kpi-value" id="lastChecked">—</div></article>
     </section>
 
-    <section class="panel filter-panel">
+    <section class="panel filter-panel" id="company-search">
       <h2 class="panel-title">搜尋與篩選</h2>
       <div class="filter-grid">
         <div class="search-wrap" id="searchWrap">
           <input
             id="search"
-            class="search-box"
+            class="search-box" aria-label="搜尋公司或事件"
             type="search"
             autocomplete="off"
             placeholder="搜尋公司代號、公司名稱、公告標題或進度內容"
@@ -1964,10 +1944,11 @@
       <div id="timelineList" class="timeline-list"></div>
     </section>
 
+    <div class="monitor-pair">
     <section class="panel latest-panel home-stack-panel">
       <div class="section-head">
         <h2 class="panel-title" style="margin:0;">最新事件</h2>
-        <div class="result-count">顯示最新 10 筆</div>
+        <a class="result-count" href="./events.html">查看全部 →</a>
       </div>
       <div id="latestEvents" class="mini-list"></div>
     </section>
@@ -1985,6 +1966,11 @@
       <a class="active-open-all" href="./active-cases.html" target="_blank" rel="noopener noreferrer">在新分頁查看全部</a>
     </section>
 
+    </div>
+    <section class="feedback-panel panel" id="feedback" aria-labelledby="feedback-title">
+      <div><h2 class="panel-title" id="feedback-title">意見回饋</h2><p>希望多追蹤哪些資訊？發現哪筆資料有誤？寫給站長，免留姓名和信箱。</p></div>
+      <a class="feedback-cta" href="https://docs.google.com/forms/d/e/1FAIpQLScfCd0Z0OJt_8sUv1SPJhxjxrgDYZlYjLH2r2P6TMyzKuxDQw/viewform" target="_blank" rel="noopener noreferrer">填寫意見 ↗</a>
+    </section>
     <section class="content-grid" id="events-section">
       <section class="panel">
         <div class="events-toolbar">
@@ -2033,7 +2019,7 @@
         </div>
         <div class="monitor-note-item">
           <div class="monitor-note-label">資料保留</div>
-          <div class="monitor-note-value">網站僅保留近三年事件，超出期間會自動汰除。</div>
+          <div class="monitor-note-value">本站追蹤 <span id="dataWindowStart">—</span> 至 <span id="dataWindowEnd">—</span> 的事件。</div>
         </div>
         <div class="monitor-note-item">
           <div class="monitor-note-label">Mail 通知訂閱</div>
@@ -2101,7 +2087,7 @@
         <div>開放資料來源依「政府資料開放授權條款－第 1 版」利用；本站僅提供整理、分類與追蹤，實際內容請以原始官方公告為準。</div>
         <div>本站與臺灣證券交易所、證券櫃檯買賣中心及公開資訊觀測站無官方合作或隸屬關係。</div>
       </div>
-      <div>© 2026 台灣興櫃轉板進度監測站</div>
+      <div>今日瀏覽 <span id="todayPageviews">—</span> · 累計瀏覽 <span id="totalPageviews">—</span><br>© 2026 台灣興櫃轉板進度監測站</div>
     </div>
   </footer>
 
@@ -2457,6 +2443,33 @@
       return true;
     }
 
+    function renderActivity(list, asOf) {
+      const container = document.getElementById("activityBars");
+      const cutoff = eventDateRank(asOf);
+      if (!cutoff) {
+        container.textContent = "暫無統計資料";
+        return;
+      }
+      const year = Math.floor(cutoff / 10000);
+      const month = Math.floor(cutoff / 100) % 100;
+      const counts = new Map();
+      for (let offset = 5; offset >= 0; offset--) {
+        const date = new Date(Date.UTC(year, month - 1 - offset, 1));
+        counts.set(date.getUTCFullYear() * 100 + date.getUTCMonth() + 1, 0);
+      }
+      for (const event of list) {
+        const day = eventDateRank(event.event_date);
+        const key = Math.floor(day / 100);
+        if (day <= cutoff && counts.has(key)) counts.set(key, counts.get(key) + 1);
+      }
+      const max = Math.max(1, ...counts.values());
+      container.innerHTML = [...counts].map(([key, count]) => `
+        <div class="activity-col" title="${Math.floor(key / 100)} 年 ${key % 100} 月，${count} 筆">
+          <div class="activity-track"><strong>${count}</strong><b aria-hidden="true" style="height:${Math.round(55 * count / max)}px"></b></div>
+          <small>${key % 100} 月</small>
+        </div>`).join("");
+    }
+
     function renderRunStatus() {
       const newCount = Number(status.new_event_count ?? 0);
 
@@ -2465,13 +2478,16 @@
       document.getElementById("dataWindowStart").textContent = formatROCDate(status.data_window_start);
       document.getElementById("dataWindowEnd").textContent = formatROCDate(status.data_window_end);
 
-      if (newCount > 0) {
-        document.getElementById("runStatusTitle").textContent = `本輪新增 ${newCount} 筆新事件`;
-        document.getElementById("runStatusDesc").textContent = `系統已於 ${compactDateTime(status.last_checked_at)} 完成檢查，並更新最新符合條件的公開事件。`;
-      } else {
-        document.getElementById("runStatusTitle").textContent = "本輪無新事件";
-        document.getElementById("runStatusDesc").textContent = `系統已於 ${compactDateTime(status.last_checked_at)} 完成例行檢查，未發現符合條件之新事件。`;
-      }
+      const failed = Object.values(status.sources || {}).filter(source => source.ok === false);
+      document.getElementById("runStatusTitle").textContent = status.last_run_ok
+        ? (newCount ? `本次新增 ${newCount} 筆事件` : "本次檢查無新增事件")
+        : "本次監測狀態待確認";
+      document.getElementById("runStatusDesc").textContent = failed.length
+        ? failed.map(source => source.label).join("、") + "暫時沿用上次資料。"
+        : "追蹤送件、審議、董事會決議及掛牌日期。";
+      document.getElementById("heroEvents").textContent = events.length.toLocaleString("zh-TW");
+      renderActivity(events, status.data_window_end);
+
     }
 
     function renderChips() {
@@ -2586,7 +2602,7 @@
 
 
     function renderLatestEvents() {
-      const latest = sortEventsByDateDesc(events).slice(0, 10);
+      const latest = sortEventsByDateDesc(events).slice(0, 5);
       const container = document.getElementById("latestEvents");
 
       if (!latest.length) {
@@ -2629,6 +2645,7 @@
       });
 
       document.getElementById("activeCaseTotal").textContent = cases.length;
+      document.getElementById("heroCases").textContent = cases.length;
       document.getElementById("activeSummary").innerHTML = Object.entries(counts).map(([label, count]) => `
         <div class="active-summary-card">
           <div class="active-summary-label">${esc(label)}</div>
@@ -2637,7 +2654,7 @@
       `).join("");
 
       const container = document.getElementById("activeCases");
-      const visibleCases = cases.slice(0, 6);
+      const visibleCases = cases.slice(0, 4);
 
       if (!visibleCases.length) {
         container.innerHTML = '<div class="empty-state">目前沒有可判定為進行中的案件。</div>';

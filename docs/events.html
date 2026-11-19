@@ -394,15 +394,16 @@
       .company-name { font-size: 20px; }
     }
   </style>
+  <link rel="stylesheet" href="./monitor-theme.css">
 </head>
-<body>
+<body class="subpage">
   <header class="site-header">
     <div class="shell header-inner">
-      <div>
+      <a class="brand" href="./index.html">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
         <h1 class="brand-title">台灣興櫃轉板進度監測站</h1>
-        <p class="brand-subtitle">全部事件清單｜可依公司、來源與事件類型篩選</p>
-      </div>
-      <a class="back-link" href="./index.html">返回首頁</a>
+      </a>
+      <nav class="nav" aria-label="主要導覽"><a href="./index.html">首頁</a><a href="./events.html">全部事件</a><a href="./active-cases.html">進行中案件</a><a class="feedback-nav" href="./index.html#feedback">意見回饋</a></nav>
     </div>
   </header>
 
@@ -415,8 +416,8 @@
     <section class="panel">
       <h2 class="panel-title">搜尋與篩選</h2>
       <div class="filter-grid">
-        <input id="search" class="search-box" type="search" placeholder="搜尋公司代號、公司名稱、公告標題或進度內容" />
-        <select id="sourceSelect" class="source-select">
+        <input id="search" class="search-box" aria-label="搜尋公司或事件" type="search" placeholder="搜尋公司代號、公司名稱、公告標題或進度內容" />
+        <select aria-label="資料來源" id="sourceSelect" class="source-select">
           <option value="">全部來源</option>
         </select>
         <button id="reset" class="reset-btn" type="button">清除篩選</button>
