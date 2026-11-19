@@ -1877,6 +1877,7 @@
       <nav class="nav" aria-label="主要導覽">
         <a href="./events.html">全部事件</a>
         <a href="./active-cases.html">進行中案件</a>
+        <a href="#view-stats">瀏覽統計</a>
         <a href="#data-disclosure">資料來源</a>
         <a class="feedback-nav" href="#feedback">意見回饋</a>
       </nav>
@@ -1899,8 +1900,8 @@
     </section>
 
     <section id="view-stats" class="kpi-grid" aria-label="瀏覽與監測統計">
-      <article class="kpi-card"><div class="kpi-label">今日瀏覽人次</div><div class="kpi-value" id="todayPageviews">—</div><small>台灣時間 00:00 起算</small></article>
-      <article class="kpi-card"><div class="kpi-label">累計瀏覽人次</div><div class="kpi-value" id="totalPageviews">—</div><small>GoatCounter 彙總，更新可能延遲</small></article>
+      <article class="kpi-card"><div class="kpi-label">今日瀏覽次數</div><div class="kpi-value" id="goatTodayViews">—</div><small>GoatCounter 原始統計</small><br><small>台灣今日即時瀏覽：<strong id="todayPageviews">—</strong></small></article>
+      <article class="kpi-card"><div class="kpi-label">累計總瀏覽次數</div><div class="kpi-value" id="totalPageviews">—</div><small>GoatCounter 彙總，更新可能延遲</small></article>
       <article class="kpi-card"><div class="kpi-label">已收錄事件</div><div class="kpi-value" id="heroEvents">—</div></article>
       <article class="kpi-card"><div class="kpi-label">進行中案件</div><div class="kpi-value" id="heroCases">—</div></article>
       <article class="kpi-card"><div class="kpi-label">追蹤期間</div><div class="kpi-value" id="dataWindowLabel">—</div></article>
@@ -2029,7 +2030,7 @@
             訂閱後，本站會將新事件寄到你的 Email。你也可以直接瀏覽網站。
             <details class="mail-unsubscribe-help" id="subscription-privacy">
               <summary>訂閱資料如何使用與刪除</summary>
-              <p>台灣興櫃轉板進度監測站（QM0121 維運）收集 Email、訂閱狀態、來源與異動時間，用於管理訂閱及寄送事件通知。名單存於 Google 試算表，透過 Google Apps Script、GitHub Actions 與郵件服務處理，資料可能在臺灣及服務商的境外機房處理。</p>
+              <p>台灣興櫃轉板進度監測站收集 Email、訂閱狀態、來源與異動時間，用於管理訂閱及寄送事件通知。名單存於 Google 試算表，透過 Google Apps Script、GitHub Actions 與郵件服務處理，資料可能在臺灣及服務商的境外機房處理。</p>
               <p>訂閱期間保留紀錄。取消後會保留地址及退訂狀態，以防再次寄送。你可直接回覆任一通知信，要求查詢、閱覽、複製、更正、停止處理利用或刪除資料。若沒有通知信，可透過<a href="https://github.com/QM0121/tw-esb-listing-alert/issues">網站維護聯絡頁</a>索取私下聯絡方式，請勿公開留下信箱。本站核對身分後處理。</p>
             </details>
             <form id="mailSubscribeForm" class="mail-subscribe-form" method="post" target="_blank" rel="noopener noreferrer">
@@ -2056,7 +2057,7 @@
       <h2 class="panel-title">資料來源與使用說明</h2>
 
       <div class="source-disclosure-intro">
-        本站由 QM0121 獨立維運。下列三項資料由金融監督管理委員會證券期貨局於政府資料開放平臺提供，資料來自臺灣證券交易所及證券櫃檯買賣中心。
+        本站獨立維運。下列三項資料由金融監督管理委員會證券期貨局於政府資料開放平臺提供，資料來自臺灣證券交易所及證券櫃檯買賣中心。
       </div>
       <div class="source-disclosure-grid">
         <div class="source-disclosure-item">
@@ -2073,7 +2074,7 @@
         </div>
       </div>
       <p>本站依<a href="https://data.gov.tw/license">政府資料開放授權條款－第 1 版</a>篩選事件並整理時間線。審議日期僅表示排定或記載的日期。只有官方新聞明載審議通過，或資料欄位載明董事會通過，才會分別標示該結果。MOPS 即時重大訊息目前停用。</p>
-      <p>今日瀏覽人次以台灣日期統計。每次開啟首頁、事件清單或案件清單，在頁面顯示時記一人次。計數服務僅儲存每日合計及短期防重複用的隨機碼。累計數字沿用 GoatCounter，更新時間與今日統計不同。</p>
+      <p>「今日瀏覽次數」與「累計總瀏覽次數」均取自本站原有的 GoatCounter。本站沿用原本的查詢方式，將台灣當天的日期交給 GoatCounter。該服務以 UTC 解讀日期，數字可能延後更新。「台灣今日即時瀏覽」另以台灣午夜換日。每次開啟首頁、事件清單或案件清單，在頁面顯示時記一人次。計數服務僅儲存每日合計及短期防重複用的隨機碼。</p>
       <div class="source-disclosure-foot">
         本站已盡合理努力標示資料來源與原始提供機關。資料經整理、分類與轉述後呈現；
         如官方資料更新、修正、撤回或來源使用規範調整，本站內容與呈現方式亦可能同步調整。
@@ -2791,10 +2792,10 @@
       });
     }
 
-    async function renderTotalViews() {
-      const element = document.getElementById("totalPageviews");
+    async function loadGoatCount(id, url) {
+      const element = document.getElementById(id);
       try {
-        const response = await fetch("https://qm0121.goatcounter.com/counter/TOTAL.json", { cache: "no-store" });
+        const response = await fetch(url, { cache: "no-store" });
         if (!response.ok) throw new Error("Counter unavailable");
         const { count } = await response.json();
         if (count == null || count === "") throw new Error("Count missing");
@@ -2804,8 +2805,15 @@
       }
     }
 
+    function renderGoatCounters() {
+      const url = "https://qm0121.goatcounter.com/counter/TOTAL.json";
+      const day = new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Taipei" }).format(new Date());
+      loadGoatCount("goatTodayViews", url + "?start=" + day);
+      loadGoatCount("totalPageviews", url);
+    }
+
     async function init() {
-      renderTotalViews();
+      renderGoatCounters();
       try {
         const [eventsRes, statusRes] = await Promise.all([
           fetch("./data/alerts.json", { cache: "no-store" }),
