@@ -13228,19 +13228,5 @@
     "detail": "交易所董事會通過上市日期已更新",
     "url": "https://www.twse.com.tw/zh/listed/listed/apply-listing.html",
     "first_seen_at": "2026-11-19T11:44:12+08:00"
-  },
-  {
-    "id": "3e5901f1a4d8d8a98356479cd382fa346ddcd446e01fa940d7fdb05b6ac4cfd1",
-    "source": "twse_apply",
-    "source_label": "TWSE 申請上市公司",
-    "event_type": "申請上市",
-    "stage": "送件",
-    "event_date": "1121120",
-    "company_code": "4949",
-    "company_name": "有成精密",
-    "title": "有成精密（4949）列入證交所申請上市公司名單",
-    "detail": "政府開放資料 CSV 顯示申請日期",
-    "url": "https://www.twse.com.tw/zh/listed/listed/apply-listing.html",
-    "first_seen_at": "2026-11-19T11:44:12+08:00"
   }
 ]
