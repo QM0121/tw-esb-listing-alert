@@ -1898,7 +1898,9 @@
       </div>
     </section>
 
-    <section class="kpi-grid" aria-label="監測數據">
+    <section id="view-stats" class="kpi-grid" aria-label="瀏覽與監測統計">
+      <article class="kpi-card"><div class="kpi-label">今日瀏覽人次</div><div class="kpi-value" id="todayPageviews">—</div></article>
+      <article class="kpi-card"><div class="kpi-label">累計瀏覽人次</div><div class="kpi-value" id="totalPageviews">—</div></article>
       <article class="kpi-card"><div class="kpi-label">已收錄事件</div><div class="kpi-value" id="heroEvents">—</div></article>
       <article class="kpi-card"><div class="kpi-label">進行中案件</div><div class="kpi-value" id="heroCases">—</div></article>
       <article class="kpi-card"><div class="kpi-label">追蹤期間</div><div class="kpi-value" id="dataWindowLabel">—</div></article>
@@ -2087,7 +2089,7 @@
         <div>開放資料來源依「政府資料開放授權條款－第 1 版」利用；本站僅提供整理、分類與追蹤，實際內容請以原始官方公告為準。</div>
         <div>本站與臺灣證券交易所、證券櫃檯買賣中心及公開資訊觀測站無官方合作或隸屬關係。</div>
       </div>
-      <div>今日瀏覽 <span id="todayPageviews">—</span> · 累計瀏覽 <span id="totalPageviews">—</span><br>© 2026 台灣興櫃轉板進度監測站</div>
+      <div>© 2026 台灣興櫃轉板進度監測站</div>
     </div>
   </footer>
 
@@ -2806,30 +2808,25 @@
       const today = taiwanDateString();
 
       const totalUrl = "https://qm0121.goatcounter.com/counter/TOTAL.json";
-      const todayUrl = `https://qm0121.goatcounter.com/counter/TOTAL.json?start=${today}`;
-
-      try {
-        const [todayRes, totalRes] = await Promise.all([
-          fetch(todayUrl, { cache: "no-store" }),
-          fetch(totalUrl, { cache: "no-store" })
-        ]);
-
-        if (!todayRes.ok || !totalRes.ok) throw new Error("GoatCounter counter request failed");
-
-        const [todayData, totalData] = await Promise.all([
-          todayRes.json(),
-          totalRes.json()
-        ]);
-
-        todayEl.textContent = todayData.count || "0";
-        totalEl.textContent = totalData.count || "0";
-      } catch (error) {
-        todayEl.textContent = "—";
-        totalEl.textContent = "—";
+      async function showCount(element, url) {
+        try {
+          const response = await fetch(url, { cache: "no-store" });
+          if (!response.ok) throw new Error("Counter unavailable");
+          const { count } = await response.json();
+          if (count == null || count === "") throw new Error("Count missing");
+          element.textContent = String(count);
+        } catch {
+          element.textContent = "暫無資料";
+        }
       }
+      await Promise.all([
+        showCount(todayEl, totalUrl + "?start=" + today),
+        showCount(totalEl, totalUrl)
+      ]);
     }
 
     async function init() {
+      renderVisitCounters();
       try {
         const [eventsRes, statusRes] = await Promise.all([
           fetch("./data/alerts.json", { cache: "no-store" }),
@@ -2849,12 +2846,10 @@
         renderTypeSummary();
         renderSourceSummary();
         initMailSubscribe();
-        renderVisitCounters();
       } catch (error) {
         document.getElementById("runStatusTitle").textContent = "資料載入失敗";
         document.getElementById("runStatusDesc").textContent = "網站暫時無法讀取最新資料，請稍後重新整理。";
         eventsEl.innerHTML = '<div class="empty-state">資料讀取失敗，請稍後重新整理。</div>';
-        renderVisitCounters();
       }
     }
 
