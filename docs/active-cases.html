@@ -364,7 +364,7 @@
       <h2 class="hero-title">目前進行中案件</h2>
       <p class="hero-desc">此頁整理仍可判定為進行中的申請案件，並依最新已知事件日期排序。</p>
       <div class="definition-note">
-        進行中案件係依目前可取得之公開事件推估；若案件已撤回或已完成掛牌，將不列入此清單。
+        依各來源最近一次成功取得的資料推估。已撤回或已屆資料所列買賣日的案件會移出清單，未到掛牌日的案件仍會顯示。
       </div>
     </section>
 
@@ -394,8 +394,10 @@
       </div>
       <div id="casesList" class="cases-list"></div>
     </section>
+    <p><a href="./index.html#data-disclosure">資料來源與授權</a> · <a href="./index.html#sourceSummary">查看各來源更新時間</a></p>
   </main>
 
+  <script src="./progress.js"></script>
   <script>
     const searchEl = document.getElementById("search");
     const trackEl = document.getElementById("trackSelect");
@@ -403,6 +405,7 @@
     const casesListEl = document.getElementById("casesList");
 
     let events = [];
+    let status = {};
     let cases = [];
 
     function esc(value) {
@@ -437,24 +440,6 @@
       return raw;
     }
 
-    function eventDateRank(value) {
-      const raw = String(value ?? "").trim();
-      if (!raw) return 0;
-
-      let m = raw.match(/^(\d{4})(\d{2})(\d{2})$/);
-      if (m) return Number(`${m[1]}${m[2]}${m[3]}`);
-
-      m = raw.match(/^(\d{3})(\d{2})(\d{2})$/);
-      if (m) return Number(`${Number(m[1]) + 1911}${m[2]}${m[3]}`);
-
-      m = raw.match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})$/);
-      if (m) return Number(`${m[1]}${String(m[2]).padStart(2, "0")}${String(m[3]).padStart(2, "0")}`);
-
-      m = raw.match(/^(\d{2,3})[-/.](\d{1,2})[-/.](\d{1,2})$/);
-      if (m) return Number(`${Number(m[1]) + 1911}${String(m[2]).padStart(2, "0")}${String(m[3]).padStart(2, "0")}`);
-
-      return 0;
-    }
 
     function sortEventsByDateDesc(list) {
       return [...list].sort((a, b) => {
@@ -498,15 +483,6 @@
       return "轉板進度";
     }
 
-    function isTerminalEvent(event) {
-      const title = String(event.title || "");
-      const detail = String(event.detail || "");
-      const text = `${title} ${detail}`;
-      return event.stage === "撤回申請"
-        || text.includes("股票上市買賣日期已更新")
-        || text.includes("股票上櫃買賣日期已更新")
-        || text.includes("開始買賣日期");
-    }
 
     function buildActiveCases() {
       const map = new Map();
@@ -530,7 +506,7 @@
 
         const track = applicationTrackForCompany(group.events);
         if (!["申請上市", "申請上櫃", "申請創新板上市"].includes(track)) return;
-        if (isTerminalEvent(latest)) return;
+        if (currentCaseClosed(sorted, status.sources || {})) return;
 
         result.push({
           code: group.code,
@@ -594,7 +570,7 @@
               <p class="case-title">${esc(eventLine)}</p>
               <div class="badges">
                 <span class="badge type">${esc(item.track)}</span>
-                <span class="badge stage">${esc(item.latest.stage || "最新進度")}</span>
+                <span class="badge stage">${esc(stageLabel(item.latest))}</span>
                 <span class="badge source">${esc(item.latest.source_label || "")}</span>
               </div>
             </div>
@@ -604,7 +580,8 @@
     }
 
     async function init() {
-      const res = await fetch("./data/alerts.json", { cache: "no-store" });
+      const [res, statusRes] = await Promise.all(["alerts", "status"].map(name => fetch(`./data/${name}.json`, { cache: "no-store" })));
+      status = statusRes.ok ? await statusRes.json() : {};
       events = res.ok ? await res.json() : [];
       cases = buildActiveCases();
       renderSummary();

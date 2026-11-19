@@ -1978,7 +1978,7 @@
         <div class="result-count"><span id="activeCaseTotal">—</span> 件</div>
       </div>
       <div class="helper-text" style="margin-top:-2px; margin-bottom:12px;">
-        依目前可取得之公開事件推估；若案件已撤回或已掛牌，將不列入進行中案件。
+        依最近一次成功取得的資料推估。已撤回或已屆資料所列買賣日的案件會移出清單，未到掛牌日的案件仍會顯示。
       </div>
       <div id="activeSummary" class="active-summary"></div>
       <div id="activeCases" class="mini-list"></div>
@@ -2038,7 +2038,12 @@
         <div class="monitor-note-item">
           <div class="monitor-note-label">Mail 通知訂閱</div>
           <div class="monitor-note-value">
-            留下 Email 後，未來偵測到新的符合條件事件時，將寄送通知；不會重複寄送歷史資料。
+            訂閱後，本站會將新事件寄到你的 Email。你也可以直接瀏覽網站。
+            <details class="mail-unsubscribe-help" id="subscription-privacy">
+              <summary>訂閱資料如何使用與刪除</summary>
+              <p>台灣興櫃轉板進度監測站（QM0121 維運）收集 Email、訂閱狀態、來源與異動時間，用於管理訂閱及寄送事件通知。名單存於 Google 試算表，透過 Google Apps Script、GitHub Actions 與郵件服務處理，資料可能在臺灣及服務商的境外機房處理。</p>
+              <p>訂閱期間保留紀錄。取消後會保留地址及退訂狀態，以防再次寄送。你可直接回覆任一通知信，要求查詢、閱覽、複製、更正、停止處理利用或刪除資料。若沒有通知信，可透過<a href="https://github.com/QM0121/tw-esb-listing-alert/issues">網站維護聯絡頁</a>索取私下聯絡方式，請勿公開留下信箱。本站核對身分後處理。</p>
+            </details>
             <form id="mailSubscribeForm" class="mail-subscribe-form" method="post" target="_blank" rel="noopener noreferrer">
               <input type="hidden" name="action" value="subscribe">
               <input id="subscriberEmail" class="mail-subscribe-input" type="email" name="email" placeholder="請輸入 Email" aria-label="訂閱通知用的 Email" autocomplete="email" maxlength="254" required>
@@ -2063,44 +2068,23 @@
       <h2 class="panel-title">資料來源與使用說明</h2>
 
       <div class="source-disclosure-intro">
-        本站係整理政府開放資料、官方 OpenAPI 與官方公開資訊，作為興櫃轉板進度追蹤工具，
-        不販售原始資料、不主張官方資料之權利，亦不取代任何正式公告；
-        所有事件內容仍應以原始資料提供機關之最新公告為準。
+        本站由 QM0121 獨立維運。下列三項資料由金融監督管理委員會證券期貨局於政府資料開放平臺提供，資料來自臺灣證券交易所及證券櫃檯買賣中心。
       </div>
-
       <div class="source-disclosure-grid">
         <div class="source-disclosure-item">
-          <div class="source-disclosure-label">申請上市資料</div>
-          <div class="source-disclosure-value">
-            資料來源：政府資料開放平臺「向本公司申請上市之本國公司」及臺灣證券交易所相關資料資源；
-            開放資料利用依「政府資料開放授權條款－第 1 版」辦理。
-          </div>
+          <div class="source-disclosure-label"><a href="https://data.gov.tw/dataset/11586">向本公司申請上市之本國公司</a></div>
+          <div class="source-disclosure-value">臺灣證券交易所 · 資料集於 2017 年上架</div>
         </div>
-
         <div class="source-disclosure-item">
-          <div class="source-disclosure-label">申請上櫃資料</div>
-          <div class="source-disclosure-value">
-            資料來源：政府資料開放平臺「申請上櫃公司」及證券櫃檯買賣中心相關資料資源；
-            開放資料利用依「政府資料開放授權條款－第 1 版」辦理。
-          </div>
+          <div class="source-disclosure-label"><a href="https://data.gov.tw/dataset/11394">申請上櫃公司</a></div>
+          <div class="source-disclosure-value">證券櫃檯買賣中心 · 資料集於 2015 年上架</div>
         </div>
-
         <div class="source-disclosure-item">
-          <div class="source-disclosure-label">創新板與證交所新聞</div>
-          <div class="source-disclosure-value">
-            資料來源：臺灣證券交易所官方 OpenAPI「證交所新聞」等公開資料；
-            本站僅就與興櫃轉板、創新板上市相關之公開資訊進行整理與分類。
-          </div>
-        </div>
-
-        <div class="source-disclosure-item">
-          <div class="source-disclosure-label">重大訊息與公告參考</div>
-          <div class="source-disclosure-value">
-            本站目前未提供公開資訊觀測站（MOPS）即時重大訊息之自動監測功能，相關重大訊息仍請以公開資訊觀測站公告為準。
-          </div>
+          <div class="source-disclosure-label"><a href="https://data.gov.tw/dataset/11546">新聞資訊 &gt; 證交所新聞</a></div>
+          <div class="source-disclosure-value">臺灣證券交易所 · 資料集於 2017 年上架</div>
         </div>
       </div>
-
+      <p>本站依<a href="https://data.gov.tw/license">政府資料開放授權條款－第 1 版</a>篩選事件並整理時間線。審議日期僅表示排定或記載的日期。只有官方新聞明載審議通過，或資料欄位載明董事會通過，才會分別標示該結果。MOPS 即時重大訊息目前停用。</p>
       <div class="source-disclosure-foot">
         本站已盡合理努力標示資料來源與原始提供機關。資料經整理、分類與轉述後呈現；
         如官方資料更新、修正、撤回或來源使用規範調整，本站內容與呈現方式亦可能同步調整。
@@ -2121,6 +2105,7 @@
     </div>
   </footer>
 
+  <script src="./progress.js"></script>
   <script>
     const CATEGORY_OPTIONS = [
       "全部",
@@ -2129,7 +2114,10 @@
       "申請創新板上市",
       "轉板進度重大更新",
       "送件",
-      "受理",
+      "審議日期已公布",
+      "董事會通過",
+      "契約日期已公布",
+      "掛牌日期已公布",
       "審議通過",
       "董事會決議申請",
       "撤回申請"
@@ -2144,7 +2132,10 @@
 
     const STAGE_SUMMARY_ORDER = [
       "送件",
-      "受理",
+      "審議日期已公布",
+      "董事會通過",
+      "契約日期已公布",
+      "掛牌日期已公布",
       "審議通過",
       "董事會決議申請",
       "撤回申請"
@@ -2216,24 +2207,6 @@
     }
 
 
-    function eventDateRank(value) {
-      const raw = String(value ?? "").trim();
-      if (!raw) return 0;
-
-      let m = raw.match(/^(\d{4})(\d{2})(\d{2})$/);
-      if (m) return Number(`${m[1]}${m[2]}${m[3]}`);
-
-      m = raw.match(/^(\d{3})(\d{2})(\d{2})$/);
-      if (m) return Number(`${Number(m[1]) + 1911}${m[2]}${m[3]}`);
-
-      m = raw.match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})$/);
-      if (m) return Number(`${m[1]}${String(m[2]).padStart(2, "0")}${String(m[3]).padStart(2, "0")}`);
-
-      m = raw.match(/^(\d{2,3})[-/.](\d{1,2})[-/.](\d{1,2})$/);
-      if (m) return Number(`${Number(m[1]) + 1911}${String(m[2]).padStart(2, "0")}${String(m[3]).padStart(2, "0")}`);
-
-      return 0;
-    }
 
     function sortEventsByDateDesc(list) {
       return [...list].sort((a, b) => {
@@ -2303,15 +2276,6 @@
       return "轉板進度";
     }
 
-    function isTerminalEvent(event) {
-      const title = String(event.title || "");
-      const detail = String(event.detail || "");
-      const text = `${title} ${detail}`;
-      return event.stage === "撤回申請"
-        || text.includes("股票上市買賣日期已更新")
-        || text.includes("股票上櫃買賣日期已更新")
-        || text.includes("開始買賣日期");
-    }
 
     function buildActiveCases() {
       const map = new Map();
@@ -2342,7 +2306,7 @@
 
         const track = applicationTrackForCompany(group.events);
         if (!["申請上市", "申請上櫃", "申請創新板上市"].includes(track)) return;
-        if (isTerminalEvent(latest)) return;
+        if (currentCaseClosed(sorted, status.sources || {})) return;
 
         cases.push({
           code: group.code,
@@ -2596,7 +2560,7 @@
         return `
           <article class="event-card">
             <div class="date-box">
-              <div class="date-label">事件日期</div>
+              <div class="date-label">${esc(dateLabel(event))}</div>
               <div class="date-value">${esc(formatROCDate(event.event_date || "—"))}</div>
               <div class="first-seen">系統收錄時間<br>${esc(compactDateTime(event.first_seen_at))}</div>
             </div>
@@ -2606,7 +2570,7 @@
               <p class="event-title">${esc(eventLine)}</p>
               <div class="badges">
                 <span class="badge type">${esc(event.event_type)}</span>
-                <span class="badge stage">${esc(event.stage)}</span>
+                <span class="badge stage">${esc(stageLabel(event))}</span>
                 <span class="badge source">${esc(event.source_label)}</span>
               </div>
               <p class="event-detail">${esc(event.detail || "重點以官方事件日期為主；系統收錄時間僅供追蹤資料更新。")}</p>
@@ -2636,7 +2600,7 @@
         return `
         <article class="latest-item">
           <div class="mini-date-box">
-            <div class="mini-date-label">事件日期</div>
+            <div class="mini-date-label">${esc(dateLabel(event))}</div>
             <div class="mini-date-value">${esc(formatROCDate(event.event_date || "—"))}</div>
           </div>
           <div class="mini-content">
@@ -2644,7 +2608,7 @@
             <div class="latest-title">${esc(eventLine)}</div>
             <div class="inline-badges">
               <span class="small-badge type">${esc(event.event_type || "未分類")}</span>
-              <span class="small-badge stage">${esc(event.stage || "未分類")}</span>
+              <span class="small-badge stage">${esc(stageLabel(event))}</span>
             </div>
           </div>
         </article>
@@ -2694,7 +2658,7 @@
               <div class="active-stage">${esc(eventLine)}</div>
               <div class="inline-badges">
                 <span class="small-badge type">${esc(item.track)}</span>
-                <span class="small-badge stage">${esc(item.latest.stage || "最新進度")}</span>
+                <span class="small-badge stage">${esc(stageLabel(item.latest))}</span>
               </div>
             </div>
           </article>
@@ -2721,13 +2685,13 @@
       const companyName = `${selectedCompany.name || latest.company_name || "公司名稱待解析"}${selectedCompany.code ? `（${selectedCompany.code}）` : latest.company_code ? `（${latest.company_code}）` : ""}`;
 
       timelineCompany.textContent = companyName;
-      timelineCurrent.textContent = `最新已知進度：${latest.stage || latest.event_type || "未分類"}｜${formatROCDate(latest.event_date || "—")}`;
+      timelineCurrent.textContent = `最新已知進度：${stageLabel(latest)}｜${formatROCDate(latest.event_date || "—")}`;
 
       timelineList.innerHTML = companyEvents.map(event => `
         <article class="timeline-item">
           <div class="timeline-item-top">
-            <div class="timeline-stage">${esc(event.event_type || "未分類")}｜${esc(event.stage || "未分類")}</div>
-            <div class="timeline-date">${esc(formatROCDate(event.event_date || "—"))}</div>
+            <div class="timeline-stage">${esc(event.event_type || "未分類")}｜${esc(stageLabel(event))}</div>
+            <div class="timeline-date">${dateLabel(event) === "原申請日" ? "原申請日 " : ""}${esc(formatROCDate(event.event_date || "—"))}</div>
           </div>
           <div class="timeline-title">${esc(event.title || "")}</div>
         </article>
@@ -2763,11 +2727,11 @@
 
         const isDisabled = item.status === "disabled" || item.display_status === "停用";
         const statusClass = isDisabled ? "disabled" : item.ok === false ? "fail" : "ok";
-        const statusText = isDisabled ? "停用" : item.ok === false ? "異常" : "正常";
+        const statusText = isDisabled ? "停用" : item.ok === false ? "更新失敗，沿用舊資料" : "正常";
 
         return `
           <div class="source-row">
-            <div class="source-name">${esc(item.label || "未知來源")}</div>
+            <div class="source-name">${esc(item.label || "未知來源")}${isDisabled ? "" : `<br><small>最近成功取得（臺灣時間） ${esc((item.last_success_at || "未知").replace("T", " ").split("+")[0])}</small>`}</div>
             <div class="source-meta">
               <span class="source-status ${statusClass}">${statusText}</span>
               <span class="source-count">${esc(fetched)}</span>

@@ -58,12 +58,10 @@ TWSE_APPLY_LISTING_PUBLIC_URL = "https://www.twse.com.tw/zh/listed/listed/apply-
 TWSE_NEWS_CSV_URL = "https://www.twse.com.tw/news/newsList?response=open_data"
 TIB_NEWS_PUBLIC_URL = "https://www.twse.com.tw/TIB/zh/news.html"
 
-# TPEx 申請上櫃資料本輪先維持原本 CSV 路徑；
-# 待確認可完全等價替代的官方 API 後，再進一步改寫。
 TPEX_APPLY_OTC_URL = "https://www.tpex.org.tw/zh-tw/mainboard/applying/status/company.html"
-TPEX_APPLY_OTC_CSV_URL_TEMPLATE = "https://www.tpex.org.tw/web/regular_emerging/apply_schedule/applicant/applicant_companies_download_UTF-8.php?l=zh-tw&y={year}"
+TPEX_APPLY_OTC_CSV_URL = "https://www.tpex.org.tw/web/regular_emerging/apply_schedule/applicant/applicant_companies_download_UTF-8.php?l=zh-tw&y=ALL"
 
-SCHEMA_VERSION = 15
+SCHEMA_VERSION = 16
 MAX_EVENTS_TO_KEEP = 5000
 MAX_SEEN_TO_KEEP = 30000
 
@@ -83,17 +81,6 @@ def current_data_window() -> tuple[datetime, datetime]:
     end_dt = taipei_now()
     start_dt = subtract_years_safe(end_dt, DATA_RETENTION_YEARS)
     return start_dt, end_dt
-
-
-def roc_year(dt: datetime) -> int:
-    return dt.year - 1911
-
-
-def tpex_candidate_roc_years(window_start: datetime, window_end: datetime) -> list[int]:
-    # 近三年是滾動區間，可能跨 4 個民國年度，例如 2023/05～2026/05 = 112、113、114、115。
-    start_year = roc_year(window_start)
-    end_year = roc_year(window_end)
-    return list(range(end_year, start_year - 1, -1))
 
 
 SOURCE_LABELS = {
@@ -117,7 +104,7 @@ MOPS_RULES: list[tuple[str, str, re.Pattern[str]]] = [
 TIB_RULES: list[tuple[str, str, re.Pattern[str]]] = [
     ("申請創新板上市", "送件", re.compile(r"送件申請.*創新板.*上市")),
     ("申請創新板上市", "撤回申請", re.compile(r"撤回.*創新板.*上市申請")),
-    ("申請創新板上市", "審議通過", re.compile(r"審議.*通過.*創新板.*上市案")),
+    ("申請創新板上市", "審議通過", re.compile(r"審議通過[^。；]*創新板[^。；]*上市案")),
     ("轉板進度重大更新", "轉板進度重大更新", re.compile(r"改列上市|開始改列上市買賣")),
 ]
 
@@ -324,38 +311,6 @@ def parse_mops_realtime(html: str, esb_companies: dict[str, str]) -> list[dict[s
 # ----------------------------------------
 # 通用：找出指定官方表格
 # ----------------------------------------
-def find_table_by_headers(soup: BeautifulSoup, required_headers: list[str]) -> Any:
-    for table in soup.find_all("table"):
-        header_text = " ".join(
-            normalize_text(th.get_text(" ", strip=True))
-            for th in table.find_all("th")
-        )
-        if all(header in header_text for header in required_headers):
-            return table
-    return None
-
-
-def direct_row_cells(tr: Any) -> list[str]:
-    cells = [normalize_text(td.get_text(" ", strip=True)) for td in tr.find_all("td", recursive=False)]
-    if cells:
-        return cells
-    return [normalize_text(td.get_text(" ", strip=True)) for td in tr.find_all("td")]
-
-
-def table_rows(table: Any) -> list[list[str]]:
-    if table is None:
-        return []
-    body_rows = table.select("tbody > tr")
-    if not body_rows:
-        body_rows = table.find_all("tr")
-    rows: list[list[str]] = []
-    for tr in body_rows:
-        cells = direct_row_cells(tr)
-        if cells:
-            rows.append(cells)
-    return rows
-
-
 def ensure_reasonable_row_count(source: str, rows: list[list[str]], max_rows: int = 5000) -> None:
     # 官方申請上市 / 上櫃公司表格目前遠低於此數；
     # 若超過，通常代表 HTML 結構誤抓，寧可失敗也不要寫入大量錯誤資料。
@@ -396,6 +351,10 @@ def parse_twse_apply_csv(csv_text: str) -> list[dict[str, str]]:
     if header_index < 0:
         return []
 
+    headers = rows[header_index]
+    required = {1: "公司代號", 2: "公司簡稱", 3: "申請日期", 6: "審議日期", 7: "董事會通過", 8: "契約", 9: "買賣日期"}
+    if any(i >= len(headers) or label not in headers[i] for i, label in required.items()):
+        raise ValueError("證交所申請資料欄位已變更。")
     data_rows = rows[header_index + 1:]
     ensure_reasonable_row_count("TWSE 申請上市公司 CSV", data_rows, max_rows=5000)
 
@@ -413,9 +372,7 @@ def parse_twse_apply_csv(csv_text: str) -> list[dict[str, str]]:
         contract_date = cells[8] if len(cells) > 8 else ""
         listing_date = cells[9] if len(cells) > 9 else ""
         remarks = cells[12] if len(cells) > 12 else ""
-        row_text = " ".join(cells)
-        is_tib = "創新板" in row_text or "創" in name
-        event_type = "申請創新板上市" if is_tib else "申請上市"
+        event_type = "申請上市"
 
         if not code or not name or not app_date:
             continue
@@ -431,23 +388,12 @@ def parse_twse_apply_csv(csv_text: str) -> list[dict[str, str]]:
             url=TWSE_APPLY_LISTING_PUBLIC_URL,
             detail="政府開放資料 CSV 顯示申請日期",
         ))
-        events.append(make_event(
-            source="twse_apply",
-            event_type=event_type,
-            stage="受理",
-            event_date=app_date,
-            company_code=code,
-            company_name=name,
-            title=f"{name}（{code}）出現在證交所申請上市公司名單",
-            url=TWSE_APPLY_LISTING_PUBLIC_URL,
-            detail="以新列入官方開放資料清單作為受理追蹤訊號",
-        ))
 
         if review_date:
             events.append(make_event(
                 source="twse_apply",
                 event_type="轉板進度重大更新",
-                stage="審議通過",
+                stage="審議日期已公布",
                 event_date=review_date,
                 company_code=code,
                 company_name=name,
@@ -457,16 +403,16 @@ def parse_twse_apply_csv(csv_text: str) -> list[dict[str, str]]:
             ))
 
         updates = [
-            (board_date, "交易所董事會通過上市日期已更新"),
-            (contract_date, "上市契約備查／主管機關核准日期已更新"),
-            (listing_date, "股票上市買賣日期已更新"),
+            (board_date, "董事會通過", "交易所董事會通過上市日期已更新"),
+            (contract_date, "契約日期已公布", "上市契約備查／主管機關核准日期已更新"),
+            (listing_date, "掛牌日期已公布", "股票上市買賣日期已更新"),
         ]
-        for date_value, detail in updates:
+        for date_value, stage, detail in updates:
             if date_value:
                 events.append(make_event(
                     source="twse_apply",
                     event_type="轉板進度重大更新",
-                    stage="轉板進度重大更新",
+                    stage=stage,
                     event_date=date_value,
                     company_code=code,
                     company_name=name,
@@ -520,7 +466,7 @@ def parse_tpex_apply(csv_text: str) -> list[dict[str, str]]:
         for idx, row in enumerate(rows[:20]):
             joined = " ".join(normalize_text(cell) for cell in row)
             if "申請日期" in joined and "股票代號" in joined and "公司名稱" in joined:
-                if len(rows) > len(best_rows):
+                if len(row) >= 9 and len(rows) > len(best_rows):
                     best_rows = rows
                     best_header_index = idx
                 break
@@ -528,6 +474,10 @@ def parse_tpex_apply(csv_text: str) -> list[dict[str, str]]:
     if not best_rows:
         return []
 
+    headers = best_rows[best_header_index]
+    required = {0: "申請日期", 1: "股票代號", 2: "公司名稱", 5: "審議日期", 6: "董事會通過", 7: "契約", 8: "買賣日期"}
+    if any(i >= len(headers) or label not in headers[i] for i, label in required.items()):
+        raise ValueError("櫃買中心申請資料欄位已變更。")
     data_rows = best_rows[best_header_index + 1:]
     ensure_reasonable_row_count("TPEx 申請上櫃公司 CSV", data_rows, max_rows=5000)
 
@@ -564,23 +514,12 @@ def parse_tpex_apply(csv_text: str) -> list[dict[str, str]]:
             url=url,
             detail="官方申請上櫃公司 CSV 顯示申請日期",
         ))
-        events.append(make_event(
-            source="tpex_apply",
-            event_type="申請上櫃",
-            stage="受理",
-            event_date=app_date,
-            company_code=code,
-            company_name=name,
-            title=f"{name}（{code}）出現在櫃買中心申請上櫃公司名單",
-            url=url,
-            detail="以新列入官方申請公司清單作為受理追蹤訊號",
-        ))
 
         if review_date:
             events.append(make_event(
                 source="tpex_apply",
                 event_type="轉板進度重大更新",
-                stage="審議通過",
+                stage="審議日期已公布",
                 event_date=review_date,
                 company_code=code,
                 company_name=name,
@@ -590,16 +529,16 @@ def parse_tpex_apply(csv_text: str) -> list[dict[str, str]]:
             ))
 
         updates = [
-            (board_date, "櫃買董事會通過上櫃日期已更新"),
-            (contract_date, "上櫃契約同意／核准日期已更新"),
-            (trading_date, "股票上櫃買賣日期已更新"),
+            (board_date, "董事會通過", "櫃買董事會通過上櫃日期已更新"),
+            (contract_date, "契約日期已公布", "上櫃契約同意／核准日期已更新"),
+            (trading_date, "掛牌日期已公布", "股票上櫃買賣日期已更新"),
         ]
-        for date_value, detail in updates:
+        for date_value, stage, detail in updates:
             if date_value:
                 events.append(make_event(
                     source="tpex_apply",
                     event_type="轉板進度重大更新",
-                    stage="轉板進度重大更新",
+                    stage=stage,
                     event_date=date_value,
                     company_code=code,
                     company_name=name,
@@ -624,107 +563,6 @@ def parse_tpex_apply(csv_text: str) -> list[dict[str, str]]:
     return dedupe_events(events)
 
 
-def parse_tpex_apply_html(html: str) -> list[dict[str, str]]:
-    """
-    TPEx CSV 若暫時無法正確解析，改以官方 HTML 頁面做 fallback。
-    """
-    soup = BeautifulSoup(html, "html.parser")
-    table = find_table_by_headers(soup, ["股票代號", "公司名稱", "申請日期"])
-    rows = table_rows(table)
-    ensure_reasonable_row_count("TPEx 申請上櫃公司 HTML", rows, max_rows=5000)
-
-    events: list[dict[str, str]] = []
-    for cells in rows:
-        if len(cells) < 10:
-            continue
-
-        code = clean_stock_code(cells[1] if len(cells) > 1 else "")
-        name = normalize_text(cells[2] if len(cells) > 2 else "")
-        app_date = normalize_text(cells[3] if len(cells) > 3 else "")
-        review_date = normalize_text(cells[6] if len(cells) > 6 else "")
-        board_date = normalize_text(cells[7] if len(cells) > 7 else "")
-        contract_date = normalize_text(cells[8] if len(cells) > 8 else "")
-        trading_date = normalize_text(cells[9] if len(cells) > 9 else "")
-        remarks = normalize_text(cells[12] if len(cells) > 12 else "")
-        url = TPEX_APPLY_OTC_URL
-
-        if not code or not name or not app_date:
-            continue
-
-        events.append(make_event(
-            source="tpex_apply",
-            event_type="申請上櫃",
-            stage="送件",
-            event_date=app_date,
-            company_code=code,
-            company_name=name,
-            title=f"{name}（{code}）列入櫃買中心申請上櫃公司名單",
-            url=url,
-            detail="官方申請上櫃公司 HTML 表格顯示申請日期",
-        ))
-        events.append(make_event(
-            source="tpex_apply",
-            event_type="申請上櫃",
-            stage="受理",
-            event_date=app_date,
-            company_code=code,
-            company_name=name,
-            title=f"{name}（{code}）出現在櫃買中心申請上櫃公司名單",
-            url=url,
-            detail="以新列入官方申請公司清單作為受理追蹤訊號",
-        ))
-
-        if review_date:
-            events.append(make_event(
-                source="tpex_apply",
-                event_type="轉板進度重大更新",
-                stage="審議通過",
-                event_date=review_date,
-                company_code=code,
-                company_name=name,
-                title=f"{name}（{code}）上櫃審議委員會審議日期已更新",
-                url=url,
-                detail="官方申請上櫃公司 HTML 表格已出現上櫃審議委員會審議日期",
-            ))
-
-        updates = [
-            (board_date, "櫃買董事會通過上櫃日期已更新"),
-            (contract_date, "上櫃契約同意／核准日期已更新"),
-            (trading_date, "股票上櫃買賣日期已更新"),
-        ]
-        for date_value, detail in updates:
-            if date_value:
-                events.append(make_event(
-                    source="tpex_apply",
-                    event_type="轉板進度重大更新",
-                    stage="轉板進度重大更新",
-                    event_date=date_value,
-                    company_code=code,
-                    company_name=name,
-                    title=f"{name}（{code}）：{detail}",
-                    url=url,
-                    detail=detail,
-                ))
-
-        if "撤件" in remarks or "撤回" in remarks or "撤銷" in remarks:
-            events.append(make_event(
-                source="tpex_apply",
-                event_type="申請上櫃",
-                stage="撤回申請",
-                event_date=app_date,
-                company_code=code,
-                company_name=name,
-                title=f"{name}（{code}）申請案備註顯示撤件／撤回",
-                url=url,
-                detail=remarks,
-            ))
-
-    return dedupe_events(events)
-
-
-# ----------------------------------------
-# 4) 臺灣創新板新聞稿
-# ----------------------------------------
 def extract_news_date(text: str) -> str:
     match = re.match(r"(\d{3}年\d{1,2}月\d{1,2}日)", text)
     return match.group(1) if match else ""
@@ -791,11 +629,11 @@ def parse_tib_news_csv(csv_text: str) -> list[dict[str, str]]:
     主要欄位預期為：標題、連結、日期。
     """
     if not csv_text or not csv_text.strip():
-        return []
+        raise ValueError("證交所新聞資料缺少 CSV 表頭或必要欄位。")
 
     rows = list(csv.reader(csv_text.splitlines()))
     if not rows:
-        return []
+        raise ValueError("證交所新聞資料缺少 CSV 表頭或必要欄位。")
 
     header_index = -1
     header: list[str] = []
@@ -808,7 +646,7 @@ def parse_tib_news_csv(csv_text: str) -> list[dict[str, str]]:
             break
 
     if header_index == -1:
-        return []
+        raise ValueError("證交所新聞資料缺少 CSV 表頭或必要欄位。")
 
     def col_index(candidates: list[str]) -> int:
         for candidate in candidates:
@@ -822,7 +660,7 @@ def parse_tib_news_csv(csv_text: str) -> list[dict[str, str]]:
     date_idx = col_index(["日期", "發布日期", "發佈日期", "時間"])
 
     if title_idx == -1:
-        return []
+        raise ValueError("證交所新聞資料缺少 CSV 表頭或必要欄位。")
 
     data_rows = rows[header_index + 1:]
     if len(data_rows) > 20000:
@@ -1079,7 +917,7 @@ def format_email_body(events: list[dict[str, str]], unsubscribe_url: str) -> str
         lines.extend([
             f"{index}. {event.get('event_type', '')}｜{event.get('stage', '')}",
             f"   公司：{company_line}",
-            f"   日期：{event.get('event_date', '')}",
+            f"   {'原申請日' if event.get('stage') == '撤回申請' and event.get('source') in {'twse_apply', 'tpex_apply'} else '日期'}：{event.get('event_date', '')}",
             f"   來源：{event.get('source_label', '')}",
             f"   標題：{event.get('title', '')}",
             f"   連結：{event.get('url', '')}",
@@ -1087,7 +925,9 @@ def format_email_body(events: list[dict[str, str]], unsubscribe_url: str) -> str
         ])
 
     lines.extend([
-        "此信件由興櫃轉板網站監測程式自動寄出。",
+        "資料由金融監督管理委員會證券期貨局提供，本站依證交所與櫃買中心開放資料整理。",
+        "各資料集及授權標示：https://qm0121.github.io/tw-esb-listing-alert/#data-disclosure",
+        "政府資料開放授權條款第 1 版：https://data.gov.tw/license",
         "若本輪沒有新事件，系統不會寄信。",
         "",
         "不想再收到通知？請開啟下方連結並確認取消訂閱：",
@@ -1179,6 +1019,7 @@ def main() -> None:
         run_mail_test()
         return
 
+    previous = read_json(STATUS_PATH, {})
     checked_at = taipei_now_iso()
     retention_start, retention_end = current_data_window()
     status: dict[str, Any] = {
@@ -1204,11 +1045,15 @@ def main() -> None:
         seen_ids = set(str(item) for item in seen_payload.get("seen", []))
         initialized_sources = set(seen_payload.get("initialized_sources", []))
         prior_schema_version = int(seen_payload.get("schema_version", 0) or 0)
-        is_v3_migration = prior_schema_version < SCHEMA_VERSION
+        if prior_schema_version < SCHEMA_VERSION:
+            initialized_sources.difference_update({"twse_apply", "tpex_apply", "tib_news"})
 
         existing_events = read_json(ALERTS_PATH, [])
         if not isinstance(existing_events, list):
             existing_events = []
+
+        first_seen = {event["id"]: event["first_seen_at"] for event in existing_events if event.get("first_seen_at")}
+        seen_ids.update(first_seen)
 
         # MOPS 是即時重大訊息，保留歷史累積；
         # TWSE OpenAPI / TPEx / TIB OpenAPI 官方來源每次重建，避免舊版錯誤資料殘留。
@@ -1245,7 +1090,6 @@ def main() -> None:
             status.setdefault("debug", {})["twse_apply_csv"] = {
                 "parsed": len(csv_events),
                 "retained": len(filtered_events),
-                "first_200_chars": normalize_text(csv_text[:200]),
             }
 
             return filtered_events
@@ -1260,56 +1104,13 @@ def main() -> None:
             status.setdefault("debug", {})["tib_news_csv"] = {
                 "parsed": len(csv_events),
                 "retained": len(filtered_events),
-                "first_200_chars": normalize_text(csv_text[:200]),
             }
 
             return filtered_events
 
         def fetch_tpex_apply_events() -> list[dict[str, str]]:
-            """
-            申請上櫃資料優先改成「依民國年度分批抓 CSV」：
-            - 近三年滾動區間可能跨 4 個民國年度
-            - 避免 y=ALL 一次抓取時偶發回傳異常或解析為 0
-            """
-            combined_events: list[dict[str, str]] = []
-            year_debug: dict[str, dict[str, int]] = {}
-
-            for year in tpex_candidate_roc_years(retention_start, retention_end):
-                url = TPEX_APPLY_OTC_CSV_URL_TEMPLATE.format(year=year)
-                csv_events = parse_tpex_apply(get_text(url))
-                filtered_events = filter_events_within_retention_window(csv_events, retention_start)
-                year_debug[str(year)] = {
-                    "parsed": len(csv_events),
-                    "retained": len(filtered_events),
-                }
-                combined_events.extend(filtered_events)
-
-            combined_events = dedupe_events(combined_events)
-
-            # 將年度抓取狀況放入 status，方便日後檢查。
-            status.setdefault("debug", {})["tpex_apply_by_year"] = year_debug
-
-            if combined_events:
-                return combined_events
-
-            # 若分年 CSV 仍完全抓不到，再以 y=ALL 試一次。
-            all_url = TPEX_APPLY_OTC_CSV_URL_TEMPLATE.format(year="ALL")
-            all_csv_events = parse_tpex_apply(get_text(all_url))
-            all_filtered_events = filter_events_within_retention_window(all_csv_events, retention_start)
-            status.setdefault("debug", {})["tpex_apply_all_csv"] = {
-                "parsed": len(all_csv_events),
-                "retained": len(all_filtered_events),
-            }
-            if all_filtered_events:
-                return all_filtered_events
-
-            # CSV 都抓不到，再用官方 HTML 作最後備援。
-            html_events = parse_tpex_apply_html(get_text(TPEX_APPLY_OTC_URL))
-            html_events = filter_events_within_retention_window(html_events, retention_start)
-            status.setdefault("debug", {})["tpex_apply_html_fallback"] = {
-                "retained": len(html_events),
-            }
-            return html_events
+            csv_events = parse_tpex_apply(get_text(TPEX_APPLY_OTC_CSV_URL))
+            return filter_events_within_retention_window(csv_events, retention_start)
 
         fetchers = {
             "twse_apply": fetch_twse_apply_events,
@@ -1326,23 +1127,23 @@ def main() -> None:
                     raise RuntimeError("TWSE 申請上市公司開放資料 CSV 解析為 0 筆；已寫入 status.debug.twse_apply_csv，暫不覆寫既有資料。")
 
                 if source == "tpex_apply" and len(source_events[source]) == 0:
-                    raise RuntimeError("TPEx 申請上櫃來源分年 CSV、ALL CSV 與 HTML 備援皆解析為 0 筆，暫不覆寫既有資料。")
-
-                if source == "tib_news" and len(source_events[source]) == 0:
-                    raise RuntimeError("TWSE 證交所新聞開放資料 CSV 解析為 0 筆；已寫入 status.debug.tib_news_csv，暫不覆寫既有資料。")
+                    raise RuntimeError("櫃買中心開放資料 CSV 無有效近期案件，沿用上次資料。")
 
                 status["sources"][source] = {
                     "label": SOURCE_LABELS.get(source, source),
                     "fetched": len(source_events[source]),
                     "ok": True,
+                    "last_success_at": checked_at,
                 }
             except Exception as exc:
+                prior = previous.get("sources", {}).get(source, {})
                 source_events[source] = []
                 source_errors[source] = str(exc)
                 status["sources"][source] = {
                     "label": SOURCE_LABELS.get(source, source),
                     "fetched": 0,
                     "ok": False,
+                    "last_success_at": prior.get("last_success_at") or (previous.get("last_checked_at") if prior.get("ok") else None),
                     "error": str(exc),
                 }
 
@@ -1362,6 +1163,8 @@ def main() -> None:
             + source_events.get("mops", [])
         )
         website_events = filter_events_within_retention_window(dedupe_events(website_events), retention_start)
+        for event in website_events:
+            event["first_seen_at"] = first_seen.get(event["id"], event["first_seen_at"])
         website_events.sort(key=event_sort_key, reverse=True)
         website_events = website_events[:MAX_EVENTS_TO_KEEP]
 
@@ -1373,12 +1176,8 @@ def main() -> None:
             new_events.extend(source_new)
             seen_ids.update(event["id"] for event in source_new)
 
-            # v3 首次修復執行時，官方清單來源先做靜默基線，
-            # 避免舊資料重新整理後一次寄出大量 Email。
-            if is_v3_migration and source in {"twse_apply", "tpex_apply", "tib_news"}:
-                initialized_sources.add(source)
+            if source in source_errors:
                 continue
-
             if source in initialized_sources:
                 sendable_events.extend(source_new)
             else:

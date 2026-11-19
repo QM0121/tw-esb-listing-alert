@@ -432,8 +432,10 @@
       </div>
       <div id="events" class="events-list"></div>
     </section>
+    <p><a href="./index.html#data-disclosure">資料來源與授權</a> · <a href="./index.html#sourceSummary">查看各來源更新時間</a></p>
   </main>
 
+  <script src="./progress.js"></script>
   <script>
     const CATEGORY_OPTIONS = [
       "全部",
@@ -442,7 +444,10 @@
       "申請創新板上市",
       "轉板進度重大更新",
       "送件",
-      "受理",
+      "審議日期已公布",
+      "董事會通過",
+      "契約日期已公布",
+      "掛牌日期已公布",
       "審議通過",
       "董事會決議申請",
       "撤回申請"
@@ -597,7 +602,7 @@
         return `
           <article class="event-card">
             <div class="date-box">
-              <div class="date-label">事件日期</div>
+              <div class="date-label">${esc(dateLabel(event))}</div>
               <div class="date-value">${esc(formatROCDate(event.event_date || "—"))}</div>
               <div class="first-seen">系統收錄時間<br>${esc(compactDateTime(event.first_seen_at))}</div>
             </div>
@@ -606,7 +611,7 @@
               <p class="event-title">${esc(eventLine)}</p>
               <div class="badges">
                 <span class="badge type">${esc(event.event_type)}</span>
-                <span class="badge stage">${esc(event.stage)}</span>
+                <span class="badge stage">${esc(stageLabel(event))}</span>
                 <span class="badge source">${esc(event.source_label)}</span>
               </div>
               <p class="event-detail">${esc(event.detail || "重點以官方事件日期為主；系統收錄時間僅供追蹤資料更新。")}</p>
