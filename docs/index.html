@@ -1899,8 +1899,8 @@
     </section>
 
     <section id="view-stats" class="kpi-grid" aria-label="瀏覽與監測統計">
-      <article class="kpi-card"><div class="kpi-label">今日瀏覽人次</div><div class="kpi-value" id="todayPageviews">—</div></article>
-      <article class="kpi-card"><div class="kpi-label">累計瀏覽人次</div><div class="kpi-value" id="totalPageviews">—</div></article>
+      <article class="kpi-card"><div class="kpi-label">今日瀏覽人次</div><div class="kpi-value" id="todayPageviews">—</div><small>台灣時間 00:00 起算</small></article>
+      <article class="kpi-card"><div class="kpi-label">累計瀏覽人次</div><div class="kpi-value" id="totalPageviews">—</div><small>GoatCounter 彙總，更新可能延遲</small></article>
       <article class="kpi-card"><div class="kpi-label">已收錄事件</div><div class="kpi-value" id="heroEvents">—</div></article>
       <article class="kpi-card"><div class="kpi-label">進行中案件</div><div class="kpi-value" id="heroCases">—</div></article>
       <article class="kpi-card"><div class="kpi-label">追蹤期間</div><div class="kpi-value" id="dataWindowLabel">—</div></article>
@@ -2073,6 +2073,7 @@
         </div>
       </div>
       <p>本站依<a href="https://data.gov.tw/license">政府資料開放授權條款－第 1 版</a>篩選事件並整理時間線。審議日期僅表示排定或記載的日期。只有官方新聞明載審議通過，或資料欄位載明董事會通過，才會分別標示該結果。MOPS 即時重大訊息目前停用。</p>
+      <p>今日瀏覽人次以台灣日期統計。每次開啟首頁、事件清單或案件清單，在頁面顯示時記一人次。計數服務僅儲存每日合計及短期防重複用的隨機碼。累計數字沿用 GoatCounter，更新時間與今日統計不同。</p>
       <div class="source-disclosure-foot">
         本站已盡合理努力標示資料來源與原始提供機關。資料經整理、分類與轉述後呈現；
         如官方資料更新、修正、撤回或來源使用規範調整，本站內容與呈現方式亦可能同步調整。
@@ -2763,18 +2764,6 @@
       document.getElementById("sourceTotal").textContent = total;
     }
 
-    function taiwanDateString() {
-      const parts = new Intl.DateTimeFormat("en-US", {
-        timeZone: "Asia/Taipei",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit"
-      }).formatToParts(new Date());
-
-      const values = Object.fromEntries(parts.map(part => [part.type, part.value]));
-      return `${values.year}-${values.month}-${values.day}`;
-    }
-
     function initMailSubscribe() {
       const form = document.getElementById("mailSubscribeForm");
       const input = document.getElementById("subscriberEmail");
@@ -2802,31 +2791,21 @@
       });
     }
 
-    async function renderVisitCounters() {
-      const todayEl = document.getElementById("todayPageviews");
-      const totalEl = document.getElementById("totalPageviews");
-      const today = taiwanDateString();
-
-      const totalUrl = "https://qm0121.goatcounter.com/counter/TOTAL.json";
-      async function showCount(element, url) {
-        try {
-          const response = await fetch(url, { cache: "no-store" });
-          if (!response.ok) throw new Error("Counter unavailable");
-          const { count } = await response.json();
-          if (count == null || count === "") throw new Error("Count missing");
-          element.textContent = String(count);
-        } catch {
-          element.textContent = "暫無資料";
-        }
+    async function renderTotalViews() {
+      const element = document.getElementById("totalPageviews");
+      try {
+        const response = await fetch("https://qm0121.goatcounter.com/counter/TOTAL.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("Counter unavailable");
+        const { count } = await response.json();
+        if (count == null || count === "") throw new Error("Count missing");
+        element.textContent = String(count);
+      } catch {
+        element.textContent = "暫無資料";
       }
-      await Promise.all([
-        showCount(todayEl, totalUrl + "?start=" + today),
-        showCount(totalEl, totalUrl)
-      ]);
     }
 
     async function init() {
-      renderVisitCounters();
+      renderTotalViews();
       try {
         const [eventsRes, statusRes] = await Promise.all([
           fetch("./data/alerts.json", { cache: "no-store" }),
@@ -2899,5 +2878,6 @@
   </script>
   <script data-goatcounter="https://qm0121.goatcounter.com/count"
           async src="https://gc.zgo.at/count.js"></script>
+  <script defer src="./daily-views.js"></script>
 </body>
 </html>
