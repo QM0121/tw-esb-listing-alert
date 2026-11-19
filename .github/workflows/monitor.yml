@@ -12,7 +12,7 @@ on:
           - "false"
           - "true"
       mail_test_recipient:
-        description: "測試信收件人；可空白，空白時使用 EMAIL_RECIPIENTS / 訂閱名單"
+        description: "測試模式必填；只寄給此處的信箱，不寄給正式訂閱者"
         required: false
         default: ""
 
@@ -48,8 +48,12 @@ jobs:
         env:
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
-          EMAIL_RECIPIENTS: ""
+          EMAIL_FROM_NAME: ${{ vars.EMAIL_FROM_NAME }}
+          EMAIL_SMTP_HOST: ${{ vars.EMAIL_SMTP_HOST }}
+          EMAIL_SMTP_PORT: ${{ vars.EMAIL_SMTP_PORT }}
           EMAIL_SUBSCRIBERS_URL: ${{ secrets.SUBSCRIBERS_API_URL }}
+          EMAIL_SUBSCRIBERS_API_KEY: ${{ secrets.SUBSCRIBERS_API_KEY }}
+          EMAIL_UNSUBSCRIBE_SECRET: ${{ secrets.UNSUBSCRIBE_SECRET }}
           MAIL_TEST_MODE: ${{ github.event.inputs.mail_test }}
           MAIL_TEST_RECIPIENTS: ${{ github.event.inputs.mail_test_recipient }}
         run: python monitor.py

@@ -1140,6 +1140,21 @@
     .mail-subscribe-message.success { color: var(--green); }
     .mail-subscribe-message.error { color: var(--red); }
 
+    .mail-unsubscribe-help {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .mail-unsubscribe-help summary {
+      color: var(--navy);
+      cursor: pointer;
+      width: fit-content;
+    }
+
+    .mail-unsubscribe-help p { margin: 8px 0 0; }
+
     .monitor-note-foot {
       margin-top: 12px;
       color: var(--muted);
@@ -2024,11 +2039,17 @@
           <div class="monitor-note-label">Mail 通知訂閱</div>
           <div class="monitor-note-value">
             留下 Email 後，未來偵測到新的符合條件事件時，將寄送通知；不會重複寄送歷史資料。
-            <form id="mailSubscribeForm" class="mail-subscribe-form">
-              <input id="subscriberEmail" class="mail-subscribe-input" type="email" name="email" placeholder="請輸入 Email" autocomplete="email" required>
+            <form id="mailSubscribeForm" class="mail-subscribe-form" method="post" target="_blank" rel="noopener noreferrer">
+              <input type="hidden" name="action" value="subscribe">
+              <input id="subscriberEmail" class="mail-subscribe-input" type="email" name="email" placeholder="請輸入 Email" aria-label="訂閱通知用的 Email" autocomplete="email" maxlength="254" required>
               <button id="mailSubscribeBtn" class="mail-subscribe-btn" type="submit">訂閱</button>
             </form>
             <div id="mailSubscribeMessage" class="mail-subscribe-message" aria-live="polite"></div>
+            <noscript>請啟用 JavaScript 後使用訂閱服務。</noscript>
+            <details class="mail-unsubscribe-help">
+              <summary>取消訂閱</summary>
+              <p>請點選通知信底部的「取消訂閱」連結，再按「確認取消訂閱」，即可停止後續通知。若要恢復通知，也可從同一連結重新訂閱。</p>
+            </details>
           </div>
         </div>
       </div>
@@ -2779,43 +2800,22 @@
 
       if (!form || !input || !button || !message) return;
 
-      form.addEventListener("submit", async event => {
-        event.preventDefault();
+      // 以原生表單開啟後端結果頁，可確認實際儲存結果。
+      // 不使用 no-cors fetch，因為 opaque 回應無法判斷是否訂閱成功。
+      form.action = MAIL_SUBSCRIBE_URL;
+      form.addEventListener("submit", event => {
         const email = input.value.trim().toLowerCase();
 
         message.className = "mail-subscribe-message";
         if (!email || !input.checkValidity()) {
+          event.preventDefault();
           message.textContent = "請輸入正確的 Email 格式。";
           message.classList.add("error");
           return;
         }
 
-        button.disabled = true;
-        button.textContent = "送出中";
-        message.textContent = "正在送出訂閱資料…";
-
-        try {
-          await fetch(MAIL_SUBSCRIBE_URL, {
-            method: "POST",
-            mode: "no-cors",
-            body: JSON.stringify({
-              email,
-              source: "tw-esb-listing-alert",
-              page: location.href,
-              submitted_at: new Date().toISOString()
-            })
-          });
-
-          input.value = "";
-          message.textContent = "已收到訂閱申請，之後有新資料時會寄送通知。";
-          message.classList.add("success");
-        } catch (error) {
-          message.textContent = "送出失敗，請稍後再試。";
-          message.classList.add("error");
-        } finally {
-          button.disabled = false;
-          button.textContent = "訂閱";
-        }
+        input.value = email;
+        message.textContent = "將另開訂閱結果頁，請在該頁確認是否成功。";
       });
     }
 

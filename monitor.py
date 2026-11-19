@@ -1,16 +1,21 @@
 from __future__ import annotations
 
+import base64
 import csv
 import hashlib
+import hmac
 import json
 import os
 import re
 import smtplib
+import ssl
 import time
 from datetime import datetime, timedelta, timezone
 from email.message import EmailMessage
+from email.utils import formataddr
 from pathlib import Path
 from typing import Any
+from urllib.parse import parse_qs, urlencode, urlsplit
 
 import requests
 from bs4 import BeautifulSoup
@@ -22,10 +27,13 @@ STATUS_PATH = ROOT / "docs" / "data" / "status.json"
 
 EMAIL_SMTP_HOST = os.getenv("EMAIL_SMTP_HOST", "smtp.gmail.com").strip() or "smtp.gmail.com"
 EMAIL_SMTP_PORT = int(os.getenv("EMAIL_SMTP_PORT", "465").strip() or "465")
+# 沿用現有寄件帳號；本次僅新增取消訂閱。
 EMAIL_SENDER = os.getenv("EMAIL_SENDER", "").strip()
 EMAIL_APP_PASSWORD = os.getenv("EMAIL_APP_PASSWORD", "").replace(" ", "").strip()
-EMAIL_RECIPIENTS_RAW = os.getenv("EMAIL_RECIPIENTS", "").strip()
+EMAIL_FROM_NAME = os.getenv("EMAIL_FROM_NAME", "興櫃轉板監測通知").strip() or "興櫃轉板監測通知"
 EMAIL_SUBSCRIBERS_URL = os.getenv("EMAIL_SUBSCRIBERS_URL", "").strip()
+EMAIL_SUBSCRIBERS_API_KEY = os.getenv("EMAIL_SUBSCRIBERS_API_KEY", "").strip()
+EMAIL_UNSUBSCRIBE_SECRET = os.getenv("EMAIL_UNSUBSCRIBE_SECRET", "").strip()
 MAIL_TEST_MODE = os.getenv("MAIL_TEST_MODE", "").strip().lower() in {"1", "true", "yes", "y"}
 MAIL_TEST_RECIPIENTS_RAW = os.getenv("MAIL_TEST_RECIPIENTS", "").strip()
 
@@ -970,83 +978,81 @@ def parse_email_recipients(raw: str) -> list[str]:
     seen: set[str] = set()
     for item in re.split(r"[,;\n]+", raw or ""):
         email = item.strip().lower()
-        if email and "@" in email and email not in seen:
+        if is_valid_email(email) and email not in seen:
             seen.add(email)
             recipients.append(email)
     return recipients
 
 
+def is_valid_email(email: str) -> bool:
+    # 與 Apps Script 一致，避免換行、公式注入或多地址混入單一欄位。
+    return len(email) <= 254 and bool(re.fullmatch(
+        r"[a-zA-Z0-9][a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]*@[a-zA-Z0-9](?:[a-zA-Z0-9.-]*[a-zA-Z0-9])?\.[a-zA-Z]{2,}",
+        email,
+    ))
+
+
+def subscriber_endpoint() -> str:
+    parsed = urlsplit(EMAIL_SUBSCRIBERS_URL)
+    if (parsed.scheme != "https" or parsed.netloc != "script.google.com"
+            or not re.fullmatch(r"/macros/s/[A-Za-z0-9_-]+/exec", parsed.path)
+            or (parsed.query and parse_qs(parsed.query) != {"action": ["list"]}) or parsed.fragment):
+        raise RuntimeError("EMAIL_SUBSCRIBERS_URL 必須是 Apps Script 的 HTTPS /exec 網址，不含查詢參數。")
+    return parsed._replace(query="", fragment="").geturl()
+
+
 def parse_subscriber_emails_from_payload(payload_text: str) -> list[str]:
-    text = (payload_text or "").strip()
-    if not text:
-        return []
-
-    # 支援 JSON：
-    # 1) ["a@example.com", "b@example.com"]
-    # 2) {"emails": ["a@example.com"]}
-    # 3) {"subscribers": [{"email": "a@example.com"}]}
+    """只接受新版已驗證的有效名單，避免舊格式重新寄給已取消者。"""
     try:
-        payload = json.loads(text)
-        raw_items: list[Any] = []
-        if isinstance(payload, list):
-            raw_items = payload
-        elif isinstance(payload, dict):
-            value = payload.get("emails") or payload.get("subscribers") or payload.get("data") or []
-            if isinstance(value, list):
-                raw_items = value
-
-        emails: list[str] = []
-        for item in raw_items:
-            if isinstance(item, str):
-                emails.append(item)
-            elif isinstance(item, dict):
-                emails.append(str(item.get("email", "")))
-        return parse_email_recipients("\n".join(emails))
-    except json.JSONDecodeError:
-        pass
-
-    # 支援 CSV / 純文字：第一欄或 email 欄。
-    rows = list(csv.reader(text.splitlines()))
-    if not rows:
-        return []
-
-    header = [normalize_text(cell).lower() for cell in rows[0]]
-    email_index = 0
-    if "email" in header:
-        email_index = header.index("email")
-
-    emails = []
-    start_index = 1 if any("email" == cell for cell in header) else 0
-    for row in rows[start_index:]:
-        if email_index < len(row):
-            emails.append(row[email_index])
-    return parse_email_recipients("\n".join(emails))
+        payload = json.loads(payload_text)
+    except (TypeError, json.JSONDecodeError):
+        raise RuntimeError("訂閱服務回傳格式錯誤，停止寄信。") from None
+    if (not isinstance(payload, dict) or payload.get("ok") is not True
+            or payload.get("schema_version") != 1 or not isinstance(payload.get("emails"), list)
+            or any(not isinstance(email, str) or not is_valid_email(email) for email in payload["emails"])):
+        raise RuntimeError("訂閱服務未授權或不是新版有效名單，停止寄信。")
+    expected_key_check = hmac.new(EMAIL_UNSUBSCRIBE_SECRET.encode("utf-8"),
+                                  b"unsubscribe-config:v1", hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(str(payload.get("signing_key_check", "")), expected_key_check):
+        raise RuntimeError("GitHub 與 Apps Script 的 UNSUBSCRIBE_SECRET 不一致，停止寄信。")
+    return parse_email_recipients("\n".join(payload["emails"]))
 
 
 def fetch_subscriber_emails() -> list[str]:
-    if not EMAIL_SUBSCRIBERS_URL:
-        return []
+    endpoint = subscriber_endpoint()
+    if len(EMAIL_SUBSCRIBERS_API_KEY) < 32:
+        raise RuntimeError("請設定至少 32 字元的 EMAIL_SUBSCRIBERS_API_KEY。")
     try:
-        return parse_subscriber_emails_from_payload(get_text(EMAIL_SUBSCRIBERS_URL))
-    except Exception as exc:
-        print(f"讀取訂閱名單失敗：{exc}")
-        return []
+        response = requests.post(endpoint, json={
+            "action": "list", "api_key": EMAIL_SUBSCRIBERS_API_KEY,
+        }, timeout=40)
+        response.raise_for_status()
+    except requests.RequestException:
+        raise RuntimeError("無法讀取訂閱名單，停止寄信；請檢查 Apps Script 部署。") from None
+    return parse_subscriber_emails_from_payload(response.text)
 
 
 def get_email_recipients(extra_raw: str = "") -> list[str]:
-    combined = []
-    combined.extend(parse_email_recipients(EMAIL_RECIPIENTS_RAW))
-    combined.extend(parse_email_recipients(extra_raw))
-    combined.extend(fetch_subscriber_emails())
+    # 測試模式只寄明確指定的地址，絕不擴散到正式訂閱者。
+    if MAIL_TEST_MODE:
+        recipients = parse_email_recipients(extra_raw)
+        if not recipients:
+            raise RuntimeError("測試模式必須填寫 MAIL_TEST_RECIPIENTS，不會預設寄給所有訂閱者。")
+        return recipients
+    return fetch_subscriber_emails()
 
-    out: list[str] = []
-    seen: set[str] = set()
-    for email in combined:
-        normalized = email.strip().lower()
-        if normalized and normalized not in seen:
-            seen.add(normalized)
-            out.append(normalized)
-    return out
+
+def make_unsubscribe_url(recipient: str) -> str:
+    email = recipient.strip().lower()
+    if not is_valid_email(email):
+        raise RuntimeError("取消訂閱連結的地址格式錯誤。")
+    if len(EMAIL_UNSUBSCRIBE_SECRET) < 32:
+        raise RuntimeError("請設定至少 32 字元的 EMAIL_UNSUBSCRIBE_SECRET。")
+    encoded = base64.urlsafe_b64encode(email.encode("utf-8")).decode("ascii").rstrip("=")
+    signature = hmac.new(EMAIL_UNSUBSCRIBE_SECRET.encode("utf-8"),
+                         f"unsubscribe:v1:{encoded}".encode("ascii"), hashlib.sha256).hexdigest()
+    token = f"v1.{encoded}.{signature}"
+    return f"{subscriber_endpoint()}?{urlencode({'action': 'unsubscribe', 'token': token})}"
 
 
 def format_email_subject(events: list[dict[str, str]]) -> str:
@@ -1058,7 +1064,7 @@ def format_email_subject(events: list[dict[str, str]]) -> str:
     return f"【興櫃轉板監測】偵測到 {len(events)} 筆新事件"
 
 
-def format_email_body(events: list[dict[str, str]]) -> str:
+def format_email_body(events: list[dict[str, str]], unsubscribe_url: str) -> str:
     lines = [
         "您好，",
         "",
@@ -1083,6 +1089,10 @@ def format_email_body(events: list[dict[str, str]]) -> str:
     lines.extend([
         "此信件由興櫃轉板網站監測程式自動寄出。",
         "若本輪沒有新事件，系統不會寄信。",
+        "",
+        "不想再收到通知？請開啟下方連結並確認取消訂閱：",
+        unsubscribe_url,
+        "取消後將停止後續通知；已在傳送中的信件可能仍會送達。",
     ])
     return "\n".join(lines)
 
@@ -1091,23 +1101,38 @@ def send_email_notification(events: list[dict[str, str]], *, test_recipients_raw
     if not events:
         return 0
 
-    recipients = get_email_recipients(test_recipients_raw)
-    if not EMAIL_SENDER:
-        raise RuntimeError("缺少 EMAIL_SENDER。")
+    if not is_valid_email(EMAIL_SENDER):
+        raise RuntimeError("缺少或無效的 EMAIL_SENDER。")
     if not EMAIL_APP_PASSWORD:
         raise RuntimeError("缺少 EMAIL_APP_PASSWORD。")
+    if len(EMAIL_UNSUBSCRIBE_SECRET) < 32:
+        raise RuntimeError("請設定至少 32 字元的 EMAIL_UNSUBSCRIBE_SECRET。")
+    subscriber_endpoint()
+    recipients = get_email_recipients(test_recipients_raw)
     if not recipients:
-        raise RuntimeError("缺少 EMAIL_RECIPIENTS 或 EMAIL_SUBSCRIBERS_URL 訂閱名單。")
+        print("目前沒有有效訂閱者，本輪不寄信。")
+        return 0
 
-    message = EmailMessage()
-    message["Subject"] = format_email_subject(events)
-    message["From"] = EMAIL_SENDER
-    message["To"] = ", ".join(recipients)
-    message.set_content(format_email_body(events))
-
-    with smtplib.SMTP_SSL(EMAIL_SMTP_HOST, EMAIL_SMTP_PORT, timeout=40) as smtp:
+    with smtplib.SMTP_SSL(EMAIL_SMTP_HOST, EMAIL_SMTP_PORT, timeout=40,
+                          context=ssl.create_default_context()) as smtp:
         smtp.login(EMAIL_SENDER, EMAIL_APP_PASSWORD)
-        smtp.send_message(message)
+        for recipient in recipients:
+            unsubscribe_url = make_unsubscribe_url(recipient)
+            message = EmailMessage()
+            message["Subject"] = format_email_subject(events)
+            message["From"] = EMAIL_SENDER
+            message["To"] = recipient
+            # GET 只顯示確認頁；不宣告需要 DKIM 及免確認 POST 的 RFC 8058 one-click。
+            message["List-Unsubscribe"] = f"<{unsubscribe_url}>"
+            message["Auto-Submitted"] = "auto-generated"
+            message.set_content(format_email_body(events, unsubscribe_url))
+            try:
+                refused = smtp.send_message(message, from_addr=EMAIL_SENDER, to_addrs=[recipient])
+                if refused:
+                    raise RuntimeError("收件伺服器拒收通知。")
+            except (smtplib.SMTPException, OSError, RuntimeError):
+                # 不把收件人地址、私人設定或管理 token 寫入公開 Actions 紀錄。
+                raise RuntimeError("通知寄送失敗，已停止本輪寄信；部分通知可能已送出。") from None
 
     return len(recipients)
 
